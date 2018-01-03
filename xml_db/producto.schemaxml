@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="latin1" collation="latin1_swedish_ci">sys_fac</database>
+</source>
+<canvas zoom="100">
+<tables>
+<table name="tiporetencion" view="colnames">
+<left>29</left>
+<top>157</top>
+<width>169</width>
+<height>141</height>
+<sql_create_table>CREATE TABLE `tiporetencion` (
+  `id_tiporeten` bigint(20) NOT NULL AUTO_INCREMENT,
+  `cod_codRetAir` varchar(6) DEFAULT NULL COMMENT '340 Otras Retenciones Aplicables el 1%',
+  `nom_codRetAir` text,
+  `porcentaje_codRetAir` double(10,2) DEFAULT NULL COMMENT 'solo dos decimales',
+  PRIMARY KEY (`id_tiporeten`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="marca_producto" view="colnames">
+<left>465</left>
+<top>159</top>
+<width>147</width>
+<height>107</height>
+<sql_create_table>CREATE TABLE `marca_producto` (
+  `id_marca` bigint(20) NOT NULL AUTO_INCREMENT,
+  `nom_marca` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id_marca`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="unidad_medida" view="colnames">
+<left>469</left>
+<top>278</top>
+<width>148</width>
+<height>107</height>
+<sql_create_table>CREATE TABLE `unidad_medida` (
+  `id_unimedida` bigint(20) NOT NULL AUTO_INCREMENT,
+  `nom_unimedida` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id_unimedida`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="producto_proveedor" view="colnames">
+<left>597</left>
+<top>22</top>
+<width>153</width>
+<height>124</height>
+<sql_create_table>CREATE TABLE `producto_proveedor` (
+  `id_prod_provd` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id_producto` bigint(20) DEFAULT NULL,
+  `id_proveedor` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id_prod_provd`),
+  KEY `FK_producto_proveedor` (`id_producto`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="producto" view="colnames">
+<left>257</left>
+<top>158</top>
+<width>182</width>
+<height>383</height>
+<sql_create_table>CREATE TABLE `producto` (
+  `id_producto` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id_tiporeten` bigint(20) DEFAULT NULL,
+  `id_marca` bigint(20) DEFAULT NULL,
+  `id_unimedida` bigint(20) DEFAULT NULL,
+  `id_prod_provd` bigint(20) DEFAULT NULL,
+  `id_ganancia` bigint(20) DEFAULT NULL,
+  `codbarra_producto` varchar(100) DEFAULT NULL,
+  `nom_producto` varchar(100) DEFAULT NULL,
+  `descrip_producto` text,
+  `costo_producto` double(10,2) DEFAULT NULL,
+  `pvp1_producto` double(10,2) DEFAULT NULL,
+  `stock_producto` int(11) DEFAULT NULL,
+  `stkmin_producto` int(11) DEFAULT NULL,
+  `stkmax_producto` int(11) DEFAULT NULL,
+  `img_producto` varchar(100) DEFAULT NULL,
+  `fecing_producto` date DEFAULT NULL,
+  `fecvenci_producto` date DEFAULT NULL,
+  `estado_producto` varchar(2) DEFAULT NULL,
+  PRIMARY KEY (`id_producto`),
+  KEY `FK_producto_retencion` (`id_tiporeten`),
+  KEY `FK_producto_marca` (`id_marca`),
+  KEY `FK_producto_medida` (`id_unimedida`),
+  CONSTRAINT `FK_producto_marca` FOREIGN KEY (`id_marca`) REFERENCES `marca_producto` (`id_marca`),
+  CONSTRAINT `FK_producto_medida` FOREIGN KEY (`id_unimedida`) REFERENCES `unidad_medida` (`id_unimedida`),
+  CONSTRAINT `FK_producto_retencion` FOREIGN KEY (`id_tiporeten`) REFERENCES `tiporetencion` (`id_tiporeten`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="persona" view="colnames">
+<left>805</left>
+<top>44</top>
+<width>156</width>
+<height>344</height>
+<sql_create_table>CREATE TABLE `persona` (
+  `id_persona` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id_tipoper` bigint(20) DEFAULT NULL COMMENT 'trabajador , cliente , empleado',
+  `id_ciudad` bigint(20) DEFAULT NULL,
+  `id_sexo` bigint(20) DEFAULT NULL,
+  `id_civil` bigint(20) DEFAULT NULL,
+  `nom_persona` varchar(50) DEFAULT NULL,
+  `ape_persona` varchar(50) DEFAULT NULL,
+  `ruc_persona` varchar(20) DEFAULT NULL,
+  `direc_persona` text,
+  `telf_persona` varchar(10) DEFAULT NULL,
+  `cel_persona` varchar(10) DEFAULT NULL,
+  `email_persona` varchar(40) DEFAULT NULL,
+  `web_persona` varchar(40) DEFAULT NULL,
+  `obs_persona` text,
+  `fec_persona` date DEFAULT NULL,
+  `estado_persona` varchar(2) DEFAULT NULL,
+  PRIMARY KEY (`id_persona`),
+  KEY `FK_persona_civil` (`id_civil`),
+  KEY `FK_persona_sexo` (`id_sexo`),
+  KEY `FK_persona_ciudad` (`id_ciudad`),
+  KEY `FK_persona_tipoper` (`id_tipoper`),
+  CONSTRAINT `FK_persona_ciudad` FOREIGN KEY (`id_ciudad`) REFERENCES `ciudad` (`id_ciudad`),
+  CONSTRAINT `FK_persona_civil` FOREIGN KEY (`id_civil`) REFERENCES `estado_civil` (`id_civil`),
+  CONSTRAINT `FK_persona_sexo` FOREIGN KEY (`id_sexo`) REFERENCES `sexo` (`id_sexo`),
+  CONSTRAINT `FK_persona_tipoper` FOREIGN KEY (`id_tipoper`) REFERENCES `tipo_persona` (`id_tipoper`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>

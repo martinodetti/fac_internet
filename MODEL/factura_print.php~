@@ -1,0 +1,144 @@
+<?php
+session_start();
+include_once 'CONTROLLER/C_Debug.php';
+include 'DAC/Database.class.php';
+include 'MODEL/Persona.php';
+//include 'MODEL/Producto.php';
+
+//include 'MODEL/Empresa.php';
+
+if(!isset($_SESSION['id_persona'])){
+   header('Location: index.php');
+		exit();
+}
+
+
+//$persona		=	$persona->showPersona($id_persona);
+//$clsEmpresa		=	new empresa();
+//$clsEmpresa		=	$clsEmpresa->showEmpresa(1);
+//$clsProducto	=	new producto();
+//$id_cli			=	$_GET['id_cliente'];
+
+
+$id_cli		= $_GET['idcliente'];
+$clsCliente	= new persona();
+$clsCliente	= $clsCliente->showPersona($id_cli);
+
+$vehiculo	= $_GET['vehiculo'];
+$numero		= $_GET['numero'];
+$fecha		= $_GET['fecha'];
+$concepto	= $_GET['concepto'];
+$total		= $_GET['total'];
+$Data		= $_GET['detalle'];
+$arr		= explode("-", $Data);
+
+//foreach($arr as $id){
+//    echo $id.'<br/>';
+//}
+
+?>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+			<link rel="stylesheet" type="text/css" href="CSS_INTERNO/table_data.css" media="screen"/>
+            <script type="text/javascript" src="JS/jquery-1.4.2.js" ></script>
+        <title></title>
+    </head>
+    <body>
+     	<div id="fecha" style="width:770px">
+     		<!-- FECHA -->
+     		<table class="tabledata" border="0">
+     			<thead>
+                    <tr>
+                        <th style="width: 480px; height:110px"></th>
+                        <th style="width: 100px"></th>
+                    </tr>
+                </thead>
+     			<tbody>
+     				<tr>
+     					<td></td>
+     					<td><?php echo $fecha; ?></td>
+     				</tr>
+     			</tbody>
+     		</table>
+     		<!-- CLIENTE -->
+     		<table class="tabledata" border="0">
+     			<thead>
+                    <tr>
+                    	<th style="width: 70px"></th>
+                        <th style="width: 400px; height:45px"></th>
+                        <th style="width: 300px"></th>
+                    </tr>
+                </thead>
+     			<tbody>
+     				<tr>
+     					<td></td>
+     					<td><?php echo $clsCliente->get_nom_persona() . " " . $clsCliente->get_ape_persona(); ?></td>
+     					<td><?php echo $clsCliente->get_direc_persona()?></td>
+     				</tr>
+     				<tr>
+	     				<td></td>
+     					<td><?php echo $vehiculo; ?></td>
+     					<td></td>
+     				</tr>
+     				<tr>
+     					<td></td>
+     					<td></td>
+     					<td><?php echo $clsCliente->get_ruc_persona(); ?></td>
+     				</tr>
+     			</tbody>
+     		</table>
+     		
+     		<!-- DETALLE -->
+     		<div id="fecha" style="width:770px; height:700px">
+		 		<table class="tabledata" border="0">
+		 			<thead>
+		                <tr>
+		                    <th style="width: 55px; height:40px"></th>
+		                    <th style="width: 105px"></th>
+		                    <th style="width: 400px"></th>
+		                    <th style="width: 105px"></th>
+		                    <th style="width: 105px"></th>
+		                </tr>
+		            </thead>
+		 			<tbody>
+		 				<?php foreach($arr as $id){
+		                    $tmp=  explode("|", $id);
+		                    ?>
+		                <tr>
+		                    <td style="width: 100px"><?php echo $tmp[3] ?></td>
+		                    <td></td>
+		                    <td style="width: 500px"><?php echo $tmp[1] ?></td>
+		                    <td style="width: 100px"><?php echo $tmp[2] ?></td>
+		                    <td style="width: 100px"><?php echo $tmp[4] ?></td>
+		                </tr>
+		                <?php } ?>
+		 			</tbody>
+		 		</table>
+		 	</div>
+		 	
+		 	<!-- TOTALES -->
+		 	<table class="tabledata" border="0">
+	 			<thead>
+	                <tr>
+	                    <th style="width: 55px; height:10px"></th>
+	                    <th style="width: 105px"></th>
+	                    <th style="width: 400px"></th>
+	                    <th style="width: 105px"></th>
+	                    <th style="width: 105px"></th>
+	                </tr>
+	            </thead>
+	 			<tbody>
+	 				<tr>
+	                    <td style="width: 100px"></td>
+	                    <td style="width: 500px"></td>
+	                    <td style="width: 100px"></td>
+	                    <td style="width: 100px"><?php echo $total ?></td>
+	                </tr>
+	 			</tbody>
+	 		</table>
+     	</div>
+        
+    </body>
+</html>

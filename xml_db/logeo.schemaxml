@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="latin1" collation="latin1_swedish_ci">sys_fac</database>
+</source>
+<canvas zoom="100">
+<tables>
+<table name="tipo_persona" view="colnames">
+<left>32</left>
+<top>53</top>
+<width>131</width>
+<height>124</height>
+<sql_create_table>CREATE TABLE `tipo_persona` (
+  `id_tipoper` bigint(20) NOT NULL AUTO_INCREMENT,
+  `nom_tipoper` varchar(100) DEFAULT NULL,
+  `estado_tipoper` varchar(2) DEFAULT NULL,
+  PRIMARY KEY (`id_tipoper`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="persona" view="colnames">
+<left>235</left>
+<top>55</top>
+<width>154</width>
+<height>346</height>
+<sql_create_table>CREATE TABLE `persona` (
+  `id_persona` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id_tipoper` bigint(20) DEFAULT NULL COMMENT 'trabajador , cliente , empleado',
+  `id_ciudad` bigint(20) DEFAULT NULL,
+  `id_sexo` bigint(20) DEFAULT NULL,
+  `id_civil` bigint(20) DEFAULT NULL,
+  `nom_persona` varchar(50) DEFAULT NULL,
+  `ape_persona` varchar(50) DEFAULT NULL,
+  `ruc_persona` varchar(20) DEFAULT NULL,
+  `direc_persona` text,
+  `telf_persona` varchar(10) DEFAULT NULL,
+  `cel_persona` varchar(10) DEFAULT NULL,
+  `email_persona` varchar(40) DEFAULT NULL,
+  `web_persona` varchar(40) DEFAULT NULL,
+  `obs_persona` text,
+  `fec_persona` date DEFAULT NULL,
+  `estado_persona` varchar(2) DEFAULT NULL,
+  PRIMARY KEY (`id_persona`),
+  KEY `FK_persona_civil` (`id_civil`),
+  KEY `FK_persona_sexo` (`id_sexo`),
+  KEY `FK_persona_ciudad` (`id_ciudad`),
+  KEY `FK_persona_tipoper` (`id_tipoper`),
+  CONSTRAINT `FK_persona_ciudad` FOREIGN KEY (`id_ciudad`) REFERENCES `ciudad` (`id_ciudad`),
+  CONSTRAINT `FK_persona_civil` FOREIGN KEY (`id_civil`) REFERENCES `estado_civil` (`id_civil`),
+  CONSTRAINT `FK_persona_sexo` FOREIGN KEY (`id_sexo`) REFERENCES `sexo` (`id_sexo`),
+  CONSTRAINT `FK_persona_tipoper` FOREIGN KEY (`id_tipoper`) REFERENCES `tipo_persona` (`id_tipoper`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="ciudad" view="colnames">
+<left>469</left>
+<top>12</top>
+<width>115</width>
+<height>107</height>
+<sql_create_table>CREATE TABLE `ciudad` (
+  `id_ciudad` bigint(20) NOT NULL AUTO_INCREMENT,
+  `nom_ciudad` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id_ciudad`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="sexo" view="colnames">
+<left>465</left>
+<top>130</top>
+<width>105</width>
+<height>107</height>
+<sql_create_table>CREATE TABLE `sexo` (
+  `id_sexo` bigint(20) NOT NULL AUTO_INCREMENT,
+  `nom_sexo` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id_sexo`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="estado_civil" view="colnames">
+<left>466</left>
+<top>265</top>
+<width>113</width>
+<height>107</height>
+<sql_create_table>CREATE TABLE `estado_civil` (
+  `id_civil` bigint(20) NOT NULL AUTO_INCREMENT,
+  `estado_civil` varchar(40) DEFAULT NULL,
+  PRIMARY KEY (`id_civil`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="acceso_modulo" view="colnames">
+<left>23</left>
+<top>197</top>
+<width>153</width>
+<height>124</height>
+<sql_create_table>CREATE TABLE `acceso_modulo` (
+  `id_acsmod` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id_persona` bigint(20) DEFAULT NULL,
+  `id_modulo` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id_acsmod`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>

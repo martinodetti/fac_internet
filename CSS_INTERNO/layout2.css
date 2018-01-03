@@ -1,0 +1,583 @@
+/* 
+    Document   : layout2
+    Created on : 27-abr-2011, 22:38:51
+    Author     : Wilfo
+    Description:
+        Purpose of the stylesheet follows.
+In this document all styles of social network student are written in the correct order
+to be understand by anyone.
+Suggestion:logica_razon@hotmail.com
+Key points:
+ - contentLayout
+ -cleared
+ -sidebar1
+ - Block
+ -Block-tl
+ -Block-tr
+ -Block-bl
+ -Block-br
+ - Block-tc
+ -Block-bc
+ -Block-cl
+ -Block-cr
+ -Block-cc
+ -Block-body
+ -BlockHeader
+ -header-tag-icon
+ -BlockHeader-text
+ -l
+ -r
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+SN: social network student
+*/
+
+.contentLayoutSNS
+{
+  margin-bottom: 5px;
+  /*890*/
+  width: 900px;
+  position: relative;
+  /*si aletraste el width de la hoja tambien este debe ser aletrado*/
+}
+/* lado1 para menutree dentro de el dropdownbox mayor*/
+ .lado1{
+    position: relative;
+    margin: 0px;
+   padding-left: 0px;
+    float: left;
+    width: 250px;
+    min-height: 300px;
+ 
+}
+.lado2{
+    position: relative;
+    margin: 20px;
+  
+    float: left;
+    width: 590px;
+    min-height: 300px;
+/*    border-right: 1px solid lightslategray;*/
+   
+
+}
+
+/** -------------------------Metiendo tree dentro de sidebar1--------------   */
+
+.contentLayoutSNS .barraleft
+{
+  position: relative;
+  margin: 0;
+  padding: 0;
+overflow: hidden;
+  float: left;
+  min-height: 100px;
+  /*540*/
+  min-width: 300px;
+  width: 300px;
+   border-right: 1px solid lightslategray;
+   border-left: 1px solid lightslategray;
+  /*si aletraste la hoja y content tambien este dbe ser aletrado*/
+}
+
+.lado1 .treeMenu {
+  position: relative;
+ margin: 0px;
+  padding: 0px;
+  width:250px;
+  font:normal 14px 'Segoe UI', Helvetica, Arial, sans-serif;
+
+}
+.treeMenu h2 {
+    font:bold 20px 'Segoe UI', Helvetica, Arial, sans-serif; color:#454545;
+    margin-bottom:12px;
+}
+.treeMenu ul {
+
+    list-style:none;
+}
+.treeMenu ul li {
+    overflow:hidden;
+
+    background:#f5f5f5 url(../img/treeTabBg.gif) repeat-x 0 0;
+      border:solid 1px #fff; margin:4px 0; -moz-border-radius:3px;
+    -webkit-border-radius:3px;  border-radius:3px;
+}
+.treeMenu ul li span {
+    display:inline-block;
+    float:right; width:30px; height:29px;
+    background:url(../img/treeSplit.png) no-repeat 100% 0;
+    
+    cursor:pointer;
+}
+.treeMenu ul li a {
+    color:#4d5f6b;
+          font-size:16px;
+          padding:0px 0px;
+          display:inline-block;
+          text-decoration:none;
+          width:234px;
+          float:left;
+}
+.treeMenu ul li span.opened {
+    background-position:100% -61px;
+}
+
+	.treeMenu ul li div { clear:both; height:auto; }
+	.treeMenu ul li li {
+            background:none;
+            border:0; margin:0;
+            padding-left:0px;
+            border-bottom:solid 1px #fff;
+            border-top:solid 1px #eee; clear:both;
+        }
+	.treeMenu ul li li a {
+            color:#626262; font-size:12px;
+            padding:5px 0; float: left;
+            width:auto;
+        }
+	.treeMenu ul li li a:hover {
+            text-decoration:underline;
+            color:#333;
+        }
+	.treeMenu ul li li span {
+            float:left; display:inline;
+            width:15px; height:20px;
+            background-position:-10px -263px;
+            cursor:default;
+        }
+	.treeMenu ul li li span.closed {
+            background-position:-10px -131px;
+            cursor:pointer;
+        }
+	.treeMenu ul li li span.closed.opened {
+            background-position:-7px -197px;
+
+        }
+
+    .treeMenu ul li li li { border:0;}
+    /* ----------------------------------------------------------------------*/
+
+.contentLayoutSNS .sidebar1
+{
+  position: relative;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  float: left;
+  overflow: hidden;
+  width: 177px;
+}
+
+/*formulario de búsqueda de productos*/
+.contentLayoutSNS .sidebarbuscar
+{
+  position: relative;
+  margin:0;
+  padding: 0;
+  border: 0;
+  float: left;
+  overflow: hidden;
+  width: 540px;
+}
+/*fin sidebar sidebarnoticia */
+
+.contentLayoutSNS .content
+{
+  position: relative;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  float: left;
+  overflow: hidden;
+  /*540*/
+  width: 800px;
+  /*si aletraste la hoja y content tambien este dbe ser aletrado*/
+}
+.contentLayoutSNS .sidebar2
+{
+	position: relative;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	float: left;
+	overflow: hidden;
+	width: 170px;
+}
+
+/* ----------   Inicio del block -----------------------------------------*/
+.Block
+{
+  overflow: hidden;
+  min-width:31px;
+  min-height:31px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 0;
+}
+
+.Block-body
+{
+  position: relative;
+  z-index: 0;
+  margin: 4px;
+}
+
+.Block-tl
+{
+  position: absolute;
+  overflow: hidden;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 23px;
+  height: 23px;
+  background-image: url('../img2/Block-s.png');
+}
+
+.Block-tr
+{
+  position: absolute;
+  overflow: hidden;
+  z-index: -1;
+  top: 0;
+  right: 0;
+  width: 23px;
+  height: 23px;
+}
+
+.Block-tr div
+{
+  position: absolute;
+  z-index: -1;
+  top: 0px;
+  left: -23px;
+  width: 46px;
+  height: 46px;
+  background-image: url('../img2/Block-s.png');
+}
+
+.Block-bl
+{
+  position: absolute;
+  overflow: hidden;
+  z-index: -1;
+  bottom: 0;
+  left: 0;
+  width: 23px;
+  height: 23px;
+}
+
+.Block-bl div
+{
+  position: absolute;
+  z-index: -1;
+  top: -23px;
+  left: 0;
+  width: 46px;
+  height: 46px;
+  background-image: url('../img2/Block-s.png');
+}
+
+.Block-br
+{
+  position: absolute;
+  overflow: hidden;
+  z-index: -1;
+  bottom: 0;
+  right: 0;
+  width: 23px;
+  height: 23px;
+}
+
+.Block-br div
+{
+  position: absolute;
+  z-index: -1;
+  top: -23px;
+  left: -23px;
+  width: 46px;
+  height: 46px;
+  background-image: url('../img2/Block-s.png');
+}
+
+.Block-tc
+{
+  position: absolute;
+  overflow:hidden;
+  z-index: -1;
+  top: 0;
+  left: 23px;
+  right: 23px;
+  height: 23px;
+}
+
+.Block-tc div
+{
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 46px;
+  background-image: url('../img2/Block-h.png');
+}
+
+.Block-bc
+{
+  position: absolute;
+  overflow:hidden;
+  z-index: -1;
+  bottom: 0;
+  left: 23px;
+  right: 23px;
+  height: 23px;
+}
+
+.Block-bc div
+{
+  position: absolute;
+  z-index: -1;
+  top: -23px;
+  left: 0;
+  width: 100%;
+  height: 46px;
+  background-image: url('../img2/Block-h.png');
+}
+
+.Block-cl
+{
+  position: absolute;
+  overflow:hidden;
+  z-index: -1;
+  top: 23px;
+  left: 0;
+  width: 23px;
+  bottom: 23px;
+}
+
+.Block-cl div
+{
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 46px;
+  height: 100%;
+  background-image: url('../img2/Block-v.png');
+}
+
+.Block-cr
+{
+  position: absolute;
+  overflow:hidden;
+  z-index: -1;
+  top: 23px;
+  right: 0;
+  width: 23px;
+  bottom: 23px;
+}
+
+.Block-cr div
+{
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: -23px;
+  width: 46px;
+  height: 100%;
+  background-image: url('../img2/Block-v.png');
+}
+
+.Block-cc
+{
+  position: absolute;
+  overflow:hidden;
+  z-index: -2;
+  top: 23px;
+  left: 23px;
+  right: 23px;
+  bottom: 23px;
+  background-image: url('../img2/Block-c.png');
+}
+
+
+.Block
+{
+  margin: 7px;
+}
+
+/* end Box, Block */
+
+/* begin BlockHeader */
+.BlockHeader
+{
+  position: relative;
+  overflow: hidden;
+  height: 30px;
+  z-index: 0;
+  line-height: 30px;
+  padding: 0 5px;
+  margin-bottom: 4px;
+
+}
+
+.BlockHeader-text
+{
+  white-space : nowrap;
+  color: #FFFFFF;
+  font-family: Arial, Helvetica, Sans-Serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: bold;
+  line-height: 30px;
+}
+
+
+.BlockHeader .l, .BlockHeader .r, .BlockHeader .r div
+{
+  top: 0;
+  position: absolute;
+  z-index: -1;
+  overflow: hidden;
+  height: 30px;
+}
+
+.BlockHeader .l
+{
+  left: 0;
+  right: 6px;
+}
+
+
+.BlockHeader .r
+{
+  right: 0;
+  width: 6px;
+}
+
+
+.BlockHeader .r div
+{
+  width: 890px;
+  right: 0;
+}
+
+
+.BlockHeader .l, .BlockHeader .r div
+{
+  background-position: left top;
+  background-repeat: no-repeat;
+  background-image: url('../img2/BlockHeader.png');
+}
+
+.header-tag-icon
+{
+  display:inline-block;
+  background-position:left top;
+  background-image: url('../img2/BlockHeaderIcon.png');
+  padding:0 0 0 22px;
+  background-repeat: no-repeat;
+  min-height: 17px;
+  margin: 0 0 0 5px;
+}
+
+/* ----------    fin del blobkheader -----------------------------------------*/
+
+.BlockContent
+{
+  overflow: hidden;
+  min-width:1px;
+  min-height:1px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 0;
+}
+
+
+.BlockContent-body
+{
+  position: relative;
+  z-index: 0;
+  margin: 10px;
+}
+
+
+.BlockContent-body
+{
+  color:#020303;
+  font-family: Arial, Helvetica, Sans-Serif;
+  font-size: 12px;
+  margin-left: 5px;
+  margin-right: 5px;
+  line-height: 100%;
+}
+
+.BlockContent-body a:link
+{
+  color: #000000;
+  font-family: Arial, Helvetica, Sans-Serif;
+  text-decoration: underline;
+}
+
+.BlockContent-body a:visited, .BlockContent-body a.visited
+{
+  color: #919A8D;
+  font-family: Arial, Helvetica, Sans-Serif;
+  text-decoration: underline;
+}
+
+.BlockContent-body a:hover, .BlockContent-body a.hover
+{
+  color: #6F8DB3;
+  font-family: Arial, Helvetica, Sans-Serif;
+  text-decoration: none;
+}
+
+
+.BlockContent-body ul
+{
+  list-style-type: none;
+  color: #282B26;
+  margin:0;
+  padding:0;
+}
+
+.BlockContent-body li
+{
+  font-family: Arial, Helvetica, Sans-Serif;
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.BlockContent-body ul li
+{
+  padding:0px 0 0px 13px;
+  background-image: url('../img2/BlockContentBullets.png');
+  background-repeat:no-repeat;
+  margin:0.5em 0 0.5em 0;
+  line-height:1.2em;
+}
+
+/* clases para captuar codigo*/
+.clsTreePro{
+    
+}
+.clsRadio{
+
+}
+.clsMatriz{
+
+}
+.clsMatrizModificar{
+
+}
+.clsMatrizEliminar{
+
+}
+.clsMatrizDetalle{
+
+}

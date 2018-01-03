@@ -1,0 +1,27 @@
+/* 
+    Document   : upload
+    Created on : 15-abr-2012, 21:59:45
+    Author     : Wilfo
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+#status{
+	font-family:Arial; padding:5px;
+}
+.Uploadsuccess{ background-color:#99f099; border:1px solid #339933; }
+.Uploaderror{ background:#f0c6c3; border:1px solid #cc6622; }
+
+.Uploadfrontal{
+    max-width: 150px;
+    max-height: 150px;
+    width: 150px;
+    height: 150px;
+    background-color: pink;
+    border: 1px solid red;
+}

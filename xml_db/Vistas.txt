@@ -1,0 +1,85 @@
+CREATE
+    /*[ALGORITHM = {UNDEFINED | MERGE | TEMPTABLE}]
+    [DEFINER = { user | CURRENT_USER }]
+    [SQL SECURITY { DEFINER | INVOKER }]*/
+    VIEW `sys_fac`.`v_acceso_modulo` 
+    AS
+(
+SELECT
+    acceso_modulo.id_persona
+    , acceso_modulo.id_modulo
+    , modulo.id_padre
+    , persona.estado_persona
+    , modulo.nom_modulo
+    , modulo.img_modulo
+    , modulo.url_modulo
+FROM
+    sys_fac.acceso_modulo
+    INNER JOIN sys_fac.modulo 
+        ON (acceso_modulo.id_modulo = modulo.id_modulo)
+    INNER JOIN sys_fac.persona 
+        ON (acceso_modulo.id_persona = persona.id_persona)
+);
+
+//////////////
+CREATE
+    /*[ALGORITHM = {UNDEFINED | MERGE | TEMPTABLE}]
+    [DEFINER = { user | CURRENT_USER }]
+    [SQL SECURITY { DEFINER | INVOKER }]*/
+    VIEW `cafecodi_sysfac`.`v_producto` 
+    AS
+(
+
+SELECT
+    producto.id_producto
+    , producto.id_tiporeten
+    , tiporetencion.porcentaje_codRetAir
+    , producto.id_marca
+    , producto.id_unimedida
+    , producto.id_ganancia
+    , ganancia.porctj_ganancia
+    , producto.codbarra_producto
+    , producto.nom_producto
+    , producto.descrip_producto
+    , producto.costo_producto
+    , producto.pvp1_producto
+    , producto.stock_producto
+    , producto.stkmin_producto
+    , producto.stkmax_producto
+    , producto.img_producto
+    , producto.fecing_producto
+    , producto.fecvenci_producto
+    , producto.estado_producto
+FROM
+    cafecodi_sysfac.producto
+    INNER JOIN cafecodi_sysfac.tiporetencion 
+        ON (producto.id_tiporeten = tiporetencion.id_tiporeten)
+    INNER JOIN cafecodi_sysfac.unidad_medida 
+        ON (producto.id_unimedida = unidad_medida.id_unimedida)
+    INNER JOIN cafecodi_sysfac.marca_producto 
+        ON (producto.id_marca = marca_producto.id_marca)
+    INNER JOIN cafecodi_sysfac.ganancia 
+        ON (producto.id_ganancia = ganancia.id_ganancia)
+);
+
+
+////////////////
+
+CREATE
+    /*[ALGORITHM = {UNDEFINED | MERGE | TEMPTABLE}]
+    [DEFINER = { user | CURRENT_USER }]
+    [SQL SECURITY { DEFINER | INVOKER }]*/
+    VIEW `cafecodi_sysfac`.`v_producto_proveedor` 
+    AS
+(
+SELECT
+    producto_proveedor.id_proveedor
+    , producto_proveedor.id_producto
+    , persona.nom_persona
+    , persona.estado_persona
+FROM
+    cafecodi_sysfac.producto_proveedor
+    INNER JOIN cafecodi_sysfac.persona 
+        ON (producto_proveedor.id_proveedor = persona.id_persona)
+
+);

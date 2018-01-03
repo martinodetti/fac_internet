@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="latin1" collation="latin1_swedish_ci">sys_fac</database>
+</source>
+<canvas zoom="100">
+<tables>
+<table name="factura" view="colnames">
+<left>210</left>
+<top>20</top>
+<width>151</width>
+<height>226</height>
+<sql_create_table>CREATE TABLE `factura` (
+  `id_fact` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id_empresa` bigint(20) DEFAULT NULL,
+  `id_cliente` bigint(20) DEFAULT NULL,
+  `id_vendedor` bigint(20) DEFAULT NULL,
+  `descto_fact` double(10,2) DEFAULT NULL,
+  `obs_fact` text,
+  `fecemi_fact` date DEFAULT NULL,
+  `estado_fact` varchar(2) DEFAULT NULL,
+  PRIMARY KEY (`id_fact`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="detalle_factura" view="colnames">
+<left>432</left>
+<top>18</top>
+<width>161</width>
+<height>160</height>
+<sql_create_table>CREATE TABLE `detalle_factura` (
+  `id_detfact` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id_fact` bigint(20) DEFAULT NULL,
+  `id_producto` bigint(20) DEFAULT NULL,
+  `canti_detfact` double(10,2) DEFAULT NULL,
+  `precio_detfact` double(10,2) DEFAULT NULL,
+  `estado_detfact` varchar(2) DEFAULT NULL,
+  UNIQUE KEY `id_detfact` (`id_detfact`),
+  KEY `FK_detalle_factura` (`id_fact`),
+  CONSTRAINT `FK_detalle_factura` FOREIGN KEY (`id_fact`) REFERENCES `factura` (`id_fact`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>

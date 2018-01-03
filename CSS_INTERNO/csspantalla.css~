@@ -1,0 +1,85 @@
+/* 
+    Document   : csspantalla
+    Created on : 15/07/2011, 01:39:39 PM
+    Author     : Usuario
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+.menu{
+    list-style: none;
+    
+}
+.selected{
+    background-color: #EFF8FF;
+  
+    z-index:1;
+    position:absolute;
+    height:100px;
+    width: 95px;
+    border-radius:5px;
+    border: 1px solid #5DA9D1;
+    display:none;
+    text-align: center;
+    border:1px solid #5DA9D1;
+}
+/*
+.selected label{
+    font-weight: bold;
+    font-family: Arial;
+    font-size: 11px;
+/*    color:#4C43F9;
+color: #000;
+    position:relative;
+    top:100px;
+
+}
+*/
+
+.etiqueta{
+/*    background-color: #EFF8FF; */
+  
+    z-index:1;
+    position:absolute;
+    height:100px;
+    width: 95px;
+    border-radius:5px;
+/*    border: 1px solid #5DA9D1; */
+    display:block;
+    text-align: center;
+/*    border:1px solid #5DA9D1; */
+}
+.etiqueta label{
+    font-weight: bold;
+    font-family: Arial;
+    font-size: 11px;
+/*    color:#4C43F9;*/
+	color: #000;
+    position:relative;
+    top:100px;
+
+}
+
+
+.menu li{
+    /* position:relative; */
+    float:left;
+    height:130px;
+    width:100px;
+    cursor: pointer;
+    border-radius:5px;
+}
+.menu li img{
+    position:absolute;
+    z-index:10;
+}
+.container{
+    background-color: white;
+    margin:0 auto;
+    width: 960px;
+}

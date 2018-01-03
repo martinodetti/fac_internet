@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="latin1" collation="latin1_swedish_ci">sys_fac</database>
+</source>
+<canvas zoom="100">
+<tables>
+<table name="compra" view="colnames">
+<left>170</left>
+<top>33</top>
+<width>158</width>
+<height>192</height>
+<sql_create_table>CREATE TABLE `compra` (
+  `id_compra` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id_provd` bigint(20) DEFAULT NULL,
+  `total_compra` double(10,2) DEFAULT NULL,
+  `obs_compra` text,
+  `baseGrava_compra` double(10,2) DEFAULT NULL,
+  `fec_compra` date DEFAULT NULL,
+  `estado_compra` varchar(2) DEFAULT NULL,
+  PRIMARY KEY (`id_compra`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="detalle_compra" view="colnames">
+<left>396</left>
+<top>35</top>
+<width>161</width>
+<height>175</height>
+<sql_create_table>CREATE TABLE `detalle_compra` (
+  `id_detcompra` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id_compra` bigint(20) DEFAULT NULL,
+  `id_producto` bigint(20) DEFAULT NULL,
+  `costouni_detcompra` double(10,2) DEFAULT NULL,
+  `canti_detcompra` int(11) DEFAULT NULL,
+  `estado_detcompra` varchar(2) DEFAULT NULL,
+  PRIMARY KEY (`id_detcompra`),
+  KEY `FK_detalle_compra` (`id_compra`),
+  CONSTRAINT `FK_detalle_compra` FOREIGN KEY (`id_compra`) REFERENCES `compra` (`id_compra`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="kardex" view="colnames">
+<left>592</left>
+<top>35</top>
+<width>185</width>
+<height>190</height>
+<sql_create_table>CREATE TABLE `kardex` (
+  `id_kardex` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id_factcmp_kardex` bigint(20) DEFAULT NULL,
+  `tipo_entrdsald_kardex` varchar(2) DEFAULT NULL,
+  `tipo_cmpbt_kardex` varchar(2) DEFAULT NULL,
+  `cod_factcmp_kardex` varchar(100) DEFAULT NULL,
+  `fecha_kardex` date DEFAULT NULL,
+  `estado_kardex` varchar(2) DEFAULT NULL,
+  PRIMARY KEY (`id_kardex`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>

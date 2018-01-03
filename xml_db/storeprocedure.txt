@@ -1,0 +1,870 @@
+DELIMITER $$
+
+CREATE
+    /*[DEFINER = { user | CURRENT_USER }]*/
+    PROCEDURE `cafecodi_sysfac`.`sp_acceso_moduloinsert`(IN tid_persona BIGINT(20),tid_modulo BIGINT(20))
+    /*LANGUAGE SQL
+    | [NOT] DETERMINISTIC
+    | { CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA }
+    | SQL SECURITY { DEFINER | INVOKER }
+    | COMMENT 'string'*/
+    BEGIN
+INSERT INTO sys_fac.acceso_modulo(
+id_persona,
+id_modulo)VALUES(
+tid_persona,
+tid_modulo);
+SELECT LAST_INSERT_ID();
+    END$$
+
+DELIMITER ;
+
+////////////777
+DELIMITER $$
+
+CREATE
+    /*[DEFINER = { user | CURRENT_USER }]*/
+    PROCEDURE `cafecodi_sysfac`.`sp_acceso_moduloupdate`(IN tid_acsmod BIGINT(20),tid_persona BIGINT(20),tid_modulo BIGINT(20))
+    /*LANGUAGE SQL
+    | [NOT] DETERMINISTIC
+    | { CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA }
+    | SQL SECURITY { DEFINER | INVOKER }
+    | COMMENT 'string'*/
+    BEGIN
+UPDATE acceso_modulo SET 
+id_persona=tid_persona,
+id_modulo=tid_modulo
+WHERE id_acsmod=tid_acsmod;
+    END$$
+
+DELIMITER ;
+
+/////////
+DELIMITER $$
+
+CREATE
+    /*[DEFINER = { user | CURRENT_USER }]*/
+    PROCEDURE `cafecodi_sysfac`.`sp_comprainsert`(IN tid_provd BIGINT(20),tguiacod_compra VARCHAR(20),
+ttotal_compra DOUBLE(10,2),tobs_compra VARCHAR(200),tbaseGrava_compra DOUBLE(10,2),tfec_compra VARCHAR(20),testado_compra VARCHAR(2))
+    /*LANGUAGE SQL
+    | [NOT] DETERMINISTIC
+    | { CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA }
+    | SQL SECURITY { DEFINER | INVOKER }
+    | COMMENT 'string'*/
+    BEGIN
+
+INSERT INTO cafecodi_sysfac.compra(
+id_provd,
+guiacod_compra,
+total_compra,
+obs_compra,
+baseGrava_compra,
+fec_compra,
+estado_compra)VALUES(
+tid_provd,
+tguiacod_compra,
+ttotal_compra,
+tobs_compra,
+tbaseGrava_compra,
+tfec_compra,
+testado_compra);
+SELECT LAST_INSERT_ID();
+
+    END$$
+
+DELIMITER ;
+
+///////////////7
+
+DELIMITER $$
+
+CREATE
+    /*[DEFINER = { user | CURRENT_USER }]*/
+    PROCEDURE `cafecodi_sysfac`.`sp_compraupdate`(IN tid_compra BIGINT(20),tid_provd BIGINT(20),tguiacod_compra VARCHAR(20),
+    ttotal_compra DOUBLE(10,2),tobs_compra VARCHAR(200),tbaseGrava_compra DOUBLE(10,2),tfec_compra VARCHAR(20),testado_compra VARCHAR(2))
+    /*LANGUAGE SQL
+    | [NOT] DETERMINISTIC
+    | { CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA }
+    | SQL SECURITY { DEFINER | INVOKER }
+    | COMMENT 'string'*/
+    BEGIN
+UPDATE compra SET 
+id_provd=tid_provd,
+guiacod_compra=tguiacod_compra,
+total_compra=ttotal_compra,
+obs_compra=tobs_compra,
+baseGrava_compra=tbaseGrava_compra,
+fec_compra=tfec_compra
+WHERE id_compra=tid_compra;
+
+
+    END$$
+
+DELIMITER ;
+
+///////////////
+
+DELIMITER $$
+
+CREATE
+    /*[DEFINER = { user | CURRENT_USER }]*/
+    PROCEDURE `cafecodi_sysfac`.`sp_detalle_comprainsert`(IN tid_compra BIGINT(20),tid_producto BIGINT(20),tcostouni_detcompra DOUBLE(10,2),tcanti_detcompra INT(11),testado_detcompra VARCHAR(2))
+    /*LANGUAGE SQL
+    | [NOT] DETERMINISTIC
+    | { CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA }
+    | SQL SECURITY { DEFINER | INVOKER }
+    | COMMENT 'string'*/
+    BEGIN
+DECLARE tmp_canti INT;   
+DECLARE tmp_costo DOUBLE(10,2);     
+DECLARE tmp_resultado DOUBLE(10,2);  
+DECLARE tmp_ganancia DOUBLE(10,2);  
+    
+SET tmp_canti=(SELECT stock_producto FROM producto WHERE id_producto=tid_producto);
+SET tmp_costo=(SELECT costo_producto FROM producto WHERE id_producto=tid_producto);   
+SET tmp_ganancia=(SELECT porctj_ganancia FROM v_producto WHERE id_producto=tid_producto);
+SET tmp_costo=(tmp_costo*tmp_canti+tcostouni_detcompra*tcanti_detcompra);
+SET tmp_canti=(tmp_canti+tcanti_detcompra);
+SET tmp_resultado=(tmp_costo/tmp_canti);
+SET tmp_ganancia=(tmp_resultado+(tmp_ganancia*tmp_resultado)/100);
+UPDATE producto  SET stock_producto=stock_producto+tcanti_detcompra, costo_producto=tmp_resultado, pvp1_producto=tmp_ganancia WHERE id_producto=tid_producto;
+   
+INSERT INTO cafecodi_sysfac.detalle_compra(
+id_compra,
+id_producto,
+costouni_detcompra,
+canti_detcompra,
+estado_detcompra)VALUES(
+tid_compra,
+tid_producto,
+tcostouni_detcompra,
+tcanti_detcompra,
+testado_detcompra);
+SELECT LAST_INSERT_ID(); 
+
+    END$$
+
+DELIMITER ;
+
+////////////////////7
+
+DELIMITER $$
+
+CREATE
+    /*[DEFINER = { user | CURRENT_USER }]*/
+    PROCEDURE `cafecodi_sysfac`.`sp_detalle_compraupdate`(IN tid_detcompra BIGINT(20),tid_compra BIGINT(20),tid_producto BIGINT(20),tcostouni_detcompra DOUBLE(10,2),tcanti_detcompra INT(11),testado_detcompra VARCHAR(2))
+    /*LANGUAGE SQL
+    | [NOT] DETERMINISTIC
+    | { CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA }
+    | SQL SECURITY { DEFINER | INVOKER }
+    | COMMENT 'string'*/
+    BEGIN
+UPDATE detalle_compra SET 
+id_compra=tid_compra,
+id_producto=tid_producto,
+costouni_detcompra=tcostouni_detcompra,
+canti_detcompra=tcanti_detcompra,
+estado_detcompra=testado_detcompra
+WHERE id_detcompra=tid_detcompra;
+    END$$
+
+DELIMITER ;
+
+//////////////////////
+
+DELIMITER $$
+
+CREATE
+    /*[DEFINER = { user | CURRENT_USER }]*/
+    PROCEDURE `cafecodi_sysfac`.`sp_detalle_devolucioninsert`(IN tid_devo BIGINT(20),tid_producto BIGINT(20),
+    tcanti_detdevo INT(11),tprecio_detdevo DOUBLE(10,2),testado_detdevo VARCHAR(2))
+    /*LANGUAGE SQL
+    | [NOT] DETERMINISTIC
+    | { CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA }
+    | SQL SECURITY { DEFINER | INVOKER }
+    | COMMENT 'string'*/
+    BEGIN
+UPDATE producto  SET stock_producto=stock_producto+tcanti_detdevo WHERE id_producto=tid_producto;
+INSERT INTO cafecodi_sysfac.detalle_devolucion(
+id_devo,
+id_producto,
+canti_detdevo,
+precio_detdevo,
+estado_detdevo)VALUES(
+tid_devo,
+tid_producto,
+tcanti_detdevo,
+tprecio_detdevo,
+testado_detdevo);
+SELECT LAST_INSERT_ID();
+    END$$
+
+DELIMITER ;
+
+/////////////////////////////////7
+DELIMITER $$
+
+CREATE
+    /*[DEFINER = { user | CURRENT_USER }]*/
+    PROCEDURE `cafecodi_sysfac`.`sp_detalle_devolucioninsert2`(IN tid_devo BIGINT(20),tid_producto BIGINT(20),
+    tcanti_detdevo INT(11),tprecio_detdevo DOUBLE(10,2),testado_detdevo VARCHAR(2))
+    /*LANGUAGE SQL
+    | [NOT] DETERMINISTIC
+    | { CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA }
+    | SQL SECURITY { DEFINER | INVOKER }
+    | COMMENT 'string'*/
+    BEGIN
+UPDATE producto  SET stock_producto=stock_producto-tcanti_detdevo WHERE id_producto=tid_producto;
+INSERT INTO cafecodi_sysfac.detalle_devolucion(
+id_devo,
+id_producto,
+canti_detdevo,
+precio_detdevo,
+estado_detdevo)VALUES(
+tid_devo,
+tid_producto,
+tcanti_detdevo,
+tprecio_detdevo,
+testado_detdevo);
+SELECT LAST_INSERT_ID();
+    END$$
+
+DELIMITER ;
+
+///////////////
+DELIMITER $$
+
+CREATE
+    /*[DEFINER = { user | CURRENT_USER }]*/
+    PROCEDURE `cafecodi_sysfac`.`sp_detalle_facturainsert`(IN tid_fact BIGINT(20),tid_producto BIGINT(20),
+    tcanti_detfact DOUBLE(10,2),tprecio_detfact DOUBLE(10,2),testado_detfact VARCHAR(2))
+    /*LANGUAGE SQL
+    | [NOT] DETERMINISTIC
+    | { CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA }
+    | SQL SECURITY { DEFINER | INVOKER }
+    | COMMENT 'string'*/
+    BEGIN
+UPDATE producto  SET stock_producto=stock_producto-tcanti_detfact 
+WHERE id_producto=tid_producto;
+INSERT INTO cafecodi_sysfac.detalle_factura(
+id_fact,
+id_producto,
+canti_detfact,
+precio_detfact,
+estado_detfact)VALUES(
+tid_fact,
+tid_producto,
+tcanti_detfact,
+tprecio_detfact,
+testado_detfact);
+SELECT LAST_INSERT_ID();
+    END$$
+
+DELIMITER ;
+///////////
+DELIMITER $$
+
+CREATE
+    /*[DEFINER = { user | CURRENT_USER }]*/
+    PROCEDURE `cafecodi_sysfac`.`sp_detalle_kardexinsert`(IN tid_kardex BIGINT(20),tid_producto BIGINT(20),tcosto_detkardex DOUBLE(10,2),tcanti_detkardex INT(11))
+    /*LANGUAGE SQL
+    | [NOT] DETERMINISTIC
+    | { CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA }
+    | SQL SECURITY { DEFINER | INVOKER }
+    | COMMENT 'string'*/
+    BEGIN
+INSERT INTO sys_fac.detalle_kardex(
+id_kardex,
+id_producto,
+costo_detkardex,
+canti_detkardex)VALUES(
+tid_kardex,
+tid_producto,
+tcosto_detkardex,
+tcanti_detkardex);
+SELECT LAST_INSERT_ID();
+    END$$
+
+DELIMITER ;
+
+//////////////////7
+DELIMITER $$
+
+CREATE
+    /*[DEFINER = { user | CURRENT_USER }]*/
+    PROCEDURE `cafecodi_sysfac`.`sp_devolucioninsert`(IN tid_factcmp_devo BIGINT(20),ttipo_cmpbt_devo INT(11),tdescto_devo DOUBLE(10,2),
+    tiva12_devo DOUBLE(10,2),ttotal_devo DOUBLE(10,2),tobs_devo VARCHAR(200),tfecha_devo VARCHAR(20),testado_devo VARCHAR(2))
+    /*LANGUAGE SQL
+    | [NOT] DETERMINISTIC
+    | { CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA }
+    | SQL SECURITY { DEFINER | INVOKER }
+    | COMMENT 'string'*/
+    BEGIN
+INSERT INTO cafecodi_sysfac.devolucion(
+id_factcmp_devo,
+tipo_cmpbt_devo,
+descto_devo,
+iva12_devo,
+total_devo,
+obs_devo,
+fecha_devo,
+estado_devo)VALUES(
+tid_factcmp_devo,
+ttipo_cmpbt_devo,
+tdescto_devo,
+tiva12_devo,
+ttotal_devo,
+tobs_devo,
+DATE(NOW()),
+testado_devo);
+SELECT LAST_INSERT_ID();
+    END$$
+
+DELIMITER ;
+////////////////////////
+DELIMITER $$
+
+CREATE
+    /*[DEFINER = { user | CURRENT_USER }]*/
+    PROCEDURE `cafecodi_sysfac`.`sp_empresaupdate`(IN tid_empresa BIGINT(20),tid_contador BIGINT(20),tid_representante BIGINT(20),
+    tid_ciudad BIGINT(20),trazsocial_empresa VARCHAR(100),truc_empresa VARCHAR(15)
+    ,tdirec_empresa VARCHAR(200),ttelf_empresa VARCHAR(12),tcel_empresa VARCHAR(10),tweb_empresa VARCHAR(50)
+    ,tcorreo_empresa VARCHAR(50),tfecha_empresa VARCHAR(20))
+    /*LANGUAGE SQL
+    | [NOT] DETERMINISTIC
+    | { CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA }
+    | SQL SECURITY { DEFINER | INVOKER }
+    | COMMENT 'string'*/
+    BEGIN
+UPDATE empresa SET 
+id_contador=tid_contador,
+id_representante=tid_representante,
+id_ciudad=tid_ciudad,
+razsocial_empresa=trazsocial_empresa,
+ruc_empresa=truc_empresa,
+direc_empresa=tdirec_empresa,
+telf_empresa=ttelf_empresa,
+cel_empresa=tcel_empresa,
+web_empresa=tweb_empresa,
+correo_empresa=tcorreo_empresa
+WHERE id_empresa=tid_empresa;
+    END$$
+
+DELIMITER ;
+
+//////////////////////7777
+
+
+DELIMITER $$
+
+CREATE
+    /*[DEFINER = { user | CURRENT_USER }]*/
+    PROCEDURE `cafecodi_sysfac`.`sp_facturainsert`(IN tid_empresa BIGINT(20),tid_cliente BIGINT(20),
+tid_vendedor BIGINT(20),tdescto_fact DOUBLE(10,2),tobs_fact VARCHAR(200),tiva12_fact DOUBLE(10,2),ttotal_fact DOUBLE(10,2)
+,tfecemi_fact VARCHAR(20),testado_fact VARCHAR(2))
+    /*LANGUAGE SQL
+    | [NOT] DETERMINISTIC
+    | { CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA }
+    | SQL SECURITY { DEFINER | INVOKER }
+    | COMMENT 'string'*/
+    BEGIN
+INSERT INTO cafecodi_sysfac.factura(
+id_empresa,
+id_cliente,
+id_vendedor,
+descto_fact,
+obs_fact,
+iva12_fact,
+total_fact,
+fecemi_fact,
+estado_fact)VALUES(
+tid_empresa,
+tid_cliente,
+tid_vendedor,
+tdescto_fact,
+tobs_fact,
+tiva12_fact,
+ttotal_fact,
+DATE(NOW()),
+testado_fact);
+SELECT LAST_INSERT_ID();
+    END$$
+
+DELIMITER ;
+
+//////////////////////////
+DELIMITER $$
+
+CREATE
+    /*[DEFINER = { user | CURRENT_USER }]*/
+    PROCEDURE `cafecodi_sysfac`.`sp_facturaupdate`(IN tid_fact BIGINT(20),tid_empresa BIGINT(20),tid_cliente BIGINT(20),tid_vendedor BIGINT(20),tdescto_fact DOUBLE(10,2),tobs_fact VARCHAR(200),tfecemi_fact VARCHAR(20),testado_fact VARCHAR(2))
+    /*LANGUAGE SQL
+    | [NOT] DETERMINISTIC
+    | { CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA }
+    | SQL SECURITY { DEFINER | INVOKER }
+    | COMMENT 'string'*/
+    BEGIN
+UPDATE factura SET 
+id_empresa=tid_empresa,
+id_cliente=tid_cliente,
+id_vendedor=tid_vendedor,
+descto_fact=tdescto_fact,
+obs_fact=tobs_fact,
+fecemi_fact=tfecemi_fact,
+estado_fact=testado_fact
+WHERE id_fact=tid_fact;
+    END$$
+
+DELIMITER ;
+
+/////////////77
+DELIMITER $$
+
+CREATE
+    /*[DEFINER = { user | CURRENT_USER }]*/
+    PROCEDURE `cafecodi_sysfac`.`sp_gananciainsert`(IN tporctj_ganancia DOUBLE(10,2),tdescrip_ganancia VARCHAR(100))
+     /*LANGUAGE SQL
+    | [NOT] DETERMINISTIC
+    | { CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA }
+    | SQL SECURITY { DEFINER | INVOKER }
+    | COMMENT 'string'*/
+    BEGIN
+INSERT INTO cafecodi_sysfac.ganancia(
+porctj_ganancia,
+descrip_ganancia)VALUES(
+tporctj_ganancia,
+tdescrip_ganancia);
+SELECT LAST_INSERT_ID();
+    END$$
+
+DELIMITER ;
+///////////
+DELIMITER $$
+
+CREATE
+    /*[DEFINER = { user | CURRENT_USER }]*/
+    PROCEDURE `cafecodi_sysfac`.`sp_gananciaupdate`(IN tid_ganancia BIGINT(20),tporctj_ganancia DOUBLE(10,2),tdescrip_ganancia VARCHAR(100))
+     /*LANGUAGE SQL
+    | [NOT] DETERMINISTIC
+    | { CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA }
+    | SQL SECURITY { DEFINER | INVOKER }
+    | COMMENT 'string'*/
+    BEGIN
+UPDATE ganancia SET 
+porctj_ganancia=tporctj_ganancia,
+descrip_ganancia=tdescrip_ganancia
+WHERE id_ganancia=tid_ganancia;
+    END$$
+
+DELIMITER ;
+////////////////
+DELIMITER $$
+
+CREATE
+    /*[DEFINER = { user | CURRENT_USER }]*/
+    PROCEDURE `cafecodi_sysfac`.`sp_kardexinsert`(IN tid_factcmp_kardex BIGINT(20),ttipo_entrdsald_kardex VARCHAR(2),
+    ttipo_cmpbt_kardex VARCHAR(2),tcod_factcmp_kardex VARCHAR(100),tfecha_kardex VARCHAR(20),testado_kardex VARCHAR(2))
+     /*LANGUAGE SQL
+    | [NOT] DETERMINISTIC
+    | { CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA }
+    | SQL SECURITY { DEFINER | INVOKER }
+    | COMMENT 'string'*/
+    BEGIN
+INSERT INTO cafecodi_sysfac.kardex(
+id_factcmp_kardex,
+tipo_entrdsald_kardex,
+tipo_cmpbt_kardex,
+cod_factcmp_kardex,
+fecha_kardex,
+estado_kardex)VALUES(
+tid_factcmp_kardex,
+ttipo_entrdsald_kardex,
+ttipo_cmpbt_kardex,
+tcod_factcmp_kardex,
+DATE(NOW()),
+testado_kardex);
+SELECT LAST_INSERT_ID();
+    END$$
+
+DELIMITER ;
+
+////////////////////
+
+
+DELIMITER $$
+
+CREATE
+    /*[DEFINER = { user | CURRENT_USER }]*/
+    PROCEDURE `cafecodi_sysfac`.`sp_kardexupdate`(IN tid_kardex BIGINT(20),tid_factcmp_kardex BIGINT(20),ttipo_entrdsald_kardex VARCHAR(2),ttipo_cmpbt_kardex VARCHAR(2),tcod_factcmp_kardex VARCHAR(100),tfecha_kardex VARCHAR(20),testado_kardex VARCHAR(2))
+     /*LANGUAGE SQL
+    | [NOT] DETERMINISTIC
+    | { CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA }
+    | SQL SECURITY { DEFINER | INVOKER }
+    | COMMENT 'string'*/
+    BEGIN
+UPDATE kardex SET 
+cod_factcmp_kardex=tcod_factcmp_kardex
+WHERE id_kardex=tid_kardex;
+    END$$
+
+DELIMITER ;
+
+//////////////////////////
+DELIMITER $$
+
+CREATE
+    /*[DEFINER = { user | CURRENT_USER }]*/
+    PROCEDURE `cafecodi_sysfac`.`sp_marca_productoinsert`(IN tnom_marca VARCHAR(49))
+     /*LANGUAGE SQL
+    | [NOT] DETERMINISTIC
+    | { CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA }
+    | SQL SECURITY { DEFINER | INVOKER }
+    | COMMENT 'string'*/
+    BEGIN
+INSERT INTO cafecodi_sysfac.marca_producto(
+nom_marca)VALUES(
+tnom_marca);
+SELECT LAST_INSERT_ID();
+    END$$
+
+DELIMITER ;
+
+////////////////////////////
+
+DELIMITER $$
+
+CREATE
+    /*[DEFINER = { user | CURRENT_USER }]*/
+    PROCEDURE `cafecodi_sysfac`.`sp_marca_productoupdate`(IN tid_marca BIGINT(20),tnom_marca VARCHAR(50))
+     /*LANGUAGE SQL
+    | [NOT] DETERMINISTIC
+    | { CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA }
+    | SQL SECURITY { DEFINER | INVOKER }
+    | COMMENT 'string'*/
+    BEGIN
+UPDATE marca_producto SET 
+nom_marca=tnom_marca
+WHERE id_marca=tid_marca;
+    END$$
+
+DELIMITER ;
+//////////////////////
+DELIMITER $$
+
+CREATE
+    /*[DEFINER = { user | CURRENT_USER }]*/
+    PROCEDURE `cafecodi_sysfac`.`sp_personainsert`(IN tid_tipoper BIGINT(20),tid_ciudad BIGINT(20),tid_sexo BIGINT(20),
+tid_civil BIGINT(20),tnom_persona VARCHAR(50),tape_persona VARCHAR(50),truc_persona VARCHAR(20),
+tdirec_persona VARCHAR(200),ttelf_persona VARCHAR(10),tcel_persona VARCHAR(10),temail_persona VARCHAR(40),
+tweb_persona VARCHAR(40),tobs_persona VARCHAR(200),tfec_persona VARCHAR(20),testado_persona VARCHAR(2),tclave_persona VARCHAR(12))
+     /*LANGUAGE SQL
+    | [NOT] DETERMINISTIC
+    | { CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA }
+    | SQL SECURITY { DEFINER | INVOKER }
+    | COMMENT 'string'*/
+    BEGIN
+INSERT INTO cafecodi_sysfac.persona(
+id_tipoper,
+id_ciudad,
+id_sexo,
+id_civil,
+nom_persona,
+ape_persona,
+ruc_persona,
+direc_persona,
+telf_persona,
+cel_persona,
+email_persona,
+web_persona,
+obs_persona,
+fec_persona,
+estado_persona,
+clave_persona)VALUES(
+tid_tipoper,
+tid_ciudad,
+tid_sexo,
+tid_civil,
+tnom_persona,
+tape_persona,
+truc_persona,
+tdirec_persona,
+ttelf_persona,
+tcel_persona,
+temail_persona,
+tweb_persona,
+tobs_persona,
+DATE(NOW()),
+testado_persona,
+tclave_persona);
+SELECT LAST_INSERT_ID();
+    END$$
+
+DELIMITER ;
+
+////////////////
+
+DELIMITER $$
+
+CREATE
+    /*[DEFINER = { user | CURRENT_USER }]*/
+    PROCEDURE `cafecodi_sysfac`.`sp_personaupdate`(IN tid_persona BIGINT(20),tid_tipoper BIGINT(20),tid_ciudad BIGINT(20),
+tid_sexo BIGINT(20),tid_civil BIGINT(20),tnom_persona VARCHAR(50),tape_persona VARCHAR(50),truc_persona VARCHAR(20),
+tdirec_persona VARCHAR(200),ttelf_persona VARCHAR(10),tcel_persona VARCHAR(10),temail_persona VARCHAR(40),tweb_persona VARCHAR(40),
+tobs_persona VARCHAR(200),tfec_persona VARCHAR(20),testado_persona VARCHAR(2),tclave_persona VARCHAR(12))
+     /*LANGUAGE SQL
+    | [NOT] DETERMINISTIC
+    | { CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA }
+    | SQL SECURITY { DEFINER | INVOKER }
+    | COMMENT 'string'*/
+    BEGIN
+UPDATE persona SET 
+id_tipoper=tid_tipoper,
+id_ciudad=tid_ciudad,
+id_sexo=tid_sexo,
+id_civil=tid_civil,
+nom_persona=tnom_persona,
+ape_persona=tape_persona,
+ruc_persona=truc_persona,
+direc_persona=tdirec_persona,
+telf_persona=ttelf_persona,
+cel_persona=tcel_persona,
+email_persona=temail_persona,
+web_persona=tweb_persona,
+obs_persona=tobs_persona,
+clave_persona=tclave_persona
+WHERE id_persona=tid_persona;
+    END$$
+
+DELIMITER ;
+
+//////////////
+DELIMITER $$
+
+CREATE
+    /*[DEFINER = { user | CURRENT_USER }]*/
+    PROCEDURE `cafecodi_sysfac`.`sp_productoinsert`(IN tid_tiporeten BIGINT(20),tid_marca BIGINT(20),tid_unimedida BIGINT(20),
+tid_ganancia BIGINT(20),tcodbarra_producto VARCHAR(100),tnom_producto VARCHAR(100),
+tdescrip_producto VARCHAR(200),tcosto_producto DOUBLE(10,2),tpvp1_producto DOUBLE(10,2),
+tstock_producto INT(11),tstkmin_producto INT(11),tstkmax_producto INT(11),timg_producto VARCHAR(100),tfecing_producto VARCHAR(20),
+tfecvenci_producto VARCHAR(20),testado_producto VARCHAR(2))
+     /*LANGUAGE SQL
+    | [NOT] DETERMINISTIC
+    | { CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA }
+    | SQL SECURITY { DEFINER | INVOKER }
+    | COMMENT 'string'*/
+    BEGIN
+INSERT INTO cafecodi_sysfac.producto(
+id_tiporeten,
+id_marca,
+id_unimedida,
+id_ganancia,
+codbarra_producto,
+nom_producto,
+descrip_producto,
+costo_producto,
+pvp1_producto,
+stock_producto,
+stkmin_producto,
+stkmax_producto,
+img_producto,
+fecing_producto,
+fecvenci_producto,
+estado_producto)VALUES(
+tid_tiporeten,
+tid_marca,
+tid_unimedida,
+tid_ganancia,
+tcodbarra_producto,
+tnom_producto,
+tdescrip_producto,
+tcosto_producto,
+tpvp1_producto,
+tstock_producto,
+tstkmin_producto,
+tstkmax_producto,
+timg_producto,
+tfecing_producto,
+tfecvenci_producto,
+testado_producto);
+SELECT LAST_INSERT_ID();
+    END$$
+
+DELIMITER ;
+
+/////////////
+
+DELIMITER $$
+
+CREATE
+    /*[DEFINER = { user | CURRENT_USER }]*/
+    PROCEDURE `cafecodi_sysfac`.`sp_productoupdate`(IN tid_producto BIGINT(20),tid_tiporeten BIGINT(20),
+tid_marca BIGINT(20),tid_unimedida BIGINT(20),tid_ganancia BIGINT(20),tcodbarra_producto VARCHAR(100),
+tnom_producto VARCHAR(100),tdescrip_producto VARCHAR(200),tcosto_producto DOUBLE(10,2),tpvp1_producto DOUBLE(10,2),
+tstock_producto INT(11),tstkmin_producto INT(11),tstkmax_producto INT(11),timg_producto VARCHAR(100),
+tfecing_producto VARCHAR(20),tfecvenci_producto VARCHAR(20),testado_producto VARCHAR(2))
+     /*LANGUAGE SQL
+    | [NOT] DETERMINISTIC
+    | { CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA }
+    | SQL SECURITY { DEFINER | INVOKER }
+    | COMMENT 'string'*/
+    BEGIN
+UPDATE producto SET 
+id_tiporeten=tid_tiporeten,
+id_marca=tid_marca,
+id_unimedida=tid_unimedida,
+id_ganancia=tid_ganancia,
+codbarra_producto=tcodbarra_producto,
+nom_producto=tnom_producto,
+descrip_producto=tdescrip_producto,
+costo_producto=tcosto_producto,
+pvp1_producto=tpvp1_producto,
+stkmin_producto=tstkmin_producto,
+stkmax_producto=tstkmax_producto,
+img_producto=timg_producto,
+fecing_producto=tfecing_producto,
+fecvenci_producto=tfecvenci_producto
+WHERE id_producto=tid_producto;
+    END$$
+
+DELIMITER ;
+
+////////////////////
+
+CREATE
+    /*[DEFINER = { user | CURRENT_USER }]*/
+    PROCEDURE `cafecodi_sysfac`.`sp_producto_proveedorinsert`(IN tid_producto BIGINT(20),tid_proveedor BIGINT(20))
+     /*LANGUAGE SQL
+    | [NOT] DETERMINISTIC
+    | { CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA }
+    | SQL SECURITY { DEFINER | INVOKER }
+    | COMMENT 'string'*/
+    BEGIN
+INSERT INTO cafecodi_sysfac.producto_proveedor(
+id_producto,
+id_proveedor)VALUES(
+tid_producto,
+tid_proveedor);
+SELECT LAST_INSERT_ID();
+
+    END$$
+
+DELIMITER ;
+/////////////////
+DELIMITER $$
+
+CREATE
+    /*[DEFINER = { user | CURRENT_USER }]*/
+    PROCEDURE `cafecodi_sysfac`.`sp_producto_proveedorupdate`(IN tid_prod_provd BIGINT(20),tid_producto BIGINT(20),
+tid_proveedor BIGINT(20))
+     /*LANGUAGE SQL
+    | [NOT] DETERMINISTIC
+    | { CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA }
+    | SQL SECURITY { DEFINER | INVOKER }
+    | COMMENT 'string'*/
+    BEGIN
+UPDATE producto_proveedor SET 
+id_producto=tid_producto,
+id_proveedor=tid_proveedor
+WHERE id_prod_provd=tid_prod_provd;
+
+    END$$
+
+DELIMITER ;
+
+////////////////
+DELIMITER $$
+
+CREATE
+    /*[DEFINER = { user | CURRENT_USER }]*/
+    PROCEDURE `cafecodi_sysfac`.`sp_tiporetencioninsert`(IN tcod_codRetAir VARCHAR(6),tnom_codRetAir TEXT,tporcentaje_codRetAir DOUBLE(10,2))
+
+     /*LANGUAGE SQL
+    | [NOT] DETERMINISTIC
+    | { CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA }
+    | SQL SECURITY { DEFINER | INVOKER }
+    | COMMENT 'string'*/
+    BEGIN
+INSERT INTO cafecodi_sysfac.tiporetencion(
+cod_codRetAir,
+nom_codRetAir,
+porcentaje_codRetAir)VALUES(
+tcod_codRetAir,
+tnom_codRetAir,
+tporcentaje_codRetAir);
+SELECT LAST_INSERT_ID();
+
+    END$$
+
+DELIMITER ;
+
+/////////////////
+
+
+DELIMITER $$
+
+CREATE
+    /*[DEFINER = { user | CURRENT_USER }]*/
+    PROCEDURE `cafecodi_sysfac`.`sp_tiporetencionupdate`(IN tid_tiporeten BIGINT(20),tcod_codRetAir VARCHAR(6),tnom_codRetAir TEXT,tporcentaje_codRetAir DOUBLE(10,2))
+
+     /*LANGUAGE SQL
+    | [NOT] DETERMINISTIC
+    | { CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA }
+    | SQL SECURITY { DEFINER | INVOKER }
+    | COMMENT 'string'*/
+    BEGIN
+UPDATE tiporetencion SET 
+cod_codRetAir=tcod_codRetAir,
+nom_codRetAir=tnom_codRetAir,
+porcentaje_codRetAir=tporcentaje_codRetAir
+WHERE id_tiporeten=tid_tiporeten;
+
+    END$$
+
+DELIMITER ;
+
+////////////////
+CREATE
+    /*[DEFINER = { user | CURRENT_USER }]*/
+    PROCEDURE `cafecodi_sysfac`.`sp_unidad_medidainsert`(IN tnom_unimedida VARCHAR(50))
+
+     /*LANGUAGE SQL
+    | [NOT] DETERMINISTIC
+    | { CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA }
+    | SQL SECURITY { DEFINER | INVOKER }
+    | COMMENT 'string'*/
+    BEGIN
+INSERT INTO cafecodi_sysfac.unidad_medida(
+nom_unimedida)VALUES(
+tnom_unimedida);
+SELECT LAST_INSERT_ID();
+
+    END$$
+
+DELIMITER ;
+
+/////////////
+DELIMITER $$
+
+CREATE
+    /*[DEFINER = { user | CURRENT_USER }]*/
+    PROCEDURE `cafecodi_sysfac`.`sp_unidad_medidaupdate`(IN tid_unimedida BIGINT(20),tnom_unimedida VARCHAR(50))
+
+     /*LANGUAGE SQL
+    | [NOT] DETERMINISTIC
+    | { CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA }
+    | SQL SECURITY { DEFINER | INVOKER }
+    | COMMENT 'string'*/
+    BEGIN
+UPDATE unidad_medida SET 
+nom_unimedida=tnom_unimedida
+WHERE id_unimedida=tid_unimedida;
+
+
+    END$$
+
+DELIMITER ;
+
+/////////////////
+
+
+
