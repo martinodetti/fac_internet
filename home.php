@@ -32,7 +32,7 @@ if(!isset($_SESSION['id_persona'])){
          <script type="text/javascript" src="JS/jquery.fancybox-1.3.2.js" ></script>
         <script type="text/javascript" src="JS/custom.js" ></script>
          <script type="text/javascript" src="JS/jquery.cmenu.js" ></script>
-         <script type="text/javascript" src="MiJS/Tema.js" ></script>
+         <script type="text/javascript" src="MYJS/Tema.js" ></script>
 
     </head>
     <body>
