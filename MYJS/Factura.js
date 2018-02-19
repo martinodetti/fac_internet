@@ -1471,7 +1471,7 @@ $(document).ready(function(){
 
                 if(response._nota_credito == "1")
                     $("#cmb_tipo_fact").val(2);
-                else if(response.nota_debito == "1")
+                else if(response._nota_debito == "1")
                     $("#cmb_tipo_fact").val(3);
                 else
                     $("#cmb_tipo_fact").val(1);
