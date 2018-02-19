@@ -206,6 +206,11 @@ $(document).ready(function(){
     }
 
 	function reloadData(){
+		for(var t=0;t<dat.length;t++)
+		{
+			dat[t].precio = Math.round(dat[t].precio);
+			dat[t].total = Math.round(dat[t].precio * dat[t].cantidad);
+		}
         var datainfo = {
             "total":0,
 			"rows":dat
@@ -824,10 +829,11 @@ $(document).ready(function(){
 					}
 
 					dat.push(tmp_row);
-					reloadData();
-					sumatoria();
-
 				}
+				reloadData();
+				sumatoria();
+
+				
 				$("#save_obs_fact").val($("#save_obs_fact").val() + ' '+ response._obs_orden);
 			}
 		});
@@ -888,10 +894,9 @@ $(document).ready(function(){
 					}
 
 					dat.push(tmp_row);
-					reloadData();
-					sumatoria();
-
 				}
+				reloadData();
+				sumatoria();
 			}
 		});
 		var id_remis_tmp = $('#txt_idremitos').val();
