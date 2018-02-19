@@ -3,6 +3,7 @@ session_start();
 include_once 'CONTROLLER/C_Debug.php';
 include 'DAC/Database.class.php';
 include 'MODEL/Persona.php';
+include 'VIEW/W_Persona.php';
 
 if(!isset($_SESSION['id_persona'])){
    header('Location: index.php');
@@ -12,12 +13,14 @@ if(!isset($_SESSION['id_persona'])){
 $id_cli		= $_GET['cliente'];
 $clsCliente	= new persona();
 $clsCliente	= $clsCliente->showPersona($id_cli);
-$Data		= $_GET['grilla'];
+
 $fecha 		= fecha();
 
-$data = str_replace('class="display"','class="tablaDetalle"',$Data);
-$data = str_replace('style=""','style="width:600px"',$data);
+$W_persona=new W_persona();
+$id_persona = $id_cli;
+$data=$W_persona->printCuentaCorriente($id_persona);
 
+$data = str_replace("class='display'",'class="tablaDetalle" style="width:600px"',$data);
 function fecha()
 {
 	switch(date('n')){
@@ -58,7 +61,7 @@ function fecha()
 		$mes = 'Diciembre';
 		break;
 	}
-	
+
 	return date('d') . " de " . $mes . " de " . date('Y');
 }
 ?>
@@ -68,7 +71,7 @@ function fecha()
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 			<link rel="stylesheet" type="text/css" href="CSS_INTERNO/table_data.css" media="screen"/>
 			<link rel="stylesheet" type="text/css" href="CSS_INTERNO/print.css"/>
-			
+
         <title></title>
     </head>
     <body>
@@ -99,7 +102,7 @@ function fecha()
 		 				<?php echo $data ?>
 		 			</td>
 		 		</tr>
-		 		
+
 		 		<tr>
 		 			<td style="height:200px">
 		 				<label>Solicito tenga a bien informar disponibilidad de pago a info@frenosoeste.com.ar o al celular 0261-153371777 nextel 686*436 </label>

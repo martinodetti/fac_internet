@@ -400,7 +400,7 @@ $("#table-example_filter").children().children().focus();
 
 
 		$('#btn_Detalle_imprimir').click(function (){
-			var grid = $("#ctacte_table").clone().html();
+			var grid = "";//$("#ctacte_table").clone().html();
        		var idcli = $("#txt_id_cliente_temp").val();
         	var windowSizeArray = [ "width=200,height=200","width=800,height=600,scrollbars=yes" ];
             var url 		= "ctacte_print.php";
