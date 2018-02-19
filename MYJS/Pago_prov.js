@@ -782,6 +782,7 @@ $(document).ready(function(){
 					$("#save_obs_recibo").val(response.obs_recibo);
 					$("#save_efectivo_recibo").val(response.efectivo_recibo);
 					$("#save_debito_recibo").val(response.debito_recibo);
+                    $("#save_saldo_recibo").val(response.saldo_a_favor);
 
 					//facturas
 					$.each(response.facturas, function(i, item) {

@@ -158,8 +158,13 @@ case '2' : //insert pago a proveedores
 	$fecemi_recibo	= $_GET['save_fecemi_recibo'];
 	$efectivo_recibo= $_GET['save_efectivo_recibo'];
 	$debito_recibo	= $_GET['save_debito_recibo'];
+	$old_saldo_favor= $_GET['save_saldo_recibo'];
 
 	$saldo_a_favor	= $_GET['save_nuevo_saldo_recibo'];
+
+	if($saldo_a_favor == ""){
+		$saldo_a_favor = 0;
+	}
 
 	$estado_recibo	= "1";
 
@@ -202,6 +207,7 @@ case '2' : //insert pago a proveedores
 	$recibo->set_debito_recibo(	$debito_recibo);
 	$recibo->set_tipo_recibo(	$tipo_recibo);
     $recibo->set_id_responsable($id_responsable);
+	$recibo->set_saldo_a_favor(	$old_saldo_favor);
 
 	$ret=$recibo->addReciboProvd(	$recibo);
 
@@ -289,8 +295,7 @@ case '2' : //insert pago a proveedores
 		$recibo->addCompraRecibo($dat);
 	}
 
-	if($saldo_a_favor > 0){
-
+	if($saldo_a_favor > 0 || true){
 		$clsPersona = new persona();
 		$clsPersona->set_saldo_favor( $id_proveedor, $saldo_a_favor * -1);
 	}

@@ -15,6 +15,7 @@ class recibo {
     public $_cheques;
     public $_tipo_recibo;
     public $_id_responsable;
+    public $_saldo_a_favor;
 
     public function __construct() {
 
@@ -133,6 +134,16 @@ class recibo {
         $this->_debito_recibo = $debito_recibo;
     }
 
+    public function get_saldo_a_favor() {
+
+        return $this->_saldo_a_favor;
+    }
+
+    public function set_saldo_a_favor($saldo_a_favor) {
+
+        $this->_saldo_a_favor = $saldo_a_favor;
+    }
+
     public function get_tipo_recibo() {
 
         return $this->_tipo_recibo;
@@ -173,7 +184,7 @@ class recibo {
     }
 
     public function addReciboProvd($recibo){
-    	$sql="INSERT INTO recibo (id_provd, fecemi_recibo, num_recibo, total_recibo, obs_recibo, estado_recibo,efectivo_recibo, debito_recibo, tipo_recibo) VALUE (";
+    	$sql="INSERT INTO recibo (id_provd, fecemi_recibo, num_recibo, total_recibo, obs_recibo, estado_recibo,efectivo_recibo, debito_recibo, tipo_recibo, saldo_a_favor) VALUE (";
     	$sql = $sql . "'" . $recibo->get_id_provd() . "',";
         $sql = $sql . "'" . $recibo->get_fecemi_recibo() . "',";
         $sql = $sql . "'" . $recibo->get_num_recibo() . "',";
@@ -181,7 +192,8 @@ class recibo {
         $sql = $sql . "'" . $recibo->get_obs_recibo() . "',";
         $sql = $sql . "'" . $recibo->get_estado_recibo() . "',";
         $sql = $sql . "'" . $recibo->get_efectivo_recibo() . "',";
-        $sql = $sql . "'" . $recibo->get_debito_recibo() . "', 3);";
+        $sql = $sql . "'" . $recibo->get_debito_recibo() . "', 3,";
+        $sql = $sql . "'" . $recibo->get_saldo_a_favor() . "');";
 
         $this->_DB->alteration_query($sql);
 
