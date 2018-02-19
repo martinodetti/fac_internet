@@ -320,7 +320,7 @@ $pdf->SetAutoPageBreak(false);
     $pdf->Ln();
     $pdf->SetX(130);
     $pdf->SetFont('Times','',12);
-    $pdf->Cell(35,5,'Saldo anterior',1,0,'R');
+    $pdf->Cell(35,5,'Saldo previo a favor',1,0,'R');
     $pdf->SetFont('Times','B',12);
     $pdf->Cell(40,5,"$".$saldo,1,0,'C');
 	$pdf->Ln();
