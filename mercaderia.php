@@ -7,13 +7,13 @@ if(!isset($_SESSION['id_persona'])){
 }
 ?>
 <!doctype html public "-//W3C//DTD HTML 4.0 //EN">
-<?php 
+<?php
  include 'DAC/Database.class.php';
  include 'MODEL/Persona.php';
 session_start();
 
 if(isset ($_SESSION['id_persona'])){
- $id_persona=$_SESSION['id_persona'];   
+ $id_persona=$_SESSION['id_persona'];
 $persona=new persona();
 $persona=$persona->showPersona($id_persona);
 $arr_provd=array();
@@ -54,9 +54,9 @@ $arr_provd=$persona->ComboProveedor();
         <script type="text/javascript" src="JS/jquery.validate.js" ></script>
         <script type="text/javascript" src="JS/jquery.livequery.js" ></script>
         <script type="text/javascript" src="MYJS/Compra.js" ></script>
-<!--        
+<!--
 <script type="text/javascript">
-            
+
     $(function(){
          $("#btn_Persona_New").click(function(){
              Add();
@@ -99,7 +99,7 @@ $arr_provd=$persona->ComboProveedor();
                         </ul>
                     </div>
                     <!--fin de cabecera-->
-					
+
 					<!-- contentLayout va aqui con todo lo que tiene wilfo-->
 					<div class="contentLayout">
 						<div id="content" >
@@ -109,25 +109,25 @@ $arr_provd=$persona->ComboProveedor();
 									<ul class="tabs-nav">
 										<li class="tab"><a href="#tabs-1">INGRESO DE MERCADERÍA</a></li>
 										<li class="tab"><a href="#tabs-2">COMPRAS ANTERIORES</a></li>
-										<li class="tab"><a href="#tabs-3">NOTAS DE CREDITO</a></li> 
+										<li class="tab"><a href="#tabs-3">NOTAS DE CREDITO</a></li>
 									</ul>
-									
-									<div class="box-content">     
-										<div id="dialg_msg" class="dialog" title="SYSFACTURA INFORMA">     
+
+									<div class="box-content">
+										<div id="dialg_msg" class="dialog" title="SYSFACTURA INFORMA">
 											<span id="msg" class="message success"></span>
 											<p class="fr"></p>
 											<a id="dial_msg_close" class="button themed closer">Aceptar</a>
 										</div>
-										
-										<div id="dialg_error" class="dialog" title="SYSFACTURA INFORMA">     
+
+										<div id="dialg_error" class="dialog" title="SYSFACTURA INFORMA">
                                             <span id="msg" class="message error">
                                             El número de factura ingresado ya se encuentra cargado para este proveedor
                                             </span>
                                             <p class="fr"></p>
 			                				<a id="dialg_error_close" class="button themed closer">Aceptar</a>
                                         </div>
-										
-										<div id="dialg_open" class="dialog" title="SYSFACTURA INFORMA">     
+
+										<div id="dialg_open" class="dialog" title="SYSFACTURA INFORMA">
                                     		<form id="frm_addordenopen">
 												<label class="form-label required"> Clave </label>
                                                 <input id="clave_usuario" class="form-field width40" name="clave_usuario" type="password" value="" maxlength="50"/>
@@ -135,12 +135,12 @@ $arr_provd=$persona->ComboProveedor();
                                                		<input id="dialg_open_close" class="button themed" type="button" value="Cancelar" name="dialg_open_close" />
                                                	</p>
                                            	</form>
-                                    	</div> 
-										
+                                    	</div>
+
 										<div id="tabs-1">
 										<!--   CAMPO ESCONDIDO PARA TOTAL    -->
 											<form id="frmCompra_Add" method="post" action="">
-												<input type="hidden" id="save_total_compra" name="save_total_compra" value="" />       
+												<input type="hidden" id="save_total_compra" name="save_total_compra" value="" />
 												<input type="hidden" id="save_iva21_compra" name="save_iva21_compra" value=""/>
 												<input type="hidden" id="save_iva10_compra" name="save_iva10_compra" value=""/>
 												<input type="hidden" id="save_subtotal_compra" name="save_subtotal_compra" value=""/>
@@ -158,14 +158,16 @@ $arr_provd=$persona->ComboProveedor();
 													<tbody>
 														<tr>
 															<td colspam=2>
-																<label class="form-label">
-																	<input type="checkbox" id="save_nota_credito" name="save_nota_credito" />
-																	<b>CAMBIAR A NOTA DE CRÉDITO</b>
-																</label>
-																
+                                                                <label class="form-label required"> Tipo de documento :</label>
+																<select id="cmb_tipo_fact" name="cmb_tipo_fact" class="form-field width30">
+																	<option value="1" selected="selected">Factura</option>
+																	<option value="2">Nota de crédito</option>
+																	<option value="3">Nota de débito</option>
+																</select>
+
 															</td>
 														</tr>
-													                                                        
+
 														<tr>
 															<td >
 																<br>
@@ -175,18 +177,18 @@ $arr_provd=$persona->ComboProveedor();
 																	<?php foreach($arr_provd as $persona){?>
 																	<option value="<?php echo $persona->get_id_persona();?>"><?php echo $persona->get_nom_persona();?></option>
 																	<?php } ?>
-																</select> 
+																</select>
 																<label id="label_ganancia"></label>
-															</td>    
+															</td>
 															<td>
 																<label class="form-label required"> Fecha </label>
 																<input id="save_fec_compra" name="save_fec_compra" class="form-field datepicker" type="text"/>
-															</td>    
-														</tr>                                                         
+															</td>
+														</tr>
 														<tr>
 															<td>
 																<label class="form-label required"> Número de Factura </label>
-																<input id="save_guiacod_compra" class="form-field width40" name="save_guiacod_compra" type="text" value="" maxlength="30"/>    
+																<input id="save_guiacod_compra" class="form-field width40" name="save_guiacod_compra" type="text" value="" maxlength="30"/>
 															</td>
 															<td>
                                                                 <label class="form-label required"> Fecha de imputación </label>
@@ -194,16 +196,16 @@ $arr_provd=$persona->ComboProveedor();
 
 <!--
 																<label class="form-label">Percepción</label>
-																<input id="txt_percepcion" class="form-field width20" name="txt_percepcion" type="text" value="" maxlength="10"/>   
+																<input id="txt_percepcion" class="form-field width20" name="txt_percepcion" type="text" value="" maxlength="10"/>
 -->
 															</td>
-														</tr>                                                         
+														</tr>
 															<tr>
 																<td colspan="2">
 																	<label class="form-label required"> Observación </label>
-																	<input id="save_obs_compra" class="form-field width80" name="save_obs_compra" type="text" value="" maxlength="150"/>  
+																	<input id="save_obs_compra" class="form-field width80" name="save_obs_compra" type="text" value="" maxlength="150"/>
 																</td>
-															</tr>                                                            
+															</tr>
 													</tbody>
 												</table>
 												<div id="div_aux" style="display: none" >
@@ -238,7 +240,7 @@ $arr_provd=$persona->ComboProveedor();
 												</table>
 											</form>
 											<hr/>
-											
+
 											<form id="frm_add_producto" name="frm_add_producto" method="">
 												<table >
 													<thead>
@@ -248,7 +250,7 @@ $arr_provd=$persona->ComboProveedor();
 																<input id="cmbgrid" name="cmbgrid"   />
 															</th>
 														</tr>
-													</thead>   
+													</thead>
 													<tbody>
 														<tr style="width: 100%">
 															<td>
@@ -259,30 +261,30 @@ $arr_provd=$persona->ComboProveedor();
                                                                 <input type="hidden" id="txt_porcentaje_iva" name="txt_porcentaje_iva" value="" />
 																<br>
 																<label class="form-label required">Costo</label>
-																<input id="txt_costo" class="form-field width40" name="txt_costo" type="text" value="" maxlength="10"/>  
+																<input id="txt_costo" class="form-field width40" name="txt_costo" type="text" value="" maxlength="10"/>
 															</td>
 															<td>
 																<br>
 																<label class="form-label required">Cantidad</label>
-																<input id="txt_cantidad" class="form-field width40" name="txt_cantidad" type="text" value="" maxlength="10"/>   
+																<input id="txt_cantidad" class="form-field width40" name="txt_cantidad" type="text" value="" maxlength="10"/>
 															</td>
 															<td>
 																<br>
 																<label class="form-label required">Precio de venta</label>
-																<input id="txt_precio" class="form-field width40" name="txt_precio" type="text" value="" maxlength="10"/>   
+																<input id="txt_precio" class="form-field width40" name="txt_precio" type="text" value="" maxlength="10"/>
 															</td>
 															<td>
 																<br>
 																<label class="form-label required">Descuento</label>
-																<input id="txt_descuento_prod" class="form-field width40" name="txt_descuento_prod" type="text" value="" maxlength="5"/>   
+																<input id="txt_descuento_prod" class="form-field width40" name="txt_descuento_prod" type="text" value="" maxlength="5"/>
 															</td>
-														</tr>                        
-													</tbody>  
+														</tr>
+													</tbody>
 												</table>
 												<div style="display: none">
 													 <input type="submit" value="btn_addProducto_aux" />
 												</div>
-											   
+
 											</form>
 											<input id="btn_AddProducto" class="button themed" type="submit" value="Agregar" name="btn_AddProducto" />
 											<input id="btn_QuitarProducto" class="button themed" type="button" value="Quitar" name="btn_QuitarProducto" />
@@ -303,7 +305,7 @@ $arr_provd=$persona->ComboProveedor();
 												</thead>
 											</table>
 											<hr/>
-											
+
 											<input id="btn_Compra_Add" class="fr button themed" type="button" value="Guardar Mercadería" name="btn_Compra_Add" />
 											<input id="btn_Compra_Update" class="fr button themed" type="button" value="Activar actualización" name="btn_Compra_Update" />
 											<input id="btn_Compra_New" class="fr button themed" type="button" value="Nuevo" name="btn_Compra_New" />
@@ -325,12 +327,12 @@ $arr_provd=$persona->ComboProveedor();
 														</tr>
 													</thead>
 													<tbody>
-										
+
 													</tbody>
 												</table>
 											</div>
 										</div>
-										
+
 										<div id="tabs-3">
 											<div id="tabla_result_nc">
 												 <table id="table-example-nc" cellpadding="0" cellspacing="0" border="0" class="display" >
@@ -344,17 +346,17 @@ $arr_provd=$persona->ComboProveedor();
 														</tr>
 													</thead>
 													<tbody>
-										
+
 													</tbody>
 												</table>
 											</div>
 										</div>
-										   
+
 										<div class="clear"></div>
-										
+
 									</div>
 								</div>
-							</div>      
+							</div>
 						</div>
 					</div>
                     <div class="cleared"></div><!-- Limpio divs-->
@@ -365,6 +367,6 @@ $arr_provd=$persona->ComboProveedor();
     </body>
 </html>
 
-<?php 
+<?php
 }
 ?>

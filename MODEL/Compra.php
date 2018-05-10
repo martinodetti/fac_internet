@@ -284,6 +284,11 @@ class compra {
 		$this->_DB->select_query($sql);
 	}
 
+    public function set_nota_debito($idc){
+		$sql = "UPDATE compra SET nota_debito = 1 WHERE id_compra = ".$idc;
+		$this->_DB->select_query($sql);
+	}
+
     public function json($estado, $txt) {
 
         return '{"estado":' . $estado . ',"txt":"' . $txt . '"}';

@@ -1,31 +1,31 @@
-<?php 
+<?php
 
-// Capa de Seguridadinclude 'Seguridad.php'; 
+// Capa de Seguridadinclude 'Seguridad.php';
 // Capa de Acceso a BD.
 
 include '../DAC/Database.class.php';
-include '../MODEL/Compra.php'; 
-include '../MODEL/Detalle_compra.php'; 
-include '../MODEL/Producto.php'; 
+include '../MODEL/Compra.php';
+include '../MODEL/Detalle_compra.php';
+include '../MODEL/Producto.php';
 include '../MODEL/Persona.php';
-include '../MODEL/Kardex.php'; 
-include '../MODEL/Detalle_kardex.php'; 
-include '../VIEW/W_Compra.php'; 
+include '../MODEL/Kardex.php';
+include '../MODEL/Detalle_kardex.php';
+include '../VIEW/W_Compra.php';
 include 'C_Debug.php';
 
-$out=""; 
+$out="";
 if(isset ($_POST['opc']))
-$opc=$_POST['opc']; 
+$opc=$_POST['opc'];
 else
-$opc=$_GET['opc'];     
+$opc=$_GET['opc'];
 
-switch ($opc) { 
+switch ($opc) {
 
-case '1': //add 
+case '1': //add
 
-	// Todos los POST que interviene. 
+	// Todos los POST que interviene.
 
-	$id_compra			=0; 
+	$id_compra			=0;
 	$id_provd			=$_GET['save_id_provd'];  //1
 	$guiacod_compra		=$_GET['save_guiacod_compra']; //1
 	$total_compra		=$_GET['save_total_compra']; //1
@@ -43,11 +43,14 @@ case '1': //add
 	$concepto_nograv	=$_GET['save_concepto_nograv'];
 
 	$nota_credito = 0;
-	if(isset($_GET['save_nota_credito']))
+	$nota_debito = 0;
+	if($_GET['cmb_tipo_fact'] == 2){
 		$nota_credito	= 	1;
+	}else if ($_GET['cmb_tipo_fact'] == 3){
+		$nota_debito = 1;
+	}
 
-
-	$estado_compra		='1'; 
+	$estado_compra		='1';
 
 	//damos vuelta la fecha
 	$arr_fec_tmp = explode('-', $fec_compra);
@@ -77,10 +80,12 @@ case '1': //add
 	$compra->set_concepto_nograv($concepto_nograv);
 
 	$ret=$compra->addCompra($compra);
-	$id_cmp=$ret['0'][0]; 
+	$id_cmp=$ret['0'][0];
 
 	if($nota_credito == 1)
 		$compra->set_nota_credito($id_cmp);
+	if($nota_debito == 1)
+		$compra->set_nota_debito($id_cmp);
 
 
 	//ahora declaro variable general para el array de productos
@@ -95,8 +100,8 @@ case '1': //add
 	$dt_data=array();
 	//inserto esa asociación de arrays en otro entendible
 	foreach($detalle as $dt_aux){
-	 $dt_data[]=$dt_aux;   
-	 //$dt_data[]=$dt_aux[0];   
+	 $dt_data[]=$dt_aux;
+	 //$dt_data[]=$dt_aux[0];
 	}
 	//ahora estan listos para ser leidos y se guarda los valores
 	foreach($dt_data as $accion){
@@ -109,22 +114,22 @@ case '1': //add
 		$clsDetalle->set_id_proveedor_detcompra($id_provd);
 
 		$arr_id_producto=$arr_id_producto.$accion['id'].'-';
-		
+
 		//insertamos detalle factura o en la nota de crédito en su defecto
 		//fact y nota de credito es lo mismo. Lo unico que cambia es que resta o suma el stock del producto
 		if($nota_credito == 1)
 			$out=$clsDetalle->addDetalle_notacredito($clsDetalle);
 		else
 			$out=$clsDetalle->addDetalle_compra($clsDetalle);
-	
+
 
 	}
 
-break; 
+break;
 
 case '2' : //update  - es igual a 1 pero con la diferencia que elimino primero el detallle de la factura y despues la grabo
 
-$id_compra			=$_GET['update_id_compra']; 
+$id_compra			=$_GET['update_id_compra'];
 $id_provd			=$_GET['save_id_provd'];  //1
 $guiacod_compra		=$_GET['save_guiacod_compra']; //1
 $total_compra		=$_GET['save_total_compra']; //1
@@ -142,7 +147,7 @@ $concepto_nograv	=$_GET['save_concepto_nograv'];
 $fec_ingreso		= date('Y-m-d');
 
 
-$estado_compra		='1'; 
+$estado_compra		='1';
 
 //damos vuelta la fecha
 $arr_fec_tmp = explode('-', $fec_compra);
@@ -170,7 +175,7 @@ $compra->set_fec_ingreso_compra($fec_ingreso);
 $compra->set_concepto_nograv($concepto_nograv);
 
 $ret=$compra->updateCompra($compra);
-$id_cmp=$id_compra; 
+$id_cmp=$id_compra;
 
 //ahora declaro variable general para el array de productos
 $arr_id_producto="";//tipo cadena
@@ -187,8 +192,8 @@ $clsDetalle->deletedetalle_compra_restar_stock($id_compra);
 
 //inserto esa asociación de arrays en otro entendible
 foreach($detalle as $dt_aux){
- $dt_data[]=$dt_aux;   
- //$dt_data[]=$dt_aux[0];   
+ $dt_data[]=$dt_aux;
+ //$dt_data[]=$dt_aux[0];
 }
 //ahora estan listos para ser leidos y se guarda los valores
 foreach($dt_data as $accion){
@@ -199,47 +204,47 @@ foreach($dt_data as $accion){
     $clsDetalle->set_precio_vta_detcompra($accion['preciovta']);
     $clsDetalle->set_estado_detcompra('1');
     $clsDetalle->set_id_proveedor_detcompra($id_provd);
- 
+
     $arr_id_producto=$arr_id_producto.$accion['id'].'-';
-    
+
 	$out=$clsDetalle->addDetalle_compra($clsDetalle);
 
 }
 
-break; 
+break;
 
-case '3' : //delete 
+case '3' : //delete
 
-// Todos los POST que interviene Delete. 
+// Todos los POST que interviene Delete.
 
-$id_compra=$_POST['delete_id_compra']; 
+$id_compra=$_POST['delete_id_compra'];
 
 
 
 $compra=new compra();
 
-$ret=$compra->deleteCompra($id_compra); 
+$ret=$compra->deleteCompra($id_compra);
 
-$out=$ret['rows_affected'][0]; 
+$out=$ret['rows_affected'][0];
 
- break; 
+ break;
 
-case '4' : //show 
+case '4' : //show
 
-// Todos los POST que interviene Show. 
+// Todos los POST que interviene Show.
 
-$id_compra=$_POST['show_id_compra']; 
+$id_compra=$_POST['show_id_compra'];
 
 $W_compra=new W_compra();
 
 $out=$W_compra->printCompra($id_compra);
 
- break; 
+ break;
 
-case '5' : //print mesas 
+case '5' : //print mesas
 $W_compra=new W_compra();
 $out=$W_compra->printCompras($fecIni,$fecFinal);
- break; 
+ break;
 
 
 case '8'://cabecera mediante fechas
@@ -251,7 +256,7 @@ case '8'://cabecera mediante fechas
 
 case '9'://detalle de factura
 	$clsCompra=new compra();
-	$id_compra=$_POST['id_compra'];   
+	$id_compra=$_POST['id_compra'];
 	$out = '';
 	if($id_compra > 0) {
 		$out=$clsCompra->lisJsonCompraDetalle_prod($id_compra);
@@ -274,27 +279,27 @@ case '11':
 	$id_provd = $_POST['id_provd'];
 	$provd = new persona();
 	$margen = $provd->get_margen_ganancia($id_provd);
-	
+
 	$out = json_encode($margen);
 	break;
-	
+
 case '12':
 	$num_fact = $_POST['num_fact'];
 	$id_prov = $_POST['id_prov'];
-	
+
 	$clsFact = new compra();
 	$out = json_encode($clsFact->VerificarExistenciaNumero($num_fact, $id_prov));
-	
+
 	break;
-	
+
 case '13':
 	$id_compra = $_POST['id_compra'];
 	$clsCompra = new compra();
-	
+
 	$out = json_encode($clsCompra->showCompraEdit($id_compra));
 
 	break;
-	
+
 case '14':
 	$id_provd = $_POST['id_provd'];
 	$clsCompra = new w_compra();
@@ -312,9 +317,9 @@ case '15':
         $out = "";
 	break;
 }
- 
 
-die($out); 
+
+die($out);
 
 
 
