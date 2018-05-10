@@ -146,9 +146,6 @@ $descuento			=$_GET['save_descuento'];
 $concepto_nograv	=$_GET['save_concepto_nograv'];
 $fec_ingreso		= date('Y-m-d');
 
-
-$estado_compra		='1';
-
 //damos vuelta la fecha
 $arr_fec_tmp = explode('-', $fec_compra);
 $fec_compra = $arr_fec_tmp[2] . '-' . $arr_fec_tmp[1] . '-' . $arr_fec_tmp[0];
