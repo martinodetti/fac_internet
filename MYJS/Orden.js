@@ -1179,6 +1179,7 @@ $('#tt').datagrid('reloadFooter',[  //inicio foter del datagrid
 						$("#btn_Orden_Add").show();
 						$("#btn_Orden_Generar").show();
 						$("#btn_Orden_Anular").show();
+			    			$("#btn_Orden_Close").show();
 	    			}
                 }
 		});
