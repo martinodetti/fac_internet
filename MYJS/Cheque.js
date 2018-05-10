@@ -67,11 +67,13 @@ $(document).ready(function(){
 					$("#update_monto_cheque").val(response._monto_cheque);
 					$("#update_fecrec_cheque").val(response._fecrec_cheque);
 					$("#update_fecpago_cheque").val(response._fecpago_cheque);
-					$("#update_num_recibo").val(response._num_recibo);
+					$("#update_num_recibo_cheque").val(response._num_recibo);
 					$("#update_cliente_cheque").val(response._cliente);
 					$("#update_banco_cheque").val(response._banco_cheque);
 					$("#update_propietario_cheque").val(response._propietario);
 					$("#update_id_cheque").val(response._id_cheque);
+					$("#update_provd_cheque").val(response._proveedor);
+					$("#update_estado_cheque").val(response._estado_cheque);
 
 /*					
 					for( var i= 0; i < response._movimientos.length ; i++)
