@@ -74,6 +74,9 @@ $(document).ready(function(){
 					$("#update_id_cheque").val(response._id_cheque);
 					$("#update_provd_cheque").val(response._proveedor);
 					$("#update_estado_cheque").val(response._estado_cheque);
+					$("#update_obs_cheque").val(response._obs_cheque);
+
+
 
 /*					
 					for( var i= 0; i < response._movimientos.length ; i++)
@@ -93,8 +96,11 @@ $(document).ready(function(){
 					$("#remitos_table").datagrid('loadData',datainfo);
 */
 					$("#btn_Cheque_Depositar").hide();
-					if(response._estado_cheque == "En mano")
+					$("#btn_Cheque_Entregar").hide();
+					if(response._estado_cheque == "En mano"){
 						$("#btn_Cheque_Depositar").show();
+						$("#btn_Cheque_Entregar").show();
+					}
                 } 
 		});
 		
@@ -233,10 +239,26 @@ $(document).ready(function(){
     
     
     $("#btn_Cheque_Depositar").click(function(){
-    	var idcheque = $("#update_id_cheque").val();
+		var idcheque = $("#update_id_cheque").val();
+		var obs = $("#update_obs_cheque").val();
     	$.ajax({
     		url: "CONTROLLER/C_Cheque.php?opc=14",
-    		data: {'idcheque': idcheque},
+    		data: {'idcheque': idcheque, 'obs': obs},
+    		type: 'POST',
+    		dataType: 'JSON',
+    		success:function(response){
+    			$('#dialg_chequeDetalle').dialog('close');
+    			$('#dialg_msg').dialog('open');
+    		}
+    	});
+	});
+	
+	$("#btn_Cheque_Entregar").click(function(){
+		var idcheque = $("#update_id_cheque").val();
+		var obs = $("#update_obs_cheque").val();
+    	$.ajax({
+    		url: "CONTROLLER/C_Cheque.php?opc=15",
+    		data: {'idcheque': idcheque, 'obs': obs},
     		type: 'POST',
     		dataType: 'JSON',
     		success:function(response){

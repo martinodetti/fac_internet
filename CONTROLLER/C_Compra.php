@@ -27,6 +27,7 @@ case '1': //add
 
 	$id_compra			=0;
 	$id_provd			=$_GET['save_id_provd'];  //1
+	$estado_compra		=$_GET['save_forma_pago'];
 	$guiacod_compra		=$_GET['save_guiacod_compra']; //1
 	$total_compra		=$_GET['save_total_compra']; //1
 	$obs_compra			=$_GET['save_obs_compra']; //1
@@ -49,8 +50,6 @@ case '1': //add
 	}else if ($_GET['cmb_tipo_fact'] == 3){
 		$nota_debito = 1;
 	}
-
-	$estado_compra		='1';
 
 	//damos vuelta la fecha
 	$arr_fec_tmp = explode('-', $fec_compra);
@@ -131,6 +130,7 @@ case '2' : //update  - es igual a 1 pero con la diferencia que elimino primero e
 
 $id_compra			=$_GET['update_id_compra'];
 $id_provd			=$_GET['save_id_provd'];  //1
+$estado_compra		=$_GET['save_forma_pago'];
 $guiacod_compra		=$_GET['save_guiacod_compra']; //1
 $total_compra		=$_GET['save_total_compra']; //1
 $obs_compra			=$_GET['save_obs_compra']; //1

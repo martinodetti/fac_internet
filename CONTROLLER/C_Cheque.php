@@ -267,8 +267,17 @@ case '13': //Cheque para ver el detalle
 	
 case '14':
 	$id_cheque = $_POST['idcheque'];
+	$obs = $_POST['obs'];
 	$clsCheque = new cheque();
-	$ret = $clsCheque->depositar($id_cheque);
+	$ret = $clsCheque->depositar($id_cheque, $obs);
+	$out = json_encode("ok");
+	break;
+
+	case '15':
+	$id_cheque = $_POST['idcheque'];
+	$obs = $_POST['obs'];
+	$clsCheque = new cheque();
+	$ret = $clsCheque->entregar($id_cheque, $obs);
 	$out = json_encode("ok");
 	break;
 }
