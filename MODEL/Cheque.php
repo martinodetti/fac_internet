@@ -276,6 +276,7 @@ class cheque {
             $cheque->set_cuit_propietario(	$row['cuit_propietario']);
             $cheque->set_num_recibo(		$row['num_recibo']		);
             $cheque->set_estado_cheque(		$row['estado_cheque']	);
+            $cheque->set_obs_cheque(        $row['obs_cheque']      );
 	    $cheque->_cliente = $row['nom_persona'];
 	    $cheque->_proveedor = $row['nom_proveedor'];
 	    $cheque->_id_provd = $row['id_provd'];
@@ -318,11 +319,17 @@ class cheque {
 		$rs = $this->_DB->alteration_query($sql);
 	}
 
-	public function depositar($idcheque)
+	public function depositar($idcheque, $obs)
 	{
-		$sql = "UPDATE cheque SET estado_cheque = 2 where id_cheque = ".$idcheque;
+        $sql = "UPDATE cheque SET estado_cheque = 2, obs_cheque = '" . $obs . "'  where id_cheque = ".$idcheque;
 		$rs = $this->_DB->alteration_query($sql);
-	}
+    }
+    
+    public function entregar($idcheque, $obs)
+	{
+		$sql = "UPDATE cheque SET estado_cheque = 3, obs_cheque = '" . $obs . "' where id_cheque = ".$idcheque;
+		$rs = $this->_DB->alteration_query($sql);
+    }
 
 
 }

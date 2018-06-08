@@ -165,17 +165,24 @@ if(isset ($_SESSION['id_persona'])){
                                                             </td>
                                                             
                                                         </tr>
-							<tr>
+							                            <tr>
                                                             <td>
                                                                 <label class="form-label required"> Entregado a </label>
                                                                 <input id="update_provd_cheque" class="form-field width60" name="update_provd_cheque" type="text" value="" readonly="readonly"/>
                                                             </td>
-							    <td>
-								<label class="form-label required"> Estado </label>
+                                                            <td>
+                                                            <label class="form-label required"> Estado </label>
                                                                 <input id="update_estado_cheque" class="form-field width60" name="update_estado_cheque" type="text" value="" readonly="readonly"/>
                                                             </td>
-
                                                         </tr>
+                                                        <tr>
+                                                            <td colspan=2>
+                                                                <label class="form-label required"> Observaciones </label>
+                                                                <input id="update_obs_cheque" class="form-field width80" name="update_obs_cheque" type="text" value=""/>
+                                                            </td>
+                                                        </tr>
+                                                        
+                                                        
                                                     </tbody>
                                                 </table>
                                               	<hr/>
@@ -195,6 +202,7 @@ if(isset ($_SESSION['id_persona'])){
 												<hr/>
 -->
                                                 <p class="fr">
+                                                    <input id="btn_Cheque_Entregar" clasS="fr button themed" type="button" value="Entregar" name="btn_Cheque_Entregar" />
                                                 	<input id="btn_Cheque_Depositar" clasS="fr button themed" type="button" value="Depositar" name="btn_Cheque_Depositar" />
 													<input id="dialg_chequeDetalle_close" class="button themed" type="button" value="Cerrar" name="dialg_chequeDetalle_close" />
 <!--                                                	<input id="btn_Cheque_Update" class="button themed" type="submit" value="Actualizar" name="btn_Cheque_Update" />
