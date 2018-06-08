@@ -649,15 +649,28 @@ $('#tt').datagrid('reloadFooter',[  //inicio foter del datagrid
     $("#btn_Orden_New").click(function(){
       	vaciarVector();
 
-	   	id = $("#txt_num_orden").val();
-	   	$("#frm_orden .form-field").val("");
+		$("#frm_orden .form-field").val("");
 	   	vaciarCampos();
-	   	$("#txt_num_orden").val(id);
 	   	$("#save_fecemi_orden").datepicker('setDate', new Date());
 	   	$("#save_fecingreso_orden").datepicker('setDate', new Date());
 	   	$("#tipo_submit").val('nuevo');
 
-   		document.forms["frm_orden"].reset();
+		document.forms["frm_orden"].reset();
+		   
+		$.ajax({
+			type:"POST",
+			url:"CONTROLLER/C_Orden.php?opc=12",
+			success:function(response){
+				if(response > 1){
+					$("#txt_num_orden").val(response);
+				}else{
+					$("#txt_num_orden").val('1');
+				}
+			}
+		});
+
+		$("#save_fecemi_orden").datepicker('setDate', new Date());
+    	$("#save_fecingreso_orden").datepicker('setDate', new Date());
 
 	   	$("#btn_Orden_Close").show();
 		$("#btn_Orden_Add").show();
@@ -1065,8 +1078,9 @@ $('#tt').datagrid('reloadFooter',[  //inicio foter del datagrid
                     }else if(response.estado == "Abierto"){
                         $("#btn_Orden_Open").hide();
 	    			}else if(response.estado == "Cerrado"){
-					$("#btn_Orden_Anular").show();
-				}
+						$("#btn_Orden_Anular").show();
+						$("#btn_Orden_Open").show();
+					}
                 }
 		});
 
@@ -1185,10 +1199,10 @@ $('#tt').datagrid('reloadFooter',[  //inicio foter del datagrid
 						$("#btn_Orden_Add").show();
 						$("#btn_Orden_Generar").show();
 						$("#btn_Orden_Anular").show();
-			    			$("#btn_Orden_Close").show();
-	    			}else if(response.estado == "Cerrado"){
-					$("#btn_Orden_Anular").show();
-				}
+			    		$("#btn_Orden_Close").show();
+						}else if(response.estado == "Cerrado"){
+						$("#btn_Orden_Anular").show();
+					}
 
                 }
 		});
