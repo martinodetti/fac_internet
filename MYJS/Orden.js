@@ -1061,7 +1061,9 @@ $('#tt').datagrid('reloadFooter',[  //inicio foter del datagrid
 	    				$("#btn_Orden_Open").show();
                     }else if(response.estado == "Abierto"){
                         $("#btn_Orden_Open").hide();
-	    			}
+	    			}else if(response.estado == "Cerrado"){
+					$("#btn_Orden_Anular").show();
+				}
                 }
 		});
 
@@ -1180,7 +1182,10 @@ $('#tt').datagrid('reloadFooter',[  //inicio foter del datagrid
 						$("#btn_Orden_Generar").show();
 						$("#btn_Orden_Anular").show();
 			    			$("#btn_Orden_Close").show();
-	    			}
+	    			}else if(response.estado == "Cerrado"){
+					$("#btn_Orden_Anular").show();
+				}
+
                 }
 		});
 
