@@ -390,7 +390,7 @@ if(isset ($_SESSION['id_persona'])){
 															</td>
 															<td>
 																<label class="form-label required"> Saldo a favor: </label>
-																<input id="save_saldo_recibo" class="form-field width20" name="save_saldo_recibo" type="text" value="" maxlength="10" readonly="readonly"/>
+																<input id="save_saldo_recibo" class="form-field width20" name="save_saldo_recibo" type="text" value="" maxlength="10"/>
 															</td>
 
 														</tr>
