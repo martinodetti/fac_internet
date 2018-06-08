@@ -167,6 +167,15 @@ $arr_provd=$persona->ComboProveedor();
 
 															</td>
 														</tr>
+														<tr>
+															<td>
+																<label class="form-label required"> Forma de pago :</label>
+																<select id="cmb_forma_pago" name="save_forma_pago" class="form-field width30">
+																	<option value="2">Contado efectivo</option>
+																	<option value="1" selected="selected">Cuenta corriente</option>
+																</select> 
+															</td>
+														</tr>
 
 														<tr>
 															<td >

@@ -868,8 +868,12 @@ $(document).ready(function(){
 					$("#contacto_vozcliente").val(response.contacto_vc);
 					$("#txt_porcentaje").val(response.porcentaje);
 					$("#save_kms_presupuesto").val(response.kms_presupuesto);
-          $("#txt_estado_presupuesto").val(response.estado);
-					$("#cmbDescto").val(parseFloat((parseFloat(response.descto_presupuesto)*100)/(parseFloat(response.descto_presupuesto)+parseFloat(response.total))));
+		  			$("#txt_estado_presupuesto").val(response.estado);
+					var descto_val = parseFloat((parseFloat(response.descto_presupuesto)*100)/(parseFloat(response.descto_presupuesto)+parseFloat(response.total)));
+					if(isNaN(descto_val)){
+						descto_val = 0;
+					}
+					$("#cmbDescto").val(descto_val);
 
 					if(response.contacto_vc != '' || response.descrip_vc != '')
 						$('#lbl_tiene_voz_cliente').show();
