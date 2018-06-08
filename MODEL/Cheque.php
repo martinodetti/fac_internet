@@ -276,7 +276,9 @@ class cheque {
             $cheque->set_cuit_propietario(	$row['cuit_propietario']);
             $cheque->set_num_recibo(		$row['num_recibo']		);
             $cheque->set_estado_cheque(		$row['estado_cheque']	);
-            $cheque->_cliente = $row['nom_persona'];
+	    $cheque->_cliente = $row['nom_persona'];
+	    $cheque->_proveedor = $row['nom_proveedor'];
+	    $cheque->_id_provd = $row['id_provd'];
 
 //            $cheque->_movimientos = $this->get_movimientos($id_cheque);
         }

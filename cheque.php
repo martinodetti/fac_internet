@@ -127,45 +127,55 @@ if(isset ($_SESSION['id_persona'])){
                                                         <tr>
                                                             <td >
                                                                 <label class="form-label required"> Número </label>
-                                                                <input id="update_num_cheque" class="form-field width60" name="update_num_cheque" type="text" value="" maxlength="100"/>
+                                                                <input id="update_num_cheque" class="form-field width60" name="update_num_cheque" type="text" value="" maxlength="100" readonly="readonly"/>
                                                             </td>    
                                                             <td >
                                                                 <label class="form-label required"> Monto </label>
-                                                                <input id="update_monto_cheque" class="form-field width60" name="update_monto_cheque" type="text" value="" maxlength="100"/>
+                                                                <input id="update_monto_cheque" class="form-field width60" name="update_monto_cheque" type="text" value="" maxlength="100" readonly="readonly"/>
                                                             </td>    
                                                         </tr>  
                                                         <tr>
                                                         	<td>
                                                         		<label class="form-label required"> Fecha recibido </label>
-                                                            	<input id="update_fecrec_cheque" name="update_fecrec_cheque" class="form-field datepicker" type="text"/>
+                                                            	<input id="update_fecrec_cheque" name="update_fecrec_cheque" class="form-field datepicker" type="text" readonly="readonly"/>
                                                             </td>
                                                             <td>
                                                             	<label class="form-label required"> Fecha de pago </label>
-                                                            	<input id="update_fecpago_cheque" name="update_fecrec_cheque" class="form-field datepicker" type="text"/>
+                                                            	<input id="update_fecpago_cheque" name="update_fecrec_cheque" class="form-field datepicker" type="text" readonly="readonly"/>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                         	<td >
                                                                 <label class="form-label required"> Número de recibo </label>
-                                                                <input id="update_num_recibo_cheque" class="form-field width60" name="update_num_recibo_cheque" type="text" value="" maxlength="100"/>
+                                                                <input id="update_num_recibo_cheque" class="form-field width60" name="update_num_recibo_cheque" type="text" value="" maxlength="100" readonly="readonly"/>
                                                             </td> 
                                                             <td >
                                                                 <label class="form-label required"> Cliente </label>
-                                                                <input id="update_cliente_cheque" class="form-field width60" name="update_cliente_cheque" type="text" value="" maxlength="100"/>
+                                                                <input id="update_cliente_cheque" class="form-field width60" name="update_cliente_cheque" type="text" value="" maxlength="100" readonly="readonly"/>
                                                             </td> 
                                                         </tr>                                                       
                                                         <tr>
                                                             <td>
                                                                 <label class="form-label required"> Banco</label>
-                                                                <input id="update_banco_cheque" class="form-field width60" name="update_banco_cheque" type="text" value=""/>
+                                                                <input id="update_banco_cheque" class="form-field width60" name="update_banco_cheque" type="text" value="" readonly="readonly"/>
                                                             </td>
                                                             <td>
                                                                 <label class="form-label required"> Propietario</label>
-                                                                <input id="update_propietario_cheque" class="form-field width60" name="update_propietario_cheque" type="text" value="" />
+                                                                <input id="update_propietario_cheque" class="form-field width60" name="update_propietario_cheque" type="text" value=""  readonly="readonly"/>
                                                             </td>
                                                             
                                                         </tr>
-                                                        
+							<tr>
+                                                            <td>
+                                                                <label class="form-label required"> Entregado a </label>
+                                                                <input id="update_provd_cheque" class="form-field width60" name="update_provd_cheque" type="text" value="" readonly="readonly"/>
+                                                            </td>
+							    <td>
+								<label class="form-label required"> Estado </label>
+                                                                <input id="update_estado_cheque" class="form-field width60" name="update_estado_cheque" type="text" value="" readonly="readonly"/>
+                                                            </td>
+
+                                                        </tr>
                                                     </tbody>
                                                 </table>
                                               	<hr/>
