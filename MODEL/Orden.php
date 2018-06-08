@@ -19,7 +19,8 @@ class orden {
 	public $_contacto_vc;
 	public $_id_vozcliente;
 	public $_id_responsable;
-	public $_kms_orden;
+    public $_kms_orden;
+    public $_control;
 
     public function __construct() {
 
@@ -206,6 +207,16 @@ class orden {
         $this->_kms_orden = $kms_orden;
     }
 
+    public function get_control_orden() {
+
+        return $this->_control;
+    }
+
+    public function set_control_orden($control_orden) {
+
+        $this->_control = $control_orden;
+    }
+
     public function addOrden($orden) {
         $sql="";
 		$sql = $sql . "'" . $orden->get_id_cliente() . "',";
@@ -220,7 +231,8 @@ class orden {
         $sql = $sql . "'" . $orden->get_descrip_vc() . "&&" . $orden->get_contacto_vc() . "',";
         $sql = $sql . "'"  . $orden->get_id_vozcliente() . "',";
         $sql = $sql . "'"  . $orden->get_id_responsable() . "',";
-        $sql = $sql . "'"  . $orden->get_kms_orden() . "'";
+        $sql = $sql . "'"  . $orden->get_kms_orden() . "',";
+        $sql = $sql . "'"  . $orden->get_control_orden() . "'";
         
         $result = $this->_DB->select_query("call sp_ordeninsert (" . $sql . ")");
        
@@ -242,8 +254,9 @@ class orden {
         $sql = $sql . "'" . $orden->get_descrip_vc() . "&&" . $orden->get_contacto_vc() . "',";
         $sql = $sql . ""  . $orden->get_id_vozcliente() . ",";
         $sql = $sql . "'" . $orden->get_id_responsable() . "',";
-        $sql = $sql . "'" . $orden->get_kms_orden() . "'";
-        
+        $sql = $sql . "'" . $orden->get_kms_orden() . "',";
+        $sql = $sql . "'" . $orden->get_control_orden() . "'";
+ 
         $this->_DB->alteration_query("call sp_ordenupdate (" . $sql . ")");
 
         return $orden->get_id_orden();

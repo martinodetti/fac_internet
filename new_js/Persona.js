@@ -260,16 +260,15 @@ $("#table-example_filter").children().children().focus();
 			width: 850,
 			height: 570,
 			modal: true
+        });
+        
+        //modal que actuliza
+		$('#dialg_ctacte').dialog({
+			autoOpen: false,
+			width: 400,
+			height: 450,
+			modal: true
 		});
-                                          
-                
-                
-
-
-
-
-
-
 
 
     //Nota: Agregar un tiempo adicional, al recibir el return del response.1s es sugerido.
@@ -349,6 +348,38 @@ $("#table-example_filter").children().children().focus();
             } 
         });   
     }
+
+    $(".clsMatrizCtacte").livequery("click", function(e){
+        var idper		= $(this).attr("id").replace("btn_ctacte","");//id de la persona
+        var frmPersona	= "opc=33&id_provd="+idper;
+        $("#txt_id_provd_temp").val(idper);
+         $.ajax({
+           type:"POST",
+           url:"CONTROLLER/C_Persona.php",
+           data:frmPersona,
+           success:function(response){
+               $("#ctacte_table").html($(response).fadeIn('slow'));
+           }
+       });
+
+          $('#dialg_ctacte').dialog('open');
+    });
+
+
+    $('#btn_Detalle_imprimir').click(function (){
+        var grid = "";//$("#ctacte_table").clone().html();
+        var idcli = $("#txt_id_provd_temp").val();
+        var windowSizeArray = [ "width=200,height=200","width=800,height=600,scrollbars=yes" ];
+        var url 		= "ctacte_provd_print.php";
+        var windowName 	= "popUp";//$(this).attr("name");
+        var windowSize	= windowSizeArray;
+        var param		= "?&provd="+idcli+"&grilla="+grid;
+        var win			= window.open(url+param, windowName, windowSize);
+    });
+
+    $("#btn_Detalle_cerrar").click(function(){
+        $('#dialg_ctacte').dialog('close');
+    });
     
      //cargo formulario modal con sus valores
      $(".clsMatrizModificar").livequery("click", function(e){

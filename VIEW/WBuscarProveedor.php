@@ -147,8 +147,8 @@
                 $row[] = $aRow[ $aColumns[3] ];
                 $row[] = $aRow[ $aColumns[4] ];
                 $row[] = $aRow[ $aColumns[5] ];
-                $row[] = "<a id='btn_update" . $aRow['id_persona'] . "' name='btn_update" .$aRow['id_persona'] . "' class='button white clsMatrizModificar' style='width:60px;height:15px' href='#'><span class='icon_text edit'></span>Editar</a>";
-//                $row[] ='<a href="#" id="modi_'.$aRow['id_disciplina'].'" class="tabla_editar">Modificar</a><a style="padding-left: 10px" class="tabla_eliminar" id="eli_'.$aRow['id_disciplina'].'" href="#">Eliminar</a>';
+				$row[] = "<a id='btn_update" . $aRow['id_persona'] . "' name='btn_update" .$aRow['id_persona'] . "' class='button white clsMatrizModificar' style='width:60px;height:15px' href='#'><span class='icon_text edit'></span>Editar</a>".
+						 "<a id='btn_ctacte" . $aRow['id_persona'] . "' name='btn_ctacte" .$aRow['id_persona'] . "' class='button white clsMatrizCtacte' style='width:60px;height:15px' href='#'><span class='icon_text preview'></span>Cuenta</a>";
 		$output['aaData'][] = $row;
 	}
 	echo json_encode( $output );

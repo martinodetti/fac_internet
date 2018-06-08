@@ -611,6 +611,11 @@ case 32: //clientes
 		$out = $clsPersona->CargarJsonClienteNombreCtaCte($strFiltro);
 	}
 	break;
+case 33:
+	$W_persona=new W_persona();
+	$id_persona = $_POST['id_provd'];
+	$out=$W_persona->printCuentaCorrienteProvd($id_persona);
+	break;
 }
 
 die($out);

@@ -42,6 +42,7 @@ case '1': //add
 	$descrip_vc			= $_GET['txt_detalle_vozcliente'];
 	$contacto_vc		= $_GET['txt_contacto_vozcliente'];
 	$kms_orden			= $_GET['save_kms_orden'];
+	$control			= $_GET['save_control_orden'];
 	$id_vozcliente		= 0;
 //	$id_vozcliente		= $_GET['save_id_vozcliente'];
 	$id_responsable		= $_GET['save_id_responsable'];
@@ -89,6 +90,7 @@ case '1': //add
 			$orden->set_id_vozcliente(		$id_vozcliente);
 			$orden->set_id_responsable(		$id_responsable);
 			$orden->set_kms_orden(			$kms_orden);
+			$orden->set_control_orden(		$control);
 			$ret=$orden->addorden(			$orden);
 		
 			$id_orden=$ret['0'][0]; //last_id de orden de reparacion
@@ -167,6 +169,7 @@ case '2' : //update
 	$id_responsable		= $_GET['save_id_responsable'];
 //	$id_vozcliente		= $_GET['save_id_vozcliente'];
 	$kms_orden			= $_GET['save_kms_orden'];
+	$control			= $_GET['save_control_orden'];
 
 	if($_GET['tipo_guardar'] == 'abierto') {
 		$estado_orden		= "1"; 
@@ -204,6 +207,7 @@ case '2' : //update
 	$orden->set_contacto_vc(		$contacto_vc);
 	$orden->set_id_responsable(		$id_responsable);
 	$orden->set_kms_orden(			$kms_orden);
+	$orden->set_control_orden(		$control);
 
 	$ret=$orden->updateOrden($orden); 
 	$out=$ret['rows_affected'][0]; 

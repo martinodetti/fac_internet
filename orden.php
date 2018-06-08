@@ -546,6 +546,10 @@ if(isset ($_SESSION['id_persona'])){
 																	<a id="btn_deleteVehiculo" href="#"><span class="icon_text cancel"></spam></a>
 																</div>
 															</td>
+
+															
+
+
 														</div>
 													</tr>
 													</tbody>
@@ -575,8 +579,9 @@ if(isset ($_SESSION['id_persona'])){
 												<table border="0" width="800" >
 													<thead>
 														<tr>
-															<th style="width: 400px"></th>
 															<th style="width: 200px"></th>
+															<th style="width: 50px"></th>
+															<th style="width: 50px"></th>
 														</tr>
 													</thead>
 													<tbody>
@@ -589,6 +594,11 @@ if(isset ($_SESSION['id_persona'])){
 																<label class="form-label required"> Kms :</label>  
 																<input id="save_kms_orden" class="form-field width40" name="save_kms_orden" type="text" value="" maxlength="10"/>
 															</td>
+															<td >
+																<label class="form-label required"> Nº Control :</label>  
+																<input id="save_control_orden" class="form-field width40" name="save_control_orden" type="text" value="" maxlength="10"/>
+															</td>
+														</tr>
 													</tbody>
 												</table>
 												<table border="0" style="width: 600px">   

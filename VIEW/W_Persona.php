@@ -445,9 +445,47 @@ public function printClienteApe($Apellido) {
         $ret = $ret . "</table>";
         return $ret;
     }    
+
+    public function printCuentaCorrienteProvd($idc) {
+
+        $ret = "";
+        $data = array();
+        $Cliente = new Persona();
+        $data = $Cliente->getCtaCteProvd($idc);
+
+        $ret = $ret . "<table class='display' id='tabledata'>";
+        $ret = $ret . "<thead>";
+        $ret = $ret . "<tr>";
+        $ret = $ret . "<th class='tc'>Factura</th>";
+        $ret = $ret . "<th class='tc'>Fecha</th>";
+        $ret = $ret . "<th class='tc'>Recepcion</th>";
+        $ret = $ret . "<th class='tc'>Total</th>";
+        $ret = $ret . " </tr>";
+        $ret = $ret . "</thead>";
+        $ret = $ret . "<tbody>";
+        
+        $total = 0;
+
+        foreach ($data as $dat) {
+            $ret = $ret . "<tr class='gradeC'>";
+            
+            $ret = $ret . "<td class='tc'>" . $dat['factura'] . "</td>";
+            $ret = $ret . "<td class='tc'>" . $dat['fecha'] . "</td>";
+            $ret = $ret . "<td class='tc'>" . $dat['ingreso'] . "</td>";
+            $ret = $ret . "<td style='text-align: right;' class='tc'>" . $dat['total'] . "</td>";
+
+            $ret = $ret . "</tr>";
+            $total = $total + $dat['total'];
+        }
+        $ret = $ret . "<td class='tc'></td><td class='tc'></td><td class='tc'>TOTAL</td><td style='text-align: right;' class='tc'>".$total."</td>";
+
+        $ret = $ret . "</tbody>";
+        $ret = $ret . "</table>";
+        return $ret;
+    }    
     
     
-public function printClientePendiente($fecha) {
+    public function printClientePendiente($fecha) {
 
         $ret = "";
         $data = array();

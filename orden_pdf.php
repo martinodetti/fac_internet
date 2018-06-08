@@ -26,6 +26,7 @@ $obs		= $_GET['obs'];
 $voz		= $_GET['voz'];
 $resp 		= $_GET['resp'];
 $kms		= $_GET['kms'];
+$control	= $_GET['control'];
 
 $arr_fecemi = explode('-',$fecemi);
 
@@ -150,11 +151,15 @@ $pdf->SetAutoPageBreak(false);
 	$pdf->SetX(6);
 	$pdf->Cell(12,6,"Obs:", $bd);
 	$pdf->setFont('Times','B',13);
-	$pdf->Cell(144,6,$obs,$bd);
+	$pdf->Cell(114,6,$obs,$bd);
 	$pdf->setFont('Times','',13);
 	$pdf->Cell(12,6,'Kms: ',$bd);
 	$pdf->setFont('Times','B',13);
-	$pdf->Cell(30,6,$kms,$bd);
+	$pdf->Cell(20,6,$kms,$bd);
+	$pdf->setFont('Times','',13);
+	$pdf->Cell(16,6,'Control: ',$bd);
+	$pdf->setFont('Times','B',13);
+	$pdf->Cell(25,6,$control,$bd);
 	$pdf->setFont('Times','',13);
 	$pdf->Ln();
 //	$pdf->MultiCell(198,6,"Observaciones: " . $obs, $bd);

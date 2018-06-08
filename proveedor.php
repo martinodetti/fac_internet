@@ -106,7 +106,8 @@ $arr_prov = $provincia->listprovincias();
                                           <ul class="tabs-nav">
                                                 <li class="tab"><a href="#tabs-1">MODIFICAR</a></li>
                                                 <li class="tab"><a href="#tabs-2">NUEVO</a></li>
-                                                <li class="tab"><a href="#tabs-3">ELIMINAR</a></li>
+<!--                                                <li class="tab"><a href="#tabs-4">CTAS CTES</a></li>
+-->                                                <li class="tab"><a href="#tabs-3">ELIMINAR</a></li>
                                             </ul>
                                         
                                         <div class="box-content">  
@@ -115,6 +116,18 @@ $arr_prov = $provincia->listprovincias();
                                                 <p class="fr"></p>
 												<a id="dial_msg_close" class="button themed closer">Aceptar</a>
                                             </div>
+
+                                            <div id="tabla_ctacte">	</div>
+											<div id="dialg_ctacte" class="dialog" title="CUENTA CORRIENTE">
+                                            <input type="hidden" id="txt_id_provd_temp" name="txt_id_provd_temp"/>
+												<div id="ctacte_table">	</div>
+
+												</br>
+												<p class="fr">
+												<input id="btn_Detalle_imprimir" class="button themed" type="button" value="Imprimir" name="btn_Detalle_imprimir" />
+												<input id="btn_Detalle_cerrar" class="button themed" type="button" value="Cerrar" name="btn_Detalle_Cerrar" />
+												</p>
+											</div>
                                             
                                             <div id="dialg_form" class="dialog" title="SYSFACTURA INFORMA">   
                                                 <form id="frmPersona_Update" method="post" action="">
@@ -229,12 +242,12 @@ $arr_prov = $provincia->listprovincias();
 														<thead>
 															<tr>
 																<th>ID</th>
-																<th>Razon Social</th>
-																<th>CUIT</th>
-																<th>Teléfono</th>
-																<th >Celular</th>
+																<th width="120">Razon Social</th>
+																<th width="50">CUIT</th>
+																<th width="50">Teléfono</th>
+																<th width="50">Celular</th>
 																<th>E-mail</th>
-																<th>Opción</th>
+																<th width="190">Opción</th>
 															</tr>
 														</thead>
 														<tbody>

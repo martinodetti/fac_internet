@@ -1069,6 +1069,35 @@ class persona {
 		}
 
 		return $data;
+    }
+    
+    public function getCtaCteProvd($idc)
+	{
+		$data = array();
+		
+		//ordenes de reparacion
+		$sql1= "SELECT c.guiacod_compra, DATE_FORMAT(c.fec_compra, '%d-%m-%Y') fecha, DATE_FORMAT(c.fec_ingreso, '%d-%m-%Y') ingreso, c.total_compra, c.nota_credito, c.nota_debito
+                FROM compra c 
+                WHERE c.estado_compra = 1
+                AND c.id_provd = " . $idc;
+
+		$result1 = $this->_DB->select_query($sql1);
+
+		foreach($result1 as $row)
+		{
+            if($row['nota_credito'] == 1){
+                $row['guiacod_compra'] = 'NC' . $row['guiacod_compra'];
+            }
+            if($row['nota_debito'] == 1){
+                $row['guiacod_compra'] = 'ND' . $row['guiacod_compra'];
+            }
+            $data[] = array("factura"	=>	$row['guiacod_compra']	, 
+                            "fecha"	    =>	$row['fecha'],
+                            "ingreso"   =>  $row['ingreso'],
+							"total"	    =>	$row['total_compra']);
+		}
+
+		return $data;
 	}
 
 	public function get_margen_ganancia($id_provd)

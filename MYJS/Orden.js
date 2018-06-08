@@ -850,13 +850,14 @@ $('#tt').datagrid('reloadFooter',[  //inicio foter del datagrid
         var obs		= $("#save_obs_orden").val();
         var to		= $("#save_total_orden").val();
         var resp	= $('#save_id_responsable option:selected').text();
-        var kms		= $('#save_kms_orden').val();
+		var kms		= $('#save_kms_orden').val();
+		var control = $('#save_control_orden').val();
         var voz		= "VOZ CLIENTE: " + $("#detalle_vozcliente").val() + ". CONTACTO: " + $("#contacto_vozcliente").val();
 
         var url 		= "orden_pdf.php";
         var windowName 	= "popUp";//$(this).attr("name");
         var windowSize 	= windowSizeArray;
-        var param		= "?mostrar_precios=0&id_cliente="+cliid+"&detalle="+fo+"&numero="+numero+"&fecemi="+fecemi+"&fecing="+fecing+"&fecegr="+fecegr+"&idvehiculo="+vehiid+"&obs="+obs+"&total="+to+"&voz="+voz+"&resp="+resp+"&kms="+kms;
+        var param		= "?mostrar_precios=0&id_cliente="+cliid+"&detalle="+fo+"&numero="+numero+"&fecemi="+fecemi+"&fecing="+fecing+"&fecegr="+fecegr+"&idvehiculo="+vehiid+"&obs="+obs+"&total="+to+"&voz="+voz+"&resp="+resp+"&kms="+kms+"&control="+control;
         var win			= window.open(url+param, windowName, windowSize);
 
     });
@@ -875,13 +876,14 @@ $('#tt').datagrid('reloadFooter',[  //inicio foter del datagrid
         var obs		= $("#save_obs_orden").val();
         var to		= $("#save_total_orden").val();
         var resp	= $('#save_id_responsable option:selected').text();
-        var kms		= $('#save_kms_orden').val();
+		var kms		= $('#save_kms_orden').val();
+		var control = $('#save_control_orden').val();
         var voz		= "VOZ CLIENTE: " + $("#detalle_vozcliente").val() + " . CONTACTO: " + $("#contacto_vozcliente").val();
 
         var url 		= "orden_pdf.php";
         var windowName 	= "popUp";//$(this).attr("name");
         var windowSize 	= windowSizeArray;
-        var param		= "?mostrar_precios=1&id_cliente="+cliid+"&detalle="+fo+"&numero="+numero+"&fecemi="+fecemi+"&fecing="+fecing+"&fecegr="+fecegr+"&idvehiculo="+vehiid+"&obs="+obs+"&total="+to+"&voz="+voz+"&resp="+resp+"&kms="+kms;
+        var param		= "?mostrar_precios=1&id_cliente="+cliid+"&detalle="+fo+"&numero="+numero+"&fecemi="+fecemi+"&fecing="+fecing+"&fecegr="+fecegr+"&idvehiculo="+vehiid+"&obs="+obs+"&total="+to+"&voz="+voz+"&resp="+resp+"&kms="+kms+"&control="+control;
         var win			= window.open(url+param, windowName, windowSize);
 
     });
@@ -993,6 +995,7 @@ $('#tt').datagrid('reloadFooter',[  //inicio foter del datagrid
 					$("#save_id_responsable").val(response.id_responsable);
 					$("#txt_porcentaje").val(response.porcentaje);
 					$("#save_kms_orden").val(response.kms_orden);
+					$("#save_control_orden").val(response.control);
 
 					if(response.contacto_vc != '' || response.descrip_vc != '')
 						$('#lbl_tiene_voz_cliente').show();
@@ -1111,6 +1114,7 @@ $('#tt').datagrid('reloadFooter',[  //inicio foter del datagrid
 					$("#save_id_responsable").val(response.id_responsable);
 					$("#txt_porcentaje").val(response.porcentaje);
 					$("#save_kms_orden").val(response.kms_orden);
+					$("#save_control_orden").val(response.control);
 
 					if(response.contacto_vc != '' || response.descrip_vc != '')
 						$('#lbl_tiene_voz_cliente').show();
