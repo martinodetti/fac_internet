@@ -1087,6 +1087,7 @@ class persona {
 		{
             if($row['nota_credito'] == 1){
                 $row['guiacod_compra'] = 'NC' . $row['guiacod_compra'];
+                $row['total_compra'] = $row['total_compra'] *-1;
             }
             if($row['nota_debito'] == 1){
                 $row['guiacod_compra'] = 'ND' . $row['guiacod_compra'];
