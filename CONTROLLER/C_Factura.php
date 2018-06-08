@@ -42,7 +42,7 @@ case '1': //add
 	$tipo_fact		=	$_GET['save_tipo_fact'];
 	$forma_pago		=	$_GET['save_forma_pago'];
 	$total_fact		=	$_GET['save_total_fact']; 
-	$obs_fact		=	$_GET['save_obs_fact']; 
+	$obs_fact		=	trim($_GET['save_obs_fact']); 
 	$fecemi_fact	=	$_GET['save_fecemi_fact']; 
 	$id_remitos		= 	$_GET['txt_idremitos'];
 	$id_ordenes		= 	$_GET['txt_idordenes'];
@@ -290,7 +290,7 @@ $id_vendedor=$_POST['update_id_vendedor'];
 
 $descto_fact=$_POST['update_descto_fact']; 
 
-$obs_fact=$_POST['update_obs_fact']; 
+$obs_fact=trim($_POST['update_obs_fact']); 
 
 $fecemi_fact=$_POST['update_fecemi_fact']; 
 

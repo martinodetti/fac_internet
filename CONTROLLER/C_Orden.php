@@ -29,7 +29,7 @@ case '1': //add
 	$id_cliente			= $_GET['save_id_cliente'];
 	$num_orden			= $_GET['save_num_orden'];
 	$total_orden		= $_GET['save_total_orden']; 
-	$obs_orden			= $_GET['save_obs_orden']; 
+	$obs_orden			= trim($_GET['save_obs_orden']); 
 	$fecemi_orden		= $_GET['save_fecemi_orden']; 
 	$fecingreso_orden	= $_GET['save_fecingreso_orden']; 
 	$fecegreso_orden	= $_GET['save_fecegreso_orden']; 
@@ -153,7 +153,7 @@ case '2' : //update
 	$id_cliente			= $_GET['save_id_cliente'];
 	$num_orden			= $_GET['save_num_orden'];
 	$total_orden		= $_GET['save_total_orden']; 
-	$obs_orden			= $_GET['save_obs_orden']; 
+	$obs_orden			= trim($_GET['save_obs_orden']); 
 	$fecemi_orden		= $_GET['save_fecemi_orden']; 
 	$fecingreso_orden	= $_GET['save_fecingreso_orden']; 
 	$fecegreso_orden	= $_GET['save_fecegreso_orden']; 
@@ -346,7 +346,7 @@ case '15':
 	
 case '16':
 	$id_orden = $_GET['id_orden'];
-	$obs = $_GET['obs'];
+	$obs = trim($_GET['obs']);
 	$clsOrden = new orden();
 	$out = json_encode($clsOrden->anularOrden($id_orden, $obs));
 	break;

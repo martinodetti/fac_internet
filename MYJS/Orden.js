@@ -406,7 +406,11 @@ $('#tt').datagrid('reloadFooter',[  //inicio foter del datagrid
     				sumatoria();
                 }
            	});
-           	$("#save_obs_orden").val($("#save_obs_orden").val() + "- (Presupuesto: " + id + ")") ;
+			if($("#save_obs_orden").val() != ""){
+				$("#save_obs_orden").val($("#save_obs_orden").val() + "- (Presupuesto: " + id + ")") ;
+			}else{
+				$("#save_obs_orden").val("(Presupuesto: " + id + ")") ;
+			}
 		}
 
 //		recalcularPrecios();
@@ -501,7 +505,7 @@ $('#tt').datagrid('reloadFooter',[  //inicio foter del datagrid
                     $("#txt_vehiculo").val("");
                 }
 
-				if($("#save_obs_orden").val() == ' - '){
+				if($("#save_obs_orden").val() == ' - ' || $("#save_obs_orden").val() == '- ' || $("#save_obs_orden").val() == ' -'){
 					$("#save_obs_orden").val("");
 				}
 

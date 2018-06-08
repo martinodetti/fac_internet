@@ -833,8 +833,9 @@ $(document).ready(function(){
 				reloadData();
 				sumatoria();
 
-
-				$("#save_obs_fact").val($("#save_obs_fact").val() + ' '+ response._obs_orden);
+				if(response._obs_orden != ""){
+					$("#save_obs_fact").val($("#save_obs_fact").val() + ' '+ response._obs_orden);
+				}
 			}
 		});
 
@@ -861,7 +862,9 @@ $(document).ready(function(){
 			data:"opc=11&id_remi=" + id_remi,
 			dataType:'json',
 			success:function(response){
-				$("#save_obs_fact").val($("#save_obs_fact").val() + ' - ' + response.obs_remi);
+				if(response.obs_remi != ""){
+					$("#save_obs_fact").val($("#save_obs_fact").val() + ' - ' + response.obs_remi);
+				}
 
 				var arr_det = response.detalle;
 				for (var i = 0 ; i < arr_det.length ; i++) {

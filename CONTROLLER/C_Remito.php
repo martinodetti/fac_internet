@@ -28,7 +28,7 @@ case '1': //add
 	$num_remi		= $_GET['save_num_remi'];
 	$total_remi		= $_GET['save_total_remi'];
 //	$total_remi		= 0; ¿¿¿¿ por qué carajo había hecho esto?????
-	$obs_remi		= $_GET['save_obs_remi'];
+	$obs_remi		= trim($_GET['save_obs_remi']);
 	$fecemi_remi	= $_GET['save_fecemi_remi'];
 	$importe_MO		= $_GET['txt_importe_manoobra'];
 	$descrip_MO		= $_GET['txt_descripcion_manoobra'];
@@ -106,7 +106,7 @@ case '2' : //update
 	$num_remi		= $_GET['save_num_remi'];
 	$total_remi		= $_GET['save_total_remi'];
 //	$total_remi		= 0; ¿¿¿¿ por qué carajo había hecho esto?????
-	$obs_remi		= $_GET['save_obs_remi'];
+	$obs_remi		= trim($_GET['save_obs_remi']);
 	$fecemi_remi	= $_GET['save_fecemi_remi'];
 	$importe_MO		= $_GET['txt_importe_manoobra'];
 	$descrip_MO		= $_GET['txt_descripcion_manoobra'];
