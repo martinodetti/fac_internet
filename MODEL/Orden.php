@@ -29,17 +29,17 @@ class orden {
 
     public function orden($id_orden, $id_vehiculo, $id_cliente, $num_orden, $obs_orden, $total_orden, $fecemi_orden,$fecingreso_orden,$fecegreso_orden, $estado_orden, $descrip_vc, $id_vozcliente, $id_responsable) {
 
-        $this->_id_orden 			= $id_orden;
+        $this->_id_orden			= $id_orden;
 		$this->_id_vehiculo			= $id_vehiculo;
-        $this->_id_vendedor 		= $id_vendedor;
+        $this->_id_vendedor			= $id_vendedor;
 		$this->_id_cliente			= $id_cliente;
-    	$this->_num_orden			= $num_orden;
-        $this->_obs_orden 			= $obs_orden;
-        $this->_total_orden 		= $total_orden;
+		$this->_num_orden			= $num_orden;
+        $this->_obs_orden			= $obs_orden;
+        $this->_total_orden			= $total_orden;
         $this->_fecemi_orden		= $fecemi_orden;
         $this->_fecingreso_orden	= $fecingreso_orden;
 		$this->_fecegreso_orden		= $fecegreso_orden;
-        $this->_estado_orden 		= $estado_orden;
+        $this->_estado_orden		= $estado_orden;
         $this->_descrip_vc			= $descrip_vc;
         $this->_id_vozcliente		= $id_vozcliente;
         $this->_id_responsable		= $id_responsable;
@@ -65,10 +65,10 @@ class orden {
     }
     
     public function get_id_vozcliente() {
-    	if($this->_id_vozcliente == "")
-    		return 'NULL';
-    	else
-	        return $this->_id_vozcliente;
+		if($this->_id_vozcliente == "")
+			return 'NULL';
+		else
+			return $this->_id_vozcliente;
     }
 
     public function set_id_vozcliente($id_vozcliente) {
@@ -223,7 +223,11 @@ class orden {
         $sql = $sql . "'" . $orden->get_id_vehiculo() . "',";
 		$sql = $sql . "'" . $orden->get_num_orden() . "',";
         $sql = $sql . "'" . $orden->get_fecingreso_orden() . "',";
-        $sql = $sql . "'" . $orden->get_fecegreso_orden() . "',";
+		if($orden->_fecegreso_orden != '')
+			$sql = $sql . "'" . $orden->get_fecegreso_orden() . "',";
+		else
+			$sql = $sql . "NULL,";
+
         $sql = $sql . "'" . $orden->get_fecemi_orden() . "',";
         $sql = $sql . "'" . $orden->get_obs_orden() . "',";
         $sql = $sql . "'" . $orden->get_total_orden() . "',";
@@ -245,8 +249,11 @@ class orden {
         $sql = $sql . "'" . $orden->get_id_cliente() . "',";
         $sql = $sql . "'" . $orden->get_id_vehiculo() . "',";
 		$sql = $sql . "'" . $orden->get_num_orden() . "',";
-        $sql = $sql . "'" . $orden->get_fecingreso_orden() . "',";
-        $sql = $sql . "'" . $orden->get_fecegreso_orden() . "',";
+	$sql = $sql . "'" . $orden->get_fecingreso_orden() . "',";
+	if($orden->_fecegreso_orden != '')
+		$sql = $sql . "'" . $orden->get_fecegreso_orden() . "',";
+	else
+		$sql = $sql . "NULL,";
         $sql = $sql . "'" . $orden->get_fecemi_orden() . "',";
         $sql = $sql . "'" . $orden->get_obs_orden() . "',";
         $sql = $sql . "'" . $orden->get_total_orden() . "',";
@@ -349,16 +356,16 @@ class orden {
 	
 	public function listordenCliente($idcliente) {
         $data = array();
-        $sql = "SELECT 	o.*, DATE_FORMAT(o.fecemi_orden,'%d-%m-%Y') fecemi_orden, 
-        				DATE_FORMAT(o.fecingreso_orden,'%d-%m-%Y') fecingreso_orden,
-        				DATE_FORMAT(o.fecegreso_orden,'%d-%m-%Y') fecgreso_orden,
-        				c.nom_persona , ve.dominio
-				FROM 	orden_reparacion o 
+        $sql = "SELECT	o.*, DATE_FORMAT(o.fecemi_orden,'%d-%m-%Y') fecemi_orden, 
+						DATE_FORMAT(o.fecingreso_orden,'%d-%m-%Y') fecingreso_orden,
+						DATE_FORMAT(o.fecegreso_orden,'%d-%m-%Y') fecgreso_orden,
+						c.nom_persona , ve.dominio
+				FROM	orden_reparacion o 
 				LEFT JOIN persona c 
 					ON (o.id_cliente = c.id_persona) 
 				LEFT JOIN `vehiculo` ve 
 					ON (ve.`id_vehiculo` = o.`id_vehiculo`) 
-				WHERE 	id_cliente = " . $idcliente . " 
+				WHERE	id_cliente = " . $idcliente . " 
 				AND		estado = 2";
 
         $result = $this->_DB->select_query($sql);
@@ -400,7 +407,7 @@ class orden {
 //            $factura->set_fecemi_fact($row['fecemi_fact']);
 //            $factura->set_estado_fact($row['estado_fact']);
             $data[] = array("id_orden"	=> $row['id_orden']		, "obs_orden"	=> $row['observaciones'],
-            				"total_orden"=> $row['total_orden']	, "fecemi_orden"	=> $row['fecemi_orden']);
+							"total_orden"=> $row['total_orden']	, "fecemi_orden"	=> $row['fecemi_orden']);
         }
 
         return json_encode($data);
@@ -430,11 +437,11 @@ class orden {
    
 	public function listJsonordenDetalleFactura($id_orden){
 		$data = array();
-        $sql = "SELECT 	do.id_orden, p.nom_producto, do.canti_detord, p.pvp1_producto AS precio_detord, do.canti_detord,
-        				do.id_producto, p.descrip_producto, p.id_tipoiva
-        		FROM 	detalle_ordenreparacion do
-        		JOIN 	producto p USING (id_producto) 
-        		WHERE	do.id_orden=".$id_orden;
+        $sql = "SELECT	do.id_orden, p.nom_producto, do.canti_detord, p.pvp1_producto AS precio_detord, do.canti_detord,
+						do.id_producto, p.descrip_producto, p.id_tipoiva
+				FROM	detalle_ordenreparacion do
+				JOIN	producto p USING (id_producto) 
+				WHERE	do.id_orden=".$id_orden;
         
         
         $result = $this->_DB->select_query($sql);  
@@ -447,17 +454,17 @@ class orden {
         
         //MANOS DE OBRA
         $sql1 ="SELECT	id_orden, '0' AS id_producto, '1' AS canti_detord, 'MO' AS nom_producto, importe AS precio_detord, descripcion AS descrip_producto
-        		FROM	manoobra 
-        		WHERE	id_orden = ".$id_orden;
+				FROM	manoobra 
+				WHERE	id_orden = ".$id_orden;
         $result1 = $this->_DB->select_query($sql1);
         $primera_mo_ocupada = 0;
         foreach($result1 as $row) {
-    	    $id_p = -2;
+			$id_p = -2;
     
-        	if($primera_mo_ocupada == 0){
-        		$id_p = 0;
-        		$primera_mo_ocupada = 1;
-        	}
+			if($primera_mo_ocupada == 0){
+				$id_p = 0;
+				$primera_mo_ocupada = 1;
+			}
             $data[]=array(	"id_orden"		=>$row['id_orden']			,	"nom_producto"	=>$row['nom_producto'],
 							"canti_detord"	=>$row['canti_detord']		,	"precio_detord" =>$row['precio_detord'],
 							"id_tipoiva"	=>'1'						,	"subtotal"		=>$row['precio_detord'] * $row['canti_detord'],
@@ -466,8 +473,8 @@ class orden {
         
         //TORNERIA
         $sql2 ="SELECT	id_orden, '-1' AS id_producto, '1' AS canti_detord, 'TO' AS nom_producto, importe AS precio_detord, descripcion AS descrip_producto
-        		FROM	torneria 
-        		WHERE	id_orden = ".$id_orden;
+				FROM	torneria 
+				WHERE	id_orden = ".$id_orden;
         $result2 = $this->_DB->select_query($sql2);
         foreach($result2 as $row) {
             $data[]=array(	"id_orden"		=>$row['id_orden']			,	"nom_producto"	=>$row['nom_producto'],
@@ -497,9 +504,9 @@ class orden {
 		$result = $this->_DB->select_query($sql1);
 
 		foreach($result as $row){
-	        $sql2 = "";
-	        $sql2 = "UPDATE producto SET stock_producto = stock_producto + " . $row['canti_detord'] . " WHERE id_producto = " . $row['id_producto'];
-	        $this->_DB->select_query($sql2);
+			$sql2 = "";
+			$sql2 = "UPDATE producto SET stock_producto = stock_producto + " . $row['canti_detord'] . " WHERE id_producto = " . $row['id_producto'];
+			$this->_DB->select_query($sql2);
 		}
 		//orden
 		$sql3 = "UPDATE orden_reparacion SET estado = 4, observaciones = '".$obs."' WHERE id_orden = ". $ido;
@@ -554,7 +561,7 @@ class orden {
 		$data = array('importe' => '', 'descripcion' => '');
 		foreach($result as $row){
 			if(count($result) > 1 || $orden == 1){
-				$data['importe'] 	= $row['importe'];
+				$data['importe']	= $row['importe'];
 				$data['descripcion']= $row['descripcion'];
 			}else{
 				$data['importe']	= "";
@@ -570,7 +577,7 @@ class orden {
 		$result = $this->_DB->select_query($sql);
 		$data = array('importe' => '', 'descripcion' => '');
 		foreach($result as $row){
-			$data['importe'] 	= $row['importe'];
+			$data['importe']	= $row['importe'];
 			$data['descripcion']= $row['descripcion'];
 		}
 		return $data;
