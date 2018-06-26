@@ -1533,18 +1533,27 @@ $(document).ready(function(){
 					subt=parseFloat(canti*precio);
 
 					if(item._id_producto == '0'){
+						if(response._tipo_fact != "1"){
+                            precio = parseFloat(precio*1.21);
+                        }
 						$("#txt_importe_manoobra").val(precio);
 						$("#txt_descripcion_manoobra").val(item._descrip_producto);
 						$("#importe_manoobra").val(precio);
 						$("#descripcion_manoobra").val(item._descrip_producto);
 					}
 					if(item._id_producto == '-2'){
+						if(response._tipo_fact != "1"){
+							precio = parseFloat(precio*1.21);
+						}
 						$("#txt_importe_manoobra2").val(precio);
 						$("#txt_descripcion_manoobra2").val(item._descrip_producto);
 						$("#importe_manoobra2").val(precio);
 						$("#descripcion_manoobra2").val(item._descrip_producto);
 					}
 					if(item._id_producto == '-1'){
+						if(response._tipo_fact != "1"){
+	                  		precio = parseFloat(precio*1.21);
+                        }
 						$("#txt_importe_torneria").val(precio);
 						$("#txt_descripcion_torneria").val(item._descrip_producto);
 						$("#importe_torneria").val(precio);
