@@ -57,7 +57,7 @@ class producto_proveedor {
         $sql = $sql . "'" . $producto_proveedor->get_id_proveedor() . "'";
         $result = $this->_DB->select_query("call sp_producto_proveedorinsert (" . $sql . ")");
 */
-        $sql = "INSERT INTO producto_proveedor values (0,".$producto_proveedor->get_id_producto().", ".$producto_proveedor->get_id_proveedor().")";
+		$sql = "INSERT INTO producto_proveedor values (0,".$producto_proveedor->get_id_producto().", ".$producto_proveedor->get_id_proveedor().")";
         $result = $this->_DB->select_query($sql);
         return $result;
     }

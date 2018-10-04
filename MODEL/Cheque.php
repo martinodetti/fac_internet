@@ -296,7 +296,7 @@ class cheque {
     public function getChequesDisponibles()
     {
     	$sql = "SELECT id_cheque, num_cheque, monto_cheque, date_format(fecpago_cheque,'%d-%m-%Y') fecpago_cheque, banco_cheque, propietario, nom_persona as cliente
-    			FROM cheque JOIN persona on (cheque.id_cliente = persona.id_persona)
+    			FROM cheque LEFT JOIN persona on (cheque.id_cliente = persona.id_persona)
     			WHERE estado_cheque = 1";
 
     	$rs = $this->_DB->select_query($sql);

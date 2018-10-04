@@ -69,9 +69,8 @@ $producto->set_fecupdate_producto($fecupdate_producto);
 $producto->set_posicion_producto($posicion_producto);
 $producto->set_estado_producto($estado_producto);
 $producto->set_tipo($tipo);
-$ret=$producto->addProducto($producto);
-
-$id_prod=$ret['0'][0]; //id del producto
+$ret=mysql_fetch_array($producto->addProducto($producto));
+$id_prod=$ret[0]; //id del producto
 $Prod_provd=new producto_proveedor();
 //array de post del proveedor inserción
 if(isset($_POST['Proveedor']))
@@ -81,9 +80,9 @@ if(isset($_POST['Proveedor']))
 	foreach($pro_arr as $id_var){
 		$Prod_provd->set_id_producto($id_prod);
 		$Prod_provd->set_id_proveedor($id_var[0]);
-		$out=$Prod_provd->addProducto_proveedor($Prod_provd);
+		$out=mysql_fetch_array($Prod_provd->addProducto_proveedor($Prod_provd));
 	}
-	$out=$out['0'][0];
+	$out=$out[0];
 	//fin del array del proveedor
 }
 break; 
