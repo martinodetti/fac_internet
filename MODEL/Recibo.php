@@ -199,7 +199,7 @@ class recibo {
 
         $sql = "SELECT LAST_INSERT_ID();";
    		$result = $this->_DB->select_query($sql);
-//        $result = $this->_DB->select_query("call sp_reciboinsert (" . $sql . ")");
+        //$result = $this->_DB->select_query("call sp_reciboinsert (" . $sql . ")");
 
         return $result;
     }
@@ -275,20 +275,17 @@ class recibo {
 
     	$sql = "";
         $sql="UPDATE recibo ";
-        $sql = $sql . "SET id_cliente 		= '" . $recibo->get_id_cliente() 		. "',";
+        $sql = $sql . "SET id_cliente 	= '" . $recibo->get_id_cliente() 	. "',";
         $sql = $sql . " fecemi_recibo 	= '" . $recibo->get_fecemi_recibo() . "',";
         $sql = $sql . " num_recibo 		= '" . $recibo->get_num_recibo() 	. "',";
         $sql = $sql . " total_recibo 	= '" . $recibo->get_total_recibo() 	. "',";
         $sql = $sql . " obs_recibo 		= '" . $recibo->get_obs_recibo() 	. "',";
         $sql = $sql . " estado_recibo 	= '" . $recibo->get_estado_recibo() . "',";
-        $sql = $sql . " efectivo_recibo 	= '" . $recibo->get_efectivo_recibo(). "', ";
+        $sql = $sql . " efectivo_recibo = '" . $recibo->get_efectivo_recibo(). "', ";
         $sql = $sql . " id_responsable  = " . $recibo->get_id_responsable() ." ";
-        $sql = $sql . "WHERE id_recibo 		= " . $recibo->get_id_recibo();
+        $sql = $sql . "WHERE id_recibo 	= " . $recibo->get_id_recibo();
 
 	    $result = $this->_DB->alteration_query($sql);
-
-//        $result = $this->_DB->alteration_query("call sp_reciboupdate (" . $sql . ")");
-
         return $result;
     }
 
@@ -299,14 +296,16 @@ class recibo {
     }
 
 	public function deleteContenido($id_recibo){
-		$sql = "delete from cheque where id_recibo = " . $id_recibo;
+        $sql = "delete from cheque where id_recibo = " . $id_recibo;
 		$this->_DB->alteration_query($sql);
 		$sql = "delete from recibo_retencion where id_recibo = ".$id_recibo;
 		$this->_DB->alteration_query($sql);
-		$sql = "delete from transferencia where id_recibo = ".$id_recibo;
-		$this->_DB->alteration_query($sql);
+        $sql = "delete from transferencia where id_recibo = ".$id_recibo;
+        $this->_DB->alteration_query($sql);
+        $sql = "update factura join recibo_factura using (id_fact) set estado_fact = 1 where id_recibo = " . $id_recibo;
+        $this->_DB->alteration_query($sql);
 		$sql = "delete from recibo_factura where id_recibo = ".$id_recibo;
-		$this->_DB->alteration_query($sql);
+        $this->_DB->alteration_query($sql);
 	}
 
     public function json($estado, $txt) {
@@ -373,7 +372,7 @@ class recibo {
 		}
 
 		//cheques
-		$sql = "SELECT 	c.num_cheque, c.banco_cheque, DATE_FORMAT(c.fecpago_cheque,'%d-%m-%Y') as fecha, c.monto_cheque
+		$sql = "SELECT 	c.num_cheque, c.banco_cheque, DATE_FORMAT(c.fecpago_cheque,'%d-%m-%Y') as fecha, c.monto_cheque, c.propietario, c.cuit_propietario, c.obs_cheque, c.estado_cheque
 				FROM 	cheque c
 				WHERE	id_recibo = ". $id_recibo;
 		$result = $this->_DB->select_query($sql);

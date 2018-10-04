@@ -803,16 +803,16 @@ $('#facturas_table').datagrid({
     // save_estado_fact 0
 
     function Recibo_Add(){
-/*
-		validador= validarCombos();
-		var opc = 1;
-		if(validador == 'C'){
-*/
+			/*
+					validador= validarCombos();
+					var opc = 1;
+					if(validador == 'C'){
+			*/
 
 			if($("#tipo_guardar").val() == "nuevo"){
 				opc = 1;
 			}else{
-				opc = 2;
+				opc = 20;
 			}
 
 			var frmRecibo=$("#frm_recibo").serialize();
@@ -914,6 +914,10 @@ $('#facturas_table').datagrid({
 							banco:item.banco_cheque	,
 							fecha:item.fecha,
 							monto:total,
+							estado:item.estado_cheque,
+							propie:item.propietario,
+							cuit_propie:item.cuit_propietario,
+							obs:item.obs_cheque,
 							check:'<input type="button" id="btn_delete_cheque'+item.num_cheque+'" class="clsBorrarCheque" value="X"/>'
 						};
 						dat_cheques.push(tmp_row);

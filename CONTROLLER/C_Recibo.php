@@ -403,6 +403,127 @@ case '19':
 	$num = $_POST['num'];
 	$out=$clsRecibo->checkNumeroReciboManual($num);
 	break;
+
+case '20':
+	$id_recibo		= $_GET['save_id_recibo'];
+	$id_cliente		= $_GET['save_id_cliente'];
+	$num_recibo		= $_GET['save_num_recibo'];
+	$total_recibo	= $_GET['save_total_recibo'];
+	$obs_recibo		= $_GET['save_obs_recibo'];
+	$fecemi_recibo	= $_GET['save_fecemi_recibo'];
+	$efectivo_recibo= $_GET['save_efectivo_recibo'];
+    $saldo_p_prov   = $_GET['save_saldo_para_proveedor'];
+	$estado_recibo	= "1";
+	$id_responsable = $_GET['save_id_responsable'];
+	
+	$tipo_recibo 	= "1";
+	if(isset($_GET['save_recibo_local']) && $_GET['save_recibo_local'] == 'on')
+		$tipo_recibo = "2";
+
+	$facturas		= isset($_POST['facturas'])?$_POST['facturas']:array();
+	$cheques		= isset($_POST['cheques'])?$_POST['cheques']:array();
+	$retenciones	= isset($_POST['retenciones'])?$_POST['retenciones']:array();
+	$transferencias	= isset($_POST['transferencias'])?$_POST['transferencias']:array();
+	$fact_prov		= isset($_POST['fact_prov'])?$_POST['fact_prov']:array();
+
+	$recibo=new recibo();
+
+	$recibo->set_id_recibo(		$id_recibo);
+	$recibo->set_id_cliente(	$id_cliente);
+	$recibo->set_num_recibo(	$num_recibo);
+	$recibo->set_total_recibo(	$total_recibo);
+	$recibo->set_obs_recibo(	$obs_recibo);
+	$recibo->set_fecemi_recibo(	$fecemi_recibo);
+	$recibo->set_estado_recibo(	$estado_recibo);
+	$recibo->set_efectivo_recibo($efectivo_recibo);
+	$recibo->set_tipo_recibo(	$tipo_recibo);
+	$recibo->set_id_responsable($id_responsable);
+	
+	$ret=$recibo->updateRecibo(	$recibo);
+
+	$recibo->deleteContenido($id_recibo);
+
+	//guardar los cheques del detalle
+	foreach($cheques as $cheque)
+	{
+		$arr = explode("-",$cheque['fecha']);
+		$fecha_cheque = $arr[2] . "-" . $arr[1] . "-" . $arr[0];
+
+		$clsCheque = new cheque();
+		$clsCheque->set_id_cliente(			$id_cliente			);
+		$clsCheque->set_id_recibo(			$id_recibo			);
+		$clsCheque->set_num_cheque(			$cheque['numero']	);
+		$clsCheque->set_monto_cheque(		$cheque['monto']	);
+		$clsCheque->set_fecrec_cheque(		date('Y-m-d')		);
+		$clsCheque->set_fecpago_cheque(		$fecha_cheque		);
+		$clsCheque->set_banco_cheque(		$cheque['banco']	);
+		$clsCheque->set_propietario(		$cheque['propie']	);
+		$clsCheque->set_cuit_propietario(	$cheque['cuit_propie']);
+		$clsCheque->set_estado_cheque(		$cheque['estado']	);
+		$clsCheque->set_obs_cheque(			$cheque['obs']		);
+
+		$result = $clsCheque->addCheque($clsCheque);
+	}
+
+	//Guardo las retenciones del detalle
+	foreach($retenciones as $retencion)
+	{
+		$ret = array();
+		$ret['id_recibo'] 	= $id_recibo;
+		$ret['idtipo'] 		= $retencion['idtipo'];
+		$ret['numero'] 		= $retencion['numero'];
+		$ret['monto'] 		= $retencion['monto'];
+
+		$result = $recibo->addRetencion($ret);
+	}
+
+	//guardo las transferencias del detalle
+	foreach($transferencias as $trans)
+	{
+		$tra = array();
+		$tra['id_recibo'] 	= $id_recibo;
+		$tra['numero'] 		= $trans['numero'];
+		$tra['monto'] 		= $trans['monto'];
+		$tra['fecha']		= date('Y-m-d');
+
+		$result = $recibo->addTransferencia($tra);
+	}
+
+	$saldo = $total_recibo;
+
+	//facturas del proveedor
+	foreach($fact_prov as $fact_p)
+	{
+		$dat = array();
+		$dat['id_compra'] 	= $fact_p['id'];
+		$dat['id_recibo'] 	= $id_recibo;
+		$dat['saldo'] 		= 0;
+		$dat['monto']		= $fact_p['total'];
+
+		$saldo = $saldo - $fact_p['total'];
+
+		$recibo->addCompraRecibo($dat);
+	}
+
+	//actualizo el saldo del cliente
+    $persona = new persona();
+	$persona->set_saldo_favor($id_cliente, $saldo_p_prov);
+
+	//actualizar las facturas del detalle
+	foreach($facturas as $fact)
+	{
+		$dat = array();
+		$dat['id_fact'] 	= $fact['id'];
+		$dat['id_recibo'] 	= $id_recibo;
+		$dat['saldo'] 		= $fact['pendiente'];
+		$dat['monto']		= $fact['total'] - $fact['pendiente'];
+
+		$recibo->addFacturaRecibo($dat);
+	}
+
+ 	$out=$recibo->json("1", "Los datos se han guardado correctamente.");
+
+	break;
 }
 
 die($out);
