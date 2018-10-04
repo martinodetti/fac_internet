@@ -208,7 +208,7 @@ else
     $id_ciudad 		= $_POST['update_id_ciudad'];
     $id_sexo 		= 1;
     $id_civil 		= 1;
-	$id_condiva 	= 3;
+	$id_condiva 	= $_POST['update_id_condiva'];
     $tiene_ctacte 	= 2;
     $clave_persona 	= "";
     $email_persona 	= $_POST['update_email_persona'];
