@@ -128,87 +128,107 @@ break;
 
 case '2' : //update  - es igual a 1 pero con la diferencia que elimino primero el detallle de la factura y despues la grabo
 
-$id_compra			=$_GET['update_id_compra'];
-$id_provd			=$_GET['save_id_provd'];  //1
-$estado_compra		=$_GET['save_forma_pago'];
-$guiacod_compra		=$_GET['save_guiacod_compra']; //1
-$total_compra		=$_GET['save_total_compra']; //1
-$obs_compra			=$_GET['save_obs_compra']; //1
-$iva21_compra		=$_GET['save_iva21_compra'];
-$iva10_compra		=$_GET['save_iva10_compra'];
-$subtotal_compra	=$_GET['save_subtotal_compra'];
-$fec_compra			=$_GET['save_fec_compra']; //1
-$percepcion 		=$_GET['txt_percepcion'];
-$iibb_ret			=$_GET['save_iibb_ret'];
-$iva_ret			=$_GET['save_iva_ret'];
-$ganancia_ret		=$_GET['save_ganancia_ret'];
-$descuento			=$_GET['save_descuento'];
-$concepto_nograv	=$_GET['save_concepto_nograv'];
-$fec_ingreso		= date('Y-m-d');
+	$id_compra			=$_GET['update_id_compra'];
+	$id_provd			=$_GET['save_id_provd'];  //1
+	$estado_compra		=$_GET['save_forma_pago'];
+	$guiacod_compra		=$_GET['save_guiacod_compra']; //1
+	$total_compra		=$_GET['save_total_compra']; //1
+	$obs_compra			=$_GET['save_obs_compra']; //1
+	$iva21_compra		=$_GET['save_iva21_compra'];
+	$iva10_compra		=$_GET['save_iva10_compra'];
+	$subtotal_compra	=$_GET['save_subtotal_compra'];
+	$fec_compra			=$_GET['save_fec_compra']; //1
+	$percepcion 		=$_GET['txt_percepcion'];
+	$iibb_ret			=$_GET['save_iibb_ret'];
+	$iva_ret			=$_GET['save_iva_ret'];
+	$ganancia_ret		=$_GET['save_ganancia_ret'];
+	$descuento			=$_GET['save_descuento'];
+	$concepto_nograv	=$_GET['save_concepto_nograv'];
+	$fec_ingreso		= date('Y-m-d');
 
-//damos vuelta la fecha
-$arr_fec_tmp = explode('-', $fec_compra);
-$fec_compra = $arr_fec_tmp[2] . '-' . $arr_fec_tmp[1] . '-' . $arr_fec_tmp[0];
+	//damos vuelta la fecha
+	$arr_fec_tmp = explode('-', $fec_compra);
+	$fec_compra = $arr_fec_tmp[2] . '-' . $arr_fec_tmp[1] . '-' . $arr_fec_tmp[0];
+
+	$nota_credito = 0;
+	$nota_debito = 0;
+	if($_GET['cmb_tipo_fact'] == 2){
+		$nota_credito	= 	1;
+	}else if ($_GET['cmb_tipo_fact'] == 3){
+		$nota_debito = 1;
+	}
+
+	
+
+	$compra=new compra();
+	$compra->set_id_compra($id_compra);
+	$compra->set_id_provd($id_provd);
+	$compra->set_guiacod_compra($guiacod_compra);
+	$compra->set_total_compra($total_compra);
+	$compra->set_obs_compra($obs_compra);
+	$compra->set_fec_compra($fec_compra);
+	$compra->set_baseGrava_compra($baseGrava_compra);
+	$compra->set_estado_compra($estado_compra);
+	$compra->set_iva21_compra($iva21_compra);
+	$compra->set_iva10_compra($iva10_compra);
+	$compra->set_subtotal_compra($subtotal_compra);
+	$compra->set_percepcion_compra($percepcion);
+	$compra->set_iibb_ret_compra($iibb_ret);
+	$compra->set_iva_ret_compra($iva_ret);
+	$compra->set_ganancia_ret_compra($ganancia_ret);
+	$compra->set_descuento_compra($descuento);
+	$compra->set_fec_ingreso_compra($fec_ingreso);
+	$compra->set_concepto_nograv($concepto_nograv);
+
+	$ret=$compra->updateCompra($compra);
+	$id_cmp=$id_compra;
+
+	if($nota_credito == 1)
+		$compra->set_nota_credito($id_cmp);
+	if($nota_debito == 1)
+		$compra->set_nota_debito($id_cmp);
 
 
-$compra=new compra();
-$compra->set_id_compra($id_compra);
-$compra->set_id_provd($id_provd);
-$compra->set_guiacod_compra($guiacod_compra);
-$compra->set_total_compra($total_compra);
-$compra->set_obs_compra($obs_compra);
-$compra->set_fec_compra($fec_compra);
-$compra->set_baseGrava_compra($baseGrava_compra);
-$compra->set_estado_compra($estado_compra);
-$compra->set_iva21_compra($iva21_compra);
-$compra->set_iva10_compra($iva10_compra);
-$compra->set_subtotal_compra($subtotal_compra);
-$compra->set_percepcion_compra($percepcion);
-$compra->set_iibb_ret_compra($iibb_ret);
-$compra->set_iva_ret_compra($iva_ret);
-$compra->set_ganancia_ret_compra($ganancia_ret);
-$compra->set_descuento_compra($descuento);
-$compra->set_fec_ingreso_compra($fec_ingreso);
-$compra->set_concepto_nograv($concepto_nograv);
+	//ahora declaro variable general para el array de productos
+	$arr_id_producto="";//tipo cadena
 
-$ret=$compra->updateCompra($compra);
-$id_cmp=$id_compra;
+	//RECIBE ARRAY DE POST  de idproducto con sus respectivas cantidad y costos
+	$detalle=$_POST['Detalle'];
+	//instancio mi clase de detalle de compra
+	$clsDetalle=new detalle_compra();
+	$dt_aux=array();
+	$dt_data=array();
 
-//ahora declaro variable general para el array de productos
-$arr_id_producto="";//tipo cadena
+	//borramos el detalle cargado anteriormente
+	//$clsDetalle->deletedetalle_compra_restar_stock($id_compra);
 
-//RECIBE ARRAY DE POST  de idproducto con sus respectivas cantidad y costos
-$detalle=$_POST['Detalle'];
-//instancio mi clase de detalle de compra
-$clsDetalle=new detalle_compra();
-$dt_aux=array();
-$dt_data=array();
+	//inserto esa asociación de arrays en otro entendible
+	foreach($detalle as $dt_aux){
+	 	$dt_data[]=$dt_aux;
+	 //$dt_data[]=$dt_aux[0];
+	}
+	//ahora estan listos para ser leidos y se guarda los valores
+	foreach($dt_data as $accion){
+	    $clsDetalle->set_id_compra($id_cmp);
+	    $clsDetalle->set_id_producto($accion['id']);
+	    $clsDetalle->set_canti_detcompra($accion['cantidad']);
+	    $clsDetalle->set_costouni_detcompra($accion['precio']);
+	    $clsDetalle->set_precio_vta_detcompra($accion['preciovta']);
+	    $clsDetalle->set_estado_detcompra('1');
+	    $clsDetalle->set_id_proveedor_detcompra($id_provd);
 
-//borramos el detalle cargado anteriormente
-$clsDetalle->deletedetalle_compra_restar_stock($id_compra);
+	    $arr_id_producto=$arr_id_producto.$accion['id'].'-';
 
-//inserto esa asociación de arrays en otro entendible
-foreach($detalle as $dt_aux){
- $dt_data[]=$dt_aux;
- //$dt_data[]=$dt_aux[0];
-}
-//ahora estan listos para ser leidos y se guarda los valores
-foreach($dt_data as $accion){
-    $clsDetalle->set_id_compra($id_cmp);
-    $clsDetalle->set_id_producto($accion['id']);
-    $clsDetalle->set_canti_detcompra($accion['cantidad']);
-    $clsDetalle->set_costouni_detcompra($accion['precio']);
-    $clsDetalle->set_precio_vta_detcompra($accion['preciovta']);
-    $clsDetalle->set_estado_detcompra('1');
-    $clsDetalle->set_id_proveedor_detcompra($id_provd);
+		//insertamos detalle factura o en la nota de crédito en su defecto
+		//fact y nota de credito es lo mismo. Lo unico que cambia es que resta o suma el stock del producto
+		if($nota_credito == 1)
+			$out=$clsDetalle->addDetalle_notacredito($clsDetalle);
+		else
+			$out=$clsDetalle->addDetalle_compra($clsDetalle);
 
-    $arr_id_producto=$arr_id_producto.$accion['id'].'-';
+	}
 
-	$out=$clsDetalle->addDetalle_compra($clsDetalle);
-
-}
-
-break;
+	break;
 
 case '3' : //delete
 

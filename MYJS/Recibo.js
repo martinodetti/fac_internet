@@ -660,7 +660,7 @@ $('#facturas_table').datagrid({
 
 	$(".clsBorrarProveedor").livequery("click", function(e){
 		var idf=$(this).attr("id").replace("btn_delete_fact_prov","");
-		for (var i =0; i < dat_fact.length; i++){
+		for (var i =0; i < dat_fact_prov.length; i++){
 		   	if (dat_fact_prov[i].id === idf) {
 			  	dat_fact_prov.splice(i,1);
 			  	break;
@@ -1015,27 +1015,36 @@ $('#facturas_table').datagrid({
 
     function Cheque_Add(){
 
-    	var che = new Object();
+    	$.ajax({
+			type:"POST",
+			data:"&numero=" + $("#save_num_cheque").val() + "&banco=" + $("#save_banco_cheque").val(),
+			url:"CONTROLLER/C_Cheque.php?opc=16",
+			success:function(response){
+				if(response == 1){
+					alert("Número de cheque y banco existente en el sistema");
+				}else{
+					var che = new Object();
 
-    	che.numero 	= $("#save_num_cheque").val();
-    	che.monto	= $("#save_monto_cheque").val();
-    	che.fecha	= $("#save_fecpago_cheque").val();
-    	che.estado	= $("#save_estado_cheque").val();
-    	che.banco	= $("#save_banco_cheque").val();
-    	che.propie	= $("#save_propietario_cheque").val();
-    	che.cuit_propie	= $("#save_cuit_propie_cheque").val();
-    	che.obs		= $("#save_obs_cheque").val();
-    	che.check 	= '<input type="button" id="btn_delete_cheque'+che.numero+'" class="clsBorrarCheque" value="X"/>';
+			    	che.numero 	= $("#save_num_cheque").val();
+			    	che.monto	= $("#save_monto_cheque").val();
+			    	che.fecha	= $("#save_fecpago_cheque").val();
+			    	che.estado	= $("#save_estado_cheque").val();
+			    	che.banco	= $("#save_banco_cheque").val();
+			    	che.propie	= $("#save_propietario_cheque").val();
+			    	che.cuit_propie	= $("#save_cuit_propie_cheque").val();
+			    	che.obs		= $("#save_obs_cheque").val();
+			    	che.check 	= '<input type="button" id="btn_delete_cheque'+che.numero+'" class="clsBorrarCheque" value="X"/>';
 
-    	dat_cheques.push(che);
-    	reloadDataCheque();
-    	sumatoriaCheque();
+			    	dat_cheques.push(che);
+			    	reloadDataCheque();
+			    	sumatoriaCheque();
 
-    	$("#frm_cheque .form-field").val ("");
-    	$("#dialg_form_cheque").dialog('close');
+			    	$("#frm_cheque .form-field").val ("");
+			    	$("#dialg_form_cheque").dialog('close');
+				}
+			}
+		});
     }
-
-
 
     $("#btn_Cheque_Add").click(function(){
     	$("#frm_cheque").submit();

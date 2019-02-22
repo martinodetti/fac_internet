@@ -121,7 +121,6 @@ class detalle_compra {
         $sql = $sql . "'" . $detalle_compra->get_precio_vta_detcompra() . "',";
         $sql = $sql . "'" . $detalle_compra->get_id_proveedor_detcompra() . "'";
 
-logger("call sp_detalle_comprainsert1 (" . $sql . ")");
 
         $result = $this->_DB->select_query("call sp_detalle_comprainsert1 (" . $sql . ")");
         return $result;
@@ -134,6 +133,7 @@ logger("call sp_detalle_comprainsert1 (" . $sql . ")");
         $sql = $sql . "'" . $detalle_compra->get_canti_detcompra() . "',";
         $sql = $sql . "'" . $detalle_compra->get_costouni_detcompra() . "',";
         $sql = $sql . "'" . $detalle_compra->get_estado_detcompra() . "'";
+       
         $result = $this->_DB->select_query("call sp_detalle_notacreditocomprainsert (" . $sql . ")");
         return $result;    
     }

@@ -86,9 +86,9 @@
 			$sWhere .= $aColumns[$i]." LIKE '%".mysql_real_escape_string( $_GET['sSearch'] )."%' OR ";
 		}
 		$sWhere = substr_replace( $sWhere, "", -3 );
-		$sWhere .= ')'." AND true";
+		$sWhere .= ')'." AND true  AND nota_credito = 1";
 	}else{
-		$sWhere = " WHERE true ";   
+		$sWhere = " WHERE true  AND nota_credito = 1";   
 	}
 	
 	/* Individual column filtering */

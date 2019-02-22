@@ -29,6 +29,8 @@ class factura {
 	public $cae_vto;
 
     public function __construct() {
+        //ESTADOS 
+        //Factura: 1-Pendiente, 2-Cancelado, 3-Anulado , 4-Pago parcial 
 
         $this->_DB = new Database();
     }

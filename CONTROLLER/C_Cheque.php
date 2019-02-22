@@ -273,12 +273,25 @@ case '14':
 	$out = json_encode("ok");
 	break;
 
-	case '15':
+case '15':
 	$id_cheque = $_POST['idcheque'];
 	$obs = $_POST['obs'];
 	$clsCheque = new cheque();
 	$ret = $clsCheque->entregar($id_cheque, $obs);
 	$out = json_encode("ok");
+	break;
+
+case '16':
+	$numero = $_POST['numero'];
+	$banco  = $_POST['banco'];
+	$clsCheque = new cheque();
+	$ret = $clsCheque->existe($numero, $banco);
+	if(isset($ret[0]['id_cheque'])){
+		$ret = 1;
+	}else{
+		$ret = 0;
+	}
+	$out = json_encode($ret);
 	break;
 }
 

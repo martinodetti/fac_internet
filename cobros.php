@@ -218,7 +218,7 @@ if(isset ($_SESSION['id_persona'])){
 										<div id="dialg_factura_proveedor" class="dialog" title="SYSFACTURA INFORMA">
 
 												<div id="div_facturas_proveedor" name="div_remitos_pendientes">
-													<table id="facturas_table_proveedor" class="easyui-datagrid" style="width:360px;height:auto" fitColumns="TRUE" title="Facturas a pagar"  singleSelect="true" showFooter="true" rownumbers="true" >
+													<table id="facturas_table_proveedor" class="easyui-datagrid" style="width:360px;height:auto" fitColumns="TRUE" title="Facturas de proveedor"  singleSelect="true" showFooter="true" rownumbers="true" >
 		                                                <thead>
 		                                                    <tr>
 		                                                        <th field="id" width="40">ID</th>
@@ -234,7 +234,7 @@ if(isset ($_SESSION['id_persona'])){
 												</div>
 												</br>
 												<p class="fr">
-												<input id="btn_Detalle_Cobrar_Factura_Proveedor" class="button themed" type="button" value="Cobrar" name="btn_Detalle_Cobrar_Factura_Proveeedor"" />
+												<input id="btn_Detalle_Cobrar_Factura_Proveedor" class="button themed" type="button" value="Pagar" name="btn_Detalle_Cobrar_Factura_Proveeedor"" />
 												<input id="btn_Detalle_cerrar_Factura_Proveedor" class="button themed" type="button" value="Cerrar" name="btn_Detalle_Cerrar_Factura_Proveeedor"" />
 												</p>
 
@@ -500,7 +500,7 @@ if(isset ($_SESSION['id_persona'])){
 														<table>
 															<tr>
 																<td width="100px"></th>
-																<td width="200px" style="font-size:15px">TOTAL REMITO: $ <spam  id="total_remito"></spam></th>
+																<td width="200px" style="font-size:15px">TOTAL RECIBO: $ <spam  id="total_remito"></spam></th>
 															</tr>
 														</table>
 													</td>
