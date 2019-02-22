@@ -1001,10 +1001,12 @@ class persona {
 
 		//facturas y notas de credito sin orden ni remito
 		$sql = "SELECT  factura.id_fact, num_fact, date_format(fecemi_fact, '%d-%m-%Y') fecha,remitos_fact, '' dominio,
-                '' fec_remi, factura.total_fact , id_orden, id_remito, factura.nota_credito
+				'' fec_remi, id_orden, id_remito, factura.nota_credito,
+				IF(recibo_factura.id_recibo is null, factura.total_fact,recibo_factura.saldo_fact) total_fact
                 FROM    factura
 				LEFT JOIN	orden_reparacion o USING(id_fact)
 				LEFT JOIN 	v_remito ON (id_remito = remitos_fact)
+				left JOIN recibo_factura ON(recibo_factura.id_fact = factura.id_fact and saldo_fact > 0)
                 WHERE   estado_fact IN(1,4)
                 AND     forma_pago = 3
                 AND     nota_debito = 0
@@ -1031,10 +1033,12 @@ class persona {
 
 		//ordenes de reparacion
 		$sql1= "SELECT 	f.id_fact, f.num_fact, date_format(f.fecemi_fact, '%d-%m-%Y') fecha, GROUP_CONCAT(id_orden) AS ordenes,
-						v.dominio, date_format(o.fecemi_orden, '%d-%m-%Y') fec_orden, f.total_fact
+						v.dominio, date_format(o.fecemi_orden, '%d-%m-%Y') fec_orden,
+						IF(recibo_factura.id_recibo is null, f.total_fact,min(recibo_factura.saldo_fact)) total_fact
 				FROM 	factura f
 				JOIN 	orden_reparacion o USING(id_fact)
 				LEFT JOIN	vehiculo v USING(id_vehiculo)
+				LEFT JOIN recibo_factura ON(recibo_factura.id_fact = f.id_fact and saldo_fact > 0)
 				WHERE	f.estado_fact in(1,4)
 				AND 	f.forma_pago = 3
 				AND 	f.id_cliente = ".$idc."
