@@ -153,7 +153,7 @@ $pdf->SetAutoPageBreak(false);
 		$pdf->Cell(30,5,"$".$arr[4],1,0,'C');
 		$total_fact = $total_fact + $arr[3] - $arr[4];
 	}
-	for($i = 1 ; $i <= 15 - count($facturas) ; $i++)
+	for($i = 1 ; $i <= 30 - count($facturas) ; $i++)
 	{
 		$pdf->Ln();
 		$pdf->SetX(5);
@@ -171,7 +171,7 @@ $pdf->SetAutoPageBreak(false);
 
 	//Cheques
 	$pdf->SetFont('Times','B',13);
-	$pdf->setXY(5,150);
+	$pdf->setXY(5,220);
 	$pdf->Cell(120,5,'Cheques',1,0,'C');
 	$pdf->Ln();
 	$pdf->SetX(5);
@@ -192,7 +192,7 @@ $pdf->SetAutoPageBreak(false);
 		$pdf->Cell(30,5,"$".$arr[3],1,0,'C');
 		$total_cheque = $total_cheque + $arr[3];
 	}
-	for($i = 1 ; $i <= 10 - count($cheques) ; $i++)
+	for($i = 1 ; $i <= 8 - count($cheques) ; $i++)
 	{
 		$pdf->Ln();
 		$pdf->SetX(5);
@@ -339,8 +339,8 @@ $pdf->SetAutoPageBreak(false);
 	//Observaciones
 	$pdf->SetFont('Times','',12);
 	$pdf->Ln();
-	$pdf->SetXY(5, 220);
-	$pdf->MultiCell(190,6,"Observaciones: " . $obs, $bd);
+	$pdf->SetXY(130,220);
+	$pdf->MultiCell(70,6,"Observaciones: " . $obs, $bd);
 
 	$pdf->Ln();
 	$pdf->SetXY(160,276);
