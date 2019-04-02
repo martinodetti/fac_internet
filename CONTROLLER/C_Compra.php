@@ -200,7 +200,7 @@ case '2' : //update  - es igual a 1 pero con la diferencia que elimino primero e
 	$dt_data=array();
 
 	//borramos el detalle cargado anteriormente
-	//$clsDetalle->deletedetalle_compra_restar_stock($id_compra);
+	$clsDetalle->deletedetalle_compra_restar_stock($id_compra);
 
 	//inserto esa asociación de arrays en otro entendible
 	foreach($detalle as $dt_aux){
