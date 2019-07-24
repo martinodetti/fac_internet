@@ -235,6 +235,7 @@ var detalle=[];//modelo del grid
         $("#label_total").val(sum.toFixed(2));
         $("#label_iva105").val(iva_105.toFixed(2));
         $("#label_iva21").val(iva_21.toFixed(2));        
+        $("#label_ivaret").val(iva_ret.toFixed(2));  
         $("#label_subtotal").val(sub.toFixed(2));
 		$("#label_concepto_nograv").val(concepto_nograv.toFixed(2));
 //		$("#label_desc").val(desc.toFixed(2));

@@ -177,6 +177,34 @@ if(isset ($_SESSION['id_persona'])){
                                                	</p>
                                            	</form>
                                     	</div>                              	
+
+                                        <div id="dialg_form_factura" class="dialog" title="SYSFACTURA INFORMA">
+
+                                            <div id="div_facturas_pendientes" name="div_remitos_pendientes">
+                                                <table id="facturas_table" class="easyui-datagrid" style="width:450px;height:auto" fitColumns="TRUE" title="Facturas pendientes"  singleSelect="true" showFooter="true" rownumbers="true" >
+                                                    <thead>
+                                                        <tr>
+                                                            <th field="id" width="30">ID</th>
+                                                            <th field="tipo_num" width="80">Tipo y Num</th>
+                                                            <th field="fecha" width="100">Fecha</th>
+                                                            <th field="or_rem" width="100">OR y Remitos</th>
+                                                            <th field="total" width="80">Monto</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            </br>
+                                            <p class="fr">
+                                            <input id="btn_Detalle_Cobrar" class="button themed" type="button" value="Cobrar" name="btn_Detalle_Cobrar" />
+                                            <input id="btn_Detalle_cerrar" class="button themed" type="button" value="Cerrar" name="btn_Detalle_Cerrar" />
+                                            </p>
+
+                                        </div>
+
+
                                     	
 										<div id="dialg_form" class="dialog" title="SYSFACTURA INFORMA"> 
 											<div id="div_remitos_pendientes" name="div_remitos_pendientes">

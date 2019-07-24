@@ -504,56 +504,90 @@ $(document).ready(function(){
 				}
 			});
 
-			dat_remitos = [];
-			if(row.pendientes > 0) {
+			if($("#cmb_tipo_fact").val() == 1 ) {
+				dat_remitos = [];
+				if(row.pendientes > 0) {
+					$.ajax({
+						type:"POST",
+						url:"CONTROLLER/C_Remito.php?",
+						data:"opc=10&id_cli=" + row.id_persona,
+						success:function(response){
+							var arr = response.split("|");
+							var length = arr.length - 1;
+							for(var i = 0; i < length ; i++) {
+								var yaesta = false;
+								var arr_1 = arr[i].split(";");
+								var id = ltrim(arr_1[0]);
+								if(arr_1[1] == 'remito')
+								{
+									yaesta = yaCobrado($('#txt_idremitos').val(), id);
+								}
+								else
+								{
+									yaesta = yaCobrado($('#txt_idordenes').val(), id);
+								}
+								if(!yaesta)
+								{
+									var row_tmp = {
+										tipo:arr_1[1],
+										id:id,
+										dominio:arr_1[2],
+										total:arr_1[3],
+										fecha:arr_1[4]
+									};
+									dat_remitos.push(row_tmp);
+								}
+							}
+							var datainfo = {
+								"total":0,
+								"rows":dat_remitos
+							};
+							$("#remitos_table").datagrid('loadData',datainfo);
+						}
+					});
+					$('#dialg_form').dialog('open');
+
+					$('#link_pendientes').show();
+				}
+				else {
+					$('#remitos_pendientes').hide();
+					$('#link_pendientes').hide();
+				}
+				recalcularPrecios();
+				sumatoria();
+
+			}else if($("#cmb_tipo_fact").val() == 2 ) {
 				$.ajax({
 					type:"POST",
-					url:"CONTROLLER/C_Remito.php?",
-					data:"opc=10&id_cli=" + row.id_persona,
+					url:"CONTROLLER/C_Factura.php?",
+					data:"opc=17&id_cli=" + row.id_persona,
 					success:function(response){
 						var arr = response.split("|");
 						var length = arr.length - 1;
 						for(var i = 0; i < length ; i++) {
-							var yaesta = false;
 							var arr_1 = arr[i].split(";");
 							var id = ltrim(arr_1[0]);
-							if(arr_1[1] == 'remito')
-							{
-								yaesta = yaCobrado($('#txt_idremitos').val(), id);
-							}
-							else
-							{
-								yaesta = yaCobrado($('#txt_idordenes').val(), id);
-							}
-							if(!yaesta)
-							{
-								var row_tmp = {
-									tipo:arr_1[1],
-									id:id,
-									dominio:arr_1[2],
-									total:arr_1[3],
-									fecha:arr_1[4]
-								};
-								dat_remitos.push(row_tmp);
-							}
+							var row_tmp = {
+								id:id,
+								tipo_num:arr_1[1],
+								total:arr_1[2],
+								pendiente: arr_1[2],
+								fecha:arr_1[3],
+								or_rem:arr_1[4]
+							};
+							dat_facturas.push(row_tmp);
 						}
 						var datainfo = {
 							"total":0,
-							"rows":dat_remitos
+							"rows":dat_facturas
 						};
-						$("#remitos_table").datagrid('loadData',datainfo);
+						$("#facturas_table").datagrid('loadData',datainfo);
 					}
 				});
-				$('#dialg_form').dialog('open');
+				$('#dialg_form_factura').dialog('open');
+			}
 
-				$('#link_pendientes').show();
-			}
-			else {
-				$('#remitos_pendientes').hide();
-				$('#link_pendientes').hide();
-			}
-			recalcularPrecios();
-			sumatoria();
+			
 
 			if(parseInt(row.tiene_ctacte) == 1 && (parseFloat(row.pendiente) >= parseFloat(row.limite_ctacte)) && row.limite_ctacte > 0){
                 $("#msg_err").text("El cliente superó el límite de cuenta corriente asignado.");
@@ -621,6 +655,13 @@ $(document).ready(function(){
 
 
 	$('#dialg_form').dialog({
+		autoOpen: false,
+		width: 500,
+		height: 300,
+		modal: true
+	});
+
+	$('#dialg_form_factura').dialog({
 		autoOpen: false,
 		width: 500,
 		height: 300,

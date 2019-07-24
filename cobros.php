@@ -192,7 +192,7 @@ if(isset ($_SESSION['id_persona'])){
 										<div id="dialg_form" class="dialog" title="SYSFACTURA INFORMA">
 
 												<div id="div_facturas_pendientes" name="div_remitos_pendientes">
-													<table id="facturas_table" class="easyui-datagrid" style="width:450px;height:auto" fitColumns="TRUE" title="Remitos pendientes"  singleSelect="true" showFooter="true" rownumbers="true" >
+													<table id="facturas_table" class="easyui-datagrid" style="width:450px;height:auto" fitColumns="TRUE" title="Facturas pendientes"  singleSelect="true" showFooter="true" rownumbers="true" >
 		                                                <thead>
 		                                                    <tr>
 		                                                        <th field="id" width="30">ID</th>

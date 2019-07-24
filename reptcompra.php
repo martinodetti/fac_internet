@@ -205,6 +205,7 @@ $arr_descto=$clsDescto->ComboDescuento_ventas();
 															<th><br> Subtotal&nbsp;&nbsp; <input id="label_subtotal" value="" disabled style="width:70px"/></th>
 															<th><br> Iva 10,5%&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input id="label_iva105" value="" disabled style="width:70px"/></th>
 															<th> <br>Iva 21% &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="label_iva21" value="" disabled style="width:70px"/></th>
+                                                            <th> <br>Iva 21% &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="label_ivaret" value="" disabled style="width:70px"/></th>
 															<th><br> TOTAL <input id="label_total" value="" disabled style="width:70px"/></th>
 														</tr>
 													</table>
