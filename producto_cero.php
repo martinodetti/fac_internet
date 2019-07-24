@@ -284,6 +284,16 @@ $arr_provd=$persona->ComboProveedor();
                                                                         <input id="update_fecupdate_producto" name="update_fecupdate_producto" class="form-field datepicker" type="text"/>
                                                                     </td>
                                                                 </tr>
+
+                                                                <tr >
+
+                                                                    <td >
+                                                                         <label class="form-label"> Chequeado </label>
+                                                                          <input id="update_chequeado_producto" name="update_chequeado_producto" class="form-field" type="checkbox"/>
+                                                                    </td>
+                                                                    <td>
+                                                                    </td>
+                                                                </tr>
 <!--
                                                                 <tr>
                                                                     <td >

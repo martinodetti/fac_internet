@@ -9,6 +9,8 @@ include '../VIEW/W_Producto.php';
 include '../MODEL/Producto_proveedor.php';
 include '../MODEL/Persona.php';
 
+include 'C_Debug.php';
+
 $out=""; 
 
 if(isset ($_POST['opc']))

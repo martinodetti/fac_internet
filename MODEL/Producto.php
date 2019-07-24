@@ -347,9 +347,9 @@ class producto {
 
         $sql = $sql . "'" . $producto->get_codbarra_producto() . "',";
 
-        $sql = $sql . "'" . $producto->get_nom_producto() . "',";
+        $sql = $sql . "'" . mysql_escape_string($producto->get_nom_producto()) . "',";
 
-        $sql = $sql . "'" . $producto->get_descrip_producto() . "',";
+        $sql = $sql . "'" . mysql_escape_string($producto->get_descrip_producto()) . "',";
 
         $sql = $sql . "'" . $producto->get_costo_producto() . "',";
 
