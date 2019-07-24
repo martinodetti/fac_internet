@@ -504,7 +504,7 @@ $(document).ready(function(){
 				}
 			});
 
-			if($("#cmb_tipo_fact").val() == 1 ) {
+//			if($("#cmb_tipo_fact").val() == 1 ) {
 				dat_remitos = [];
 				if(row.pendientes > 0) {
 					$.ajax({
@@ -555,7 +555,7 @@ $(document).ready(function(){
 				}
 				recalcularPrecios();
 				sumatoria();
-
+/*
 			}else if($("#cmb_tipo_fact").val() == 2 ) {
 				$.ajax({
 					type:"POST",
@@ -586,7 +586,7 @@ $(document).ready(function(){
 				});
 				$('#dialg_form_factura').dialog('open');
 			}
-
+*/
 			
 
 			if(parseInt(row.tiene_ctacte) == 1 && (parseFloat(row.pendiente) >= parseFloat(row.limite_ctacte)) && row.limite_ctacte > 0){
