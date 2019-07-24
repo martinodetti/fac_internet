@@ -124,7 +124,7 @@ $pdf->SetAutoPageBreak(false);
 	$pdf->setFont('Times','',13);
 	$pdf->Cell(15,6,"Patente: ",$bd);
 	$pdf->setFont('Times','B',13);
-	$pdf->Cell(18,6,$clsVehiculo->get_dominio(),$bd);
+	$pdf->Cell(20,6,$clsVehiculo->get_dominio(),$bd);
 	$pdf->setFont('Times','',13);
 	$pdf->Cell(11,6,'Resp: ',$bd);
 	$pdf->setFont('Times','B',13);

@@ -10,6 +10,7 @@ $fecha		= $_GET['fecha'];
 $obs		= $_GET['obs'];
 $total		= $_GET['total'];
 $efectivo	= $_GET['efectivo'];
+$saldo  	= $_GET['saldo'];
 
 $arr		= explode("~", $_GET['detalle']);
 
@@ -344,10 +345,16 @@ $pdf->SetAutoPageBreak(false);
 	$pdf->Ln();
 	$pdf->SetX(130);
 	$pdf->SetFont('Times','',12);
+	$pdf->Cell(35,5,'Saldo anterior',1,0,'R');
+	$pdf->SetFont('Times','B',12);
+	$pdf->Cell(40,5,"$".$saldo,1,0,'C');
+	$pdf->Ln();
+	$pdf->SetX(130);
+	$pdf->SetFont('Times','',12);
 	$pdf->Cell(35,5,'Efectivo',1,0,'R');
 	$pdf->SetFont('Times','B',12);
 	$pdf->Cell(40,5,"$".$efectivo,1,0,'C');
-	$total = $total_cheque + $total_retencion + $total_trans + $efectivo;
+	$total = $total_cheque + $total_retencion + $total_trans + $efectivo + $saldo;
 	$pdf->Ln();
 	$pdf->SetX(130);
 	$pdf->SetFont('Times','B',13);

@@ -159,11 +159,16 @@ if(isset ($_SESSION['id_persona'])){
                                                                 <label class="form-label required"> Banco</label>
                                                                 <input id="update_banco_cheque" class="form-field width60" name="update_banco_cheque" type="text" value="" readonly="readonly"/>
                                                             </td>
+                                                        </tr>
+                                                        <tr>
                                                             <td>
                                                                 <label class="form-label required"> Propietario</label>
                                                                 <input id="update_propietario_cheque" class="form-field width60" name="update_propietario_cheque" type="text" value=""  readonly="readonly"/>
                                                             </td>
-                                                            
+                                                            <td>
+                                                                <label class="form-label required"> Cuit</label>
+                                                                <input id="update_cuit_propietario_cheque" class="form-field width60" name="update_cuit_propietario_cheque" type="text" value=""  readonly="readonly"/>
+                                                            </td>
                                                         </tr>
 							                            <tr>
                                                             <td>

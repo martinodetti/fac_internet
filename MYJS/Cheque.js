@@ -71,6 +71,7 @@ $(document).ready(function(){
 					$("#update_cliente_cheque").val(response._cliente);
 					$("#update_banco_cheque").val(response._banco_cheque);
 					$("#update_propietario_cheque").val(response._propietario);
+					$("#update_cuit_propietario_cheque").val(response._cuit_propietario);
 					$("#update_id_cheque").val(response._id_cheque);
 					$("#update_provd_cheque").val(response._proveedor);
 					$("#update_estado_cheque").val(response._estado_cheque);

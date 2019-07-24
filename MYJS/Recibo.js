@@ -1234,11 +1234,12 @@ $('#facturas_table').datagrid({
         var obs			= $("#save_obs_recibo").val();
         var efectivo	= $("#save_efectivo_recibo").val();
         var total		= $("#total_remito").val();
+        var saldo 		= $("#save_saldo_recibo").val();
 
         var url 		= "recibo_pdf.php";
         var windowName 	= "popUp";//$(this).attr("name");
         var windowSize 	= windowSizeArray;
-        var param		= "?obs="+obs+"&cliente="+cliente+"&cuit="+cuit+"&numero="+numero+"&fecha="+fecha+"&efectivo="+efectivo+"&total="+total+"&detalle="+fo;
+        var param		= "?obs="+obs+"&cliente="+cliente+"&cuit="+cuit+"&numero="+numero+"&fecha="+fecha+"&saldo="+saldo+"&efectivo="+efectivo+"&total="+total+"&detalle="+fo;
         var win			= window.open(url+param, windowName, windowSize);
 
     }
