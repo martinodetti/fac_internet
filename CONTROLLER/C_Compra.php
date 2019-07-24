@@ -42,6 +42,7 @@ case '1': //add
 	$descuento			=$_GET['save_descuento'];
 	$fec_ingreso		=$_GET['save_fec_compra_ingreso'];
 	$concepto_nograv	=$_GET['save_concepto_nograv'];
+	$regimen_general	=$_GET['save_regimen_general_ret'];
 
 	$nota_credito = 0;
 	$nota_debito = 0;
@@ -77,6 +78,7 @@ case '1': //add
 	$compra->set_descuento_compra($descuento);
 	$compra->set_fec_ingreso_compra($fec_ingreso);
 	$compra->set_concepto_nograv($concepto_nograv);
+	$compra->set_regimen_general($regimen_general);
 
 	$ret=$compra->addCompra($compra);
 	$id_cmp=$ret['0'][0];
@@ -144,6 +146,7 @@ case '2' : //update  - es igual a 1 pero con la diferencia que elimino primero e
 	$ganancia_ret		=$_GET['save_ganancia_ret'];
 	$descuento			=$_GET['save_descuento'];
 	$concepto_nograv	=$_GET['save_concepto_nograv'];
+	$regimen_general	=$_GET['save_regimen_general_ret'];
 	$fec_ingreso		= date('Y-m-d');
 
 	//damos vuelta la fecha
@@ -179,6 +182,7 @@ case '2' : //update  - es igual a 1 pero con la diferencia que elimino primero e
 	$compra->set_descuento_compra($descuento);
 	$compra->set_fec_ingreso_compra($fec_ingreso);
 	$compra->set_concepto_nograv($concepto_nograv);
+	$compra->set_regimen_general($regimen_general);
 
 	$ret=$compra->updateCompra($compra);
 	$id_cmp=$id_compra;

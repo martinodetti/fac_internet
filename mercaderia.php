@@ -238,6 +238,10 @@ $arr_provd=$persona->ComboProveedor();
 															<input id="save_ganancia_ret" class="form-field width30" name="save_ganancia_ret" type="text" value="" maxlength="10"/>
 														</td>
 														<td>
+															<label class="form-label">Perc. R.G.</label>
+															<input id="save_regimen_general_ret" class="form-field width30" name="save_regimen_general_ret" type="text" value="" maxlength="10"/>
+														</td>
+														<td>
 															<label class="form-label">Concep. no grav.</label>
 															<input id="save_concepto_nograv" class="form-field width30" name="save_concepto_nograv" type="text" value="" maxlength="10"/>
 														</td>

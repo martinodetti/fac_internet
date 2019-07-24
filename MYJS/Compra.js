@@ -238,6 +238,12 @@ $('#tt').datagrid('reloadFooter',[  //inicio foter del datagrid
 			var concepto_nograv = parseFloat($("#save_concepto_nograv").val());
 		else
 			var concepto_nograv = 0;
+
+        if($("#save_regimen_general_ret").val() != '')
+            var regimen_general = parseFloat($("#save_regimen_general_ret").val());
+        else
+            var regimen_general = 0;
+        
 		
         var id_condiva = $("#id_condiva").val();
 
@@ -257,7 +263,7 @@ $('#tt').datagrid('reloadFooter',[  //inicio foter del datagrid
             }
 		}
 
-		var toto=sum + iva21 + iva10 + iva_ret + iibb_ret + ganancia_ret + concepto_nograv;
+		var toto=sum + iva21 + iva10 + iva_ret + iibb_ret + ganancia_ret + concepto_nograv + regimen_general;
 
 		$('#tt').datagrid('reloadFooter',[
 		   {cantidad:"SubTotal : ",total: sum.toFixed(2)},
@@ -600,6 +606,7 @@ $('#tt').datagrid('reloadFooter',[  //inicio foter del datagrid
 				$("#save_descuento").val(response._descuento_compra);
 				$("#save_concepto_nograv").val(response._concepto_nograv);
 				$("#save_id_provd").val(response._id_provd);
+                $("#save_regimen_general_ret").val(response._regimen_general);
 				$("#tipo_guardar").val("update");
 				$("#update_id_compra").val(id_compra);
 				

@@ -21,6 +21,7 @@ class compra {
     public $_descuento_compra;
     public $_iibb_ret_compra;
 	public $_concepto_nograv;
+    public $_regimen_general;
 
     public function __construct() {
 
@@ -225,6 +226,15 @@ class compra {
         $this->_concepto_nograv = $concepto_nograv;
     }
 
+    public function get_regimen_general() {
+
+        return $this->_regimen_general;
+    }
+
+    public function set_regimen_general($regimen_general){
+        $this->_regimen_general = $regimen_general;
+    }
+
     public function addCompra($compra) {
         $sql="";
         $sql = $sql . "'" . $compra->get_id_provd() . "',";
@@ -242,7 +252,8 @@ class compra {
         $sql = $sql . "'" . $compra->get_ganancia_ret_compra() . "',";
         $sql = $sql . "'" . $compra->get_descuento_compra() . "',";
         $sql = $sql . "'" . $compra->get_fec_ingreso_compra() . "',";
-		$sql = $sql . "'" . $compra->get_concepto_nograv() . "'";
+		$sql = $sql . "'" . $compra->get_concepto_nograv() . "',";
+        $sql = $sql . "'" . $compra->get_regimen_general() . "'";
 
         $result = $this->_DB->select_query("call sp_comprainsert (" . $sql . ")");
         return $result;
@@ -266,7 +277,8 @@ class compra {
         $sql = $sql . "'" . $compra->get_ganancia_ret_compra() . "',";
         $sql = $sql . "'" . $compra->get_descuento_compra() . "',";
         $sql = $sql . "'" . $compra->get_fec_ingreso_compra() . "',";
-		$sql = $sql . "'" . $compra->get_concepto_nograv() . "'";
+		$sql = $sql . "'" . $compra->get_concepto_nograv() . "',";
+        $sql = $sql . "'" . $compra->get_regimen_general() . "'";
 
         $result = $this->_DB->alteration_query("call sp_compraupdate (" . $sql . ")");
 
@@ -347,6 +359,7 @@ class compra {
             $compra->set_descuento_compra($row['descuento_compra']);
             $compra->set_iva_ret_compra($row['iva_ret_compra']);
 			$compra->set_concepto_nograv($row['concepto_nograv']);
+            $compra->set_regimen_general($row['regimen_general']);
 
             $compra->detalle = $detalle_compra->showDetalle_compraEdit($idc);
         }
