@@ -26,6 +26,7 @@ case '1': //add
 	$fecemi_recibo	= $_GET['save_fecemi_recibo'];
 	$efectivo_recibo= $_GET['save_efectivo_recibo'];
     $saldo_p_prov   = $_GET['save_saldo_para_proveedor'];
+    $saldo_anterior = $_GET['save_saldo_recibo'];
 	$estado_recibo	= "1";
     $id_responsable = $_GET['save_id_responsable'];
 
@@ -62,6 +63,8 @@ case '1': //add
 	$recibo->set_efectivo_recibo($efectivo_recibo);
 	$recibo->set_tipo_recibo(	$tipo_recibo);
     $recibo->set_id_responsable($id_responsable);
+    $recibo->set_saldo_a_favor( $saldo_anterior);
+
 	$ret=$recibo->addrecibo(	$recibo);
 	$id_recibo=$ret['0'][0]; //last_id de recibo
 

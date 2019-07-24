@@ -867,6 +867,7 @@ $('#facturas_table').datagrid({
 					$("#txt_cuit").val(response.ruc_persona);
 					$("#save_obs_recibo").val(response.obs_recibo);
 					$("#save_efectivo_recibo").val(response.efectivo_recibo);
+					$("#save_saldo_recibo").val(response.saldo_a_favor);
                     $("#save_id_responsable").val(response.id_responsable);
 					if(response.tipo_recibo == "2")
 						$("#save_recibo_local").attr("checked", "checked") ;

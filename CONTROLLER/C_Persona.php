@@ -277,22 +277,22 @@ if($id_tipoper == 2)
 break;
 
 case '3' : //delete
-// Todos los POST que interviene Delete.
-$id_persona=$_POST['delete_id_persona'];
-$persona=new persona();
+    // Todos los POST que interviene Delete.
+    $id_persona=$_POST['delete_id_persona'];
+    $persona=new persona();
 
-$val1=$persona->puedeEliminarProveedor($id_persona);//pregunt asi puede eliminar proveedor 1
-$val2=$persona->puedeEliminarCliente($id_persona);//pregt. si se puede eliminar cliente 0
-$val3=$persona->puedeEliminarTrabajador($id_persona);//pregnt si s epuede eliminar trabajador
-$valt=0;
-$valt=$val1+$val2+$val3;
-if($valt==0){
-$ret=$persona->deletePersona($id_persona);
-$out=$persona->json("1", "Registro eliminado sactisfactoriamente.");
-}else{
-    $out=$persona->json("0", "No se ha podido eliminar.");
-}
- break;
+    $val1=$persona->puedeEliminarProveedor($id_persona);//pregunt asi puede eliminar proveedor 1
+    $val2=$persona->puedeEliminarCliente($id_persona);//pregt. si se puede eliminar cliente 0
+    $val3=$persona->puedeEliminarTrabajador($id_persona);//pregnt si s epuede eliminar trabajador
+    $valt=0;
+    $valt=$val1+$val2+$val3;
+    if($valt==0){
+    $ret=$persona->deletePersona($id_persona);
+    $out=$persona->json("1", "Registro eliminado sactisfactoriamente.");
+    }else{
+        $out=$persona->json("0", "No se ha podido eliminar.");
+    }
+    break;
 case '4' : //show
 
 // Todos los POST que interviene Show.

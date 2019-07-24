@@ -163,7 +163,7 @@ class recibo {
     }
 
     public function addRecibo($recibo) {
-        $sql="INSERT INTO recibo (id_cliente, fecemi_recibo, num_recibo, total_recibo, obs_recibo, estado_recibo,efectivo_recibo, tipo_recibo, id_responsable) VALUE (";
+        $sql="INSERT INTO recibo (id_cliente, fecemi_recibo, num_recibo, total_recibo, obs_recibo, estado_recibo,efectivo_recibo, tipo_recibo, id_responsable, saldo_a_favor) VALUE (";
         $sql = $sql . "'" . $recibo->get_id_cliente() . "',";
         $sql = $sql . "'" . $recibo->get_fecemi_recibo() . "',";
         $sql = $sql . "'" . $recibo->get_num_recibo() . "',";
@@ -172,7 +172,8 @@ class recibo {
         $sql = $sql . "'" . $recibo->get_estado_recibo() . "',";
         $sql = $sql . "'" . $recibo->get_efectivo_recibo() . "',";
         $sql = $sql . "'" . $recibo->get_tipo_recibo() . "',";
-        $sql = $sql . "" . $recibo->get_id_responsable() . ");";
+        $sql = $sql . "" . $recibo->get_id_responsable() . ", ";
+        $sql = $sql . "" . $recibo->get_saldo_a_favor() . ");";
 
         $this->_DB->alteration_query($sql);
 
