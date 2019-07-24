@@ -505,7 +505,7 @@ class orden {
 
 		foreach($result as $row){
 			$sql2 = "";
-			$sql2 = "UPDATE producto SET stock_producto = stock_producto + " . $row['canti_detord'] . " WHERE id_producto = " . $row['id_producto'];
+			$sql2 = "UPDATE producto SET stock_producto = stock_producto - " . $row['canti_detord'] . " WHERE id_producto = " . $row['id_producto'];
 			$this->_DB->select_query($sql2);
 		}
 		//orden

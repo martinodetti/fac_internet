@@ -116,25 +116,33 @@ class detalle_factura {
         $this->_id_tipoiva = $id_tipoiva;
     }
 
-    public function addDetalle_factura($detalle_factura) {
+    public function addDetalle_factura($detalle_factura, $restar = true) {
         $sql="";
         $sql = $sql . "'" . $detalle_factura->get_id_fact() . "',";
         $sql = $sql . "'" . $detalle_factura->get_id_producto() . "',";
         $sql = $sql . "'" . $detalle_factura->get_canti_detfact() . "',";
         $sql = $sql . "'" . $detalle_factura->get_precio_detfact() . "',";
         $sql = $sql . "'" . $detalle_factura->get_estado_detfact() . "'";
-        $result = $this->_DB->select_query("call sp_detalle_facturainsert (" . $sql . ")");
+        if($restar){
+            $result = $this->_DB->select_query("call sp_detalle_facturainsert (" . $sql . ")");
+        }else{
+            $result = $this->_DB->select_query("call sp_detalle_facturainsert_sin_restar_stock (" . $sql . ")");
+        }
         return $result;
     }
     
-    public function addDetalle_notacredito($detalle_factura){
+    public function addDetalle_notacredito($detalle_factura, $sumar = true){
         $sql="";
         $sql = $sql . "'" . $detalle_factura->get_id_fact() . "',";
         $sql = $sql . "'" . $detalle_factura->get_id_producto() . "',";
         $sql = $sql . "'" . $detalle_factura->get_canti_detfact() . "',";
         $sql = $sql . "'" . $detalle_factura->get_precio_detfact() . "',";
         $sql = $sql . "'" . $detalle_factura->get_estado_detfact() . "'";
-        $result = $this->_DB->select_query("call sp_detalle_notacreditoinsert (" . $sql . ")");
+        if($sumar){
+            $result = $this->_DB->select_query("call sp_detalle_notacreditoinsert (" . $sql . ")");
+        }else{
+            $result = $this->_DB->select_query("call sp_detalle_notacreditoinsert_sin_sumar_stock (" . $sql . ")");
+        }
         return $result;    
     }
 

@@ -26,9 +26,8 @@ switch ($opc) {
 case '1': //add 
 
 	$IMPRESORA = "HP_LaserJet_Professional_P_1102w";
-	
-	$punto_de_venta = 2;
 
+	$punto_de_venta = 2;
 
 	// Todos los POST que interviene. 
 	$id_fact				=	0; 
@@ -236,13 +235,18 @@ case '1': //add
 		
 			//insertamos detalle factura o en la nota de crédito en su defecto
 			//fact y nota de credito es lo mismo. Lo unico que cambia es que resta o suma el stock del producto
+			//TODO si viene de un remito entonces no descontar el stock
+			$afecta_stock = true;
+			if($accion['id_remi'] > 0){
+				$afecta_stock = false;
+			}
 			if($nota_credito == 1)
 			{
-				$out=$clsDetFactura->addDetalle_notacredito($clsDetFactura);
+				$out=$clsDetFactura->addDetalle_notacredito($clsDetFactura, $afecta_stock);
 			}
 			else
 			{
-				$out=$clsDetFactura->addDetalle_factura($clsDetFactura);
+				$out=$clsDetFactura->addDetalle_factura($clsDetFactura, $afecta_stock);
 			}
 
 		}

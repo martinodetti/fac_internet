@@ -795,7 +795,8 @@ $(document).ready(function(){
 						cantidad:arr_det[i]['canti_detord'],
 						id_tipoiva:arr_det[i]['id_tipoiva'],
 						total:subtotal,
-						id_remi:arr_det[i]['id_orden']
+						id_remi:0,
+						id_orden:arr_det[i]['id_orden']
 					};
 
 					if($("#save_tipo_fact").val() == "B"){

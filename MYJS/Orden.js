@@ -72,21 +72,6 @@ $(document).ready(function(){
 		    }
 		});
 
-
-/*
-			var i = 0;
-			iLen = oSettings.aoData.length;
-			for ( i ; i < iLen ; i++ ) {
-		    	if (oSettings.aoData[i]._aData[6] == "Cerrado") {
-			    	oSettings.aoData[i].nTr.className = "myClass";
-		     	}
-			}
-
-		}
-
-    });
-*/
-
 	$.ajax({
 		type:"POST",
 		url:"CONTROLLER/C_Orden.php?opc=12",
@@ -111,20 +96,6 @@ $('#tt').datagrid('reloadFooter',[  //inicio foter del datagrid
 
     $("#save_fecemi_orden").datepicker('setDate', new Date());
     $("#save_fecingreso_orden").datepicker('setDate', new Date());
-
-/*
-	$("#btn_plan_calculo").click(function(){
-		var fec_ini = $("#plan_fecini_producto").datepicker('getDate');//datepicker('getDate')
-		var fec_fin = $('#plan_fecfin_producto').datepicker('getDate');
-		var dayDiff = Math.ceil((fec_fin - fec_ini) / (1000 * 60 * 60 * 24));
-		var costo=$("#plan_pago_producto").val();
-		var total=(parseFloat(costo)/30)*dayDiff;
-		total=total.toFixed(2)*1;
-		$("#plan_numdia_producto").val(dayDiff);
-		$("#plan_total_producto").val(total);
-		$("#txt_precio").val(total);
-	});
-*/
 
 
 	function Add(){
@@ -416,51 +387,6 @@ $('#tt').datagrid('reloadFooter',[  //inicio foter del datagrid
 //		recalcularPrecios();
 	});
 
-
-/*
-	$('#cmbgridEmpleado').combogrid({
-		panelWidth:400,
-		url: 'CONTROLLER/C_Persona.php?opc=12',
-		idField:'id_persona',
-		textField:'nom_persona',
-		mode:'remote',
-		fitColumns:true,
-		columns:[[
-			{field:'id_persona',title:'Id',width:20},
-			{field:'nom_persona',title:'Nombre',align:'right',width:100},
-			{field:'ape_persona',title:'Apellido',align:'right',width:100}
-
-		]],
-		onSelect:function(rowData){
-		var row =$('#cmbgridEmpleado').combogrid('grid').datagrid('getSelected');
-		   $("#save_id_vendedor").val(row.id_persona);
-		}
-    });
-*/
-
-
-/*
-	$('#cmbgridVehiculo').combogrid({
-		panelWidth:400,
-		url: 'CONTROLLER/C_Vehiculo.php?opc=13',
-		idField:'id_vehiculo',
-		textField:'dominio',
-		mode:'remote',
-		fitColumns:true,
-		columns:[[
-			{field:'id_vehiculo',title:'Id',width:20},
-			{field:'dominio',title:'Patente',align:'right',width:100},
-			{field:'vehiculo',title:'Vehiculo',align:'right',width:100}
-
-		]],
-		onSelect:function(rowData){
-			var row =$('#cmbgridVehiculo').combogrid('grid').datagrid('getSelected');
-			$("#save_id_vehiculo").val(row.id_vehiculo);
-			llenar_cmbGridCliente(row.id_vehiculo);
-		}
-	});
-
-*/
 
 	$("#label_cliente_vehiculo").hide();
 
