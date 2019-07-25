@@ -30,7 +30,7 @@ case '1': //add
 	$punto_de_venta = 2;
 
 	// Todos los POST que interviene. 
-	$id_fact				=	0; 
+	$id_fact		=	0; 
 	$id_empresa		=	$_GET['save_id_empresa']; 
 	$id_cliente		=	$_GET['save_id_cliente']; 
 	$id_vendedor	=	$_GET['save_id_vendedor']; 
@@ -56,6 +56,7 @@ case '1': //add
 	$tipo_documento	=	$_GET['cmb_tipo_fact'];
 	$detalle		= 	$_POST['Detalle'];
 	$nro_documento 	= 	$_GET['txt_ruc_fact'];
+	$id_fact_nc		= 	$_GET['txt_id_fact_nc'];
 
 	$estado_fact	=	2; 
 	if($forma_pago == 3)
@@ -63,8 +64,8 @@ case '1': //add
 
 
 	//primero vamos al webservices de la afip
+/*
 	$wsfe = new awsfe();
-
 
 	//tengo que armar el objeto que va a recibir la factura 
 	$param = array();
@@ -139,8 +140,6 @@ case '1': //add
 		$continuar = TRUE;
 	}
 
-
-
 	if($continuar == FALSE)
 	{
 		$error = 0;
@@ -159,7 +158,7 @@ case '1': //add
 		die(json_encode(array(	'error' 		=> $error, 
 								'descripcion' 	=> utf8_decode($descrip))));
 	}
-
+*/
 	$factura=new factura();
 
 	$factura->set_id_empresa($id_empresa);
@@ -189,6 +188,7 @@ case '1': //add
 	if($tipo_documento == 2)
 	{
 		$factura->set_nota_credito($id_fact);
+		$factura->nc_contra_factura($factura->get_total_fact(), $id_fact_nc, $id_fact);
 	}
 	if($tipo_documento == 3)
 	{

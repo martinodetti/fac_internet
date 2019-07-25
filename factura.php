@@ -198,8 +198,8 @@ if(isset ($_SESSION['id_persona'])){
                                             </div>
                                             </br>
                                             <p class="fr">
-                                            <input id="btn_Detalle_Cobrar" class="button themed" type="button" value="Cobrar" name="btn_Detalle_Cobrar" />
-                                            <input id="btn_Detalle_cerrar" class="button themed" type="button" value="Cerrar" name="btn_Detalle_Cerrar" />
+                                            <input id="btn_Detalle_Usar" class="button themed" type="button" value="Usar" name="btn_Detalle_Usar" />
+                                            <input id="btn_Detalle_cerrar_fact" class="button themed" type="button" value="Cerrar" name="btn_Detalle_Cerrar_fact" />
                                             </p>
 
                                         </div>
@@ -344,6 +344,7 @@ if(isset ($_SESSION['id_persona'])){
 -->                                            
                                                 <input type="hidden" id="save_id_cliente" name="save_id_cliente" value="" />
                                                 <input type="hidden" id="txt_id_fact" name="txt_id_fact" value=""/>
+                                                <input type="hidden" id="txt_id_fact_nc" name="txt_id_fact_nc" value=""/>
                                                 <input type="hidden" id="save_id_empresa" name="save_id_empresa" value="1" />
                                                 <input type="hidden" id="save_id_vendedor" name="save_id_vendedor" value="<?php  echo $persona->get_id_persona();?>" />
 												<input type="hidden" id="txt_dominio_print" name="txt_dominio_print" value=""/>

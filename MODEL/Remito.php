@@ -378,10 +378,10 @@ class remito {
         		WHERE 	dr.id_remito=".$id_remi;
         $result = $this->_DB->select_query($sql);
 		foreach ($result as $row) {
-            $detalle[]=array(	"id_remi"		=>$row['id_remito']		,	"nom_producto"	=>$row['nom_producto'],
-							"canti_detremi"	=>$row['canti_detremi']	,	"precio_detremi"=>$row['precio_detremi'],
-							"id_tipoiva"	=>$row['id_tipoiva']	,	"subtotal"		=>$row['precio_detremi'] * $row['canti_detremi'],
-							"id_producto"	=>$row['id_producto']	,	"descrip_producto"	=>$row['descrip_producto']);
+            $detalle[]=array("id_remi"	    =>$row['id_remito']		,"nom_producto"	   =>$row['nom_producto'],
+							"canti_detremi"	=>$row['canti_detremi']	,"precio_detremi"  =>$row['precio_detremi'],
+							"id_tipoiva"	=>$row['id_tipoiva']	,"subtotal"		   =>$row['precio_detremi'] * $row['canti_detremi'],
+							"id_producto"	=>$row['id_producto']	,"descrip_producto"=>$row['descrip_producto']);
         }
 
 
