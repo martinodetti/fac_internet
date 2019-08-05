@@ -535,13 +535,17 @@ class factura {
 
    public function listJsonFacuraDetalle_dos($id_fact){
        $data = array();
-        $sql = "SELECT * FROM v_factura_detalle WHERE id_fact=".$id_fact;
+        $sql = "SELECT d.*, p.id_tipoiva FROM v_factura_detalle d
+                JOIN    producto p USING(id_producto)
+                WHERE d.id_fact=".$id_fact;
         $result = $this->_DB->select_query($sql);  
 		
        foreach ($result as $row) {
             $data[]=array(	"id_fact"		=>$row['id_fact']		,"nom_producto"		=>$row['nom_producto'], 
 							"canti_detfact"	=>$row['canti_detfact']	,"precio_detfact"	=>$row['precio_detfact'],
-							"descrip_producto"		=>$row['descrip_producto']);
+                            "id_producto"   =>$row['id_producto']   ,"descrip_producto"	=>$row['descrip_producto'],
+                            "id_tipoiva"    =>$row['id_tipoiva']
+                        );
         }
         return json_encode($data);
        
@@ -794,5 +798,22 @@ class factura {
         return $data;
     }
 	
+
+    public function nc_contra_factura($monto, $idfact, $idnc){
+        //busco la factura
+        $sql1 = "SELECT * FROM factura WHERE id_fact = " . $idfact;
+        $rs = $this->_DB->select_query($sql1);
+        $factura = $rs[0];
+
+        $result = false;
+
+        //pago total de la fact y NC si coinciden los montos y la fact está pendiente
+        if($factura['estado_fact'] == 1 && $factura['total_fact'] == $monto){
+            $sql2 = "UPDATE factura SET estado_fact = 2 WHERE id_fact IN(" . $idfact . "," . $idnc .")";
+            $result = $this->_DB->alteration_query($sql2);
+        }
+
+        return $result;
+    }
 }
 ?>

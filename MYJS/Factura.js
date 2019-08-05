@@ -3,6 +3,7 @@ $(document).ready(function(){
 	var dat=[];//modelo del grid
 	var total_iva=0;
 	var dat_remitos=[];
+	var dat_facturas=[];
 
 	$('#tt').datagrid('reloadFooter',[  //inicio foter del datagrid
 		{cantidad:"SubTotal : ",total: 0},
@@ -504,7 +505,7 @@ $(document).ready(function(){
 				}
 			});
 
-//			if($("#cmb_tipo_fact").val() == 1 ) {
+			if($("#cmb_tipo_fact").val() == 1 ) {
 				dat_remitos = [];
 				if(row.pendientes > 0) {
 					$.ajax({
@@ -555,8 +556,9 @@ $(document).ready(function(){
 				}
 				recalcularPrecios();
 				sumatoria();
-/*
+
 			}else if($("#cmb_tipo_fact").val() == 2 ) {
+				dat_facturas = [];
 				$.ajax({
 					type:"POST",
 					url:"CONTROLLER/C_Factura.php?",
@@ -586,7 +588,7 @@ $(document).ready(function(){
 				});
 				$('#dialg_form_factura').dialog('open');
 			}
-*/
+
 			
 
 			if(parseInt(row.tiene_ctacte) == 1 && (parseFloat(row.pendiente) >= parseFloat(row.limite_ctacte)) && row.limite_ctacte > 0){
@@ -686,6 +688,10 @@ $(document).ready(function(){
 		 $('#dialg_form').dialog('close');
 	});
 
+	$("#btn_Detalle_cerrar_fact").click(function(){
+		 $('#dialg_form_factura').dialog('close');
+	});
+
 	$("#btn_Detalle_cerrar_2").click(function(){
 		 $('#dialg_form_2').dialog('close');
 	});
@@ -732,6 +738,39 @@ $(document).ready(function(){
 		});
 
 		$('#dialg_form_2').dialog('open');
+	});
+
+	$("#cmb_tipo_fact").change(function(){
+		val = $(this).val();
+		vaciarVector();
+		$("#frm_factura .form-field").val ("");
+		$('.datepicker').datepicker('setDate', new Date());
+		$('#link_pendientes').hide();
+		$("#cmbgridCliente").val('');
+		$(this).val(val);
+	});
+
+	$("#btn_Detalle_Usar").click(function(){
+		var row = $("#facturas_table").datagrid('getSelected');
+		var index = dat_facturas.indexOf(row);
+		var prefijo = "";
+
+		if(index!=-1) {
+			dat_facturas.splice(index,1); // Remove it if really found!
+		}
+
+		var datainfo = {
+			"total":0,
+			"rows":dat_facturas
+		};
+		$("#facturas_table").datagrid('loadData',datainfo);
+
+		if(row != null) {
+			sumarDetalleFact(row.id);
+		}
+		$("#save_obs_fact").val('Sobre factura Nº: ' + row.tipo_num);
+		$("#txt_id_fact_nc").val(row.id);
+		recalcularPrecios();
 	});
 
 	$("#btn_Detalle_Cobrar").click(function() {
@@ -888,6 +927,50 @@ $(document).ready(function(){
 		} else {
 			$('#txt_idordenes').val(id_orden_tmp + ',' + id_orden);
 		}
+	}
+
+	function sumarDetalleFact(id_fact) {
+
+		$.ajax({
+			type:"POST",
+			url:"CONTROLLER/C_Factura.php?",
+			data:"opc=9&id_fact=" + id_fact,
+			dataType:'json',
+			success:function(response){
+				
+				var arr_det = response;
+				for (var i = 0 ; i < arr_det.length ; i++) {
+					var subtotal = parseFloat(arr_det[i]['precio_detfact']) * parseFloat(arr_det[i]['canti_detfact']);
+					var tmp_row={
+						id:arr_det[i]['id_producto'],
+						codigo:arr_det[i]['nom_producto'],
+						producto:arr_det[i]['descrip_producto'],
+						precio:arr_det[i]['precio_detfact'],
+						precio_orig:arr_det[i]['precio_detfact'],
+						cantidad:arr_det[i]['canti_detfact'],
+						id_tipoiva:arr_det[i]['id_tipoiva'],
+						total:subtotal,
+						id_fact:arr_det[i]['id_fact']
+					};
+
+					if($("#save_tipo_fact").val() == "B"){
+						tmp_row.precio 	= (parseFloat(arr_det[i]['precio_detfact']) * 1.21).toFixed(2),
+						tmp_row.total	= (subtotal * 1.21).toFixed(2)
+					}
+
+					if(tmp_row.id == '0'){
+						$("#importe_manoobra").val(tmp_row.precio);
+						$("#descripcion_manoobra").val(tmp_row.producto);
+						$("#txt_importe_manoobra").val(tmp_row.precio);
+						$("#txt_descripcion_manoobra").val(tmp_row.producto);
+					}
+
+					dat.push(tmp_row);
+				}
+				reloadData();
+				sumatoria();
+			}
+		});
 	}
 
 
