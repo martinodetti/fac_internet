@@ -64,7 +64,7 @@ case '1': //add
 
 
 	//primero vamos al webservices de la afip
-/*
+
 	$wsfe = new awsfe();
 
 	//tengo que armar el objeto que va a recibir la factura 
@@ -158,7 +158,7 @@ case '1': //add
 		die(json_encode(array(	'error' 		=> $error, 
 								'descripcion' 	=> utf8_decode($descrip))));
 	}
-*/
+
 	$factura=new factura();
 
 	$factura->set_id_empresa($id_empresa);
