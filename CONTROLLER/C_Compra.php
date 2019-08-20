@@ -43,6 +43,7 @@ case '1': //add
 	$fec_ingreso		=$_GET['save_fec_compra_ingreso'];
 	$concepto_nograv	=$_GET['save_concepto_nograv'];
 	$regimen_general	=$_GET['save_regimen_general_ret'];
+	$baseGrava_compra 	= 0;
 
 	$nota_credito = 0;
 	$nota_debito = 0;
@@ -148,6 +149,7 @@ case '2' : //update  - es igual a 1 pero con la diferencia que elimino primero e
 	$concepto_nograv	=$_GET['save_concepto_nograv'];
 	$regimen_general	=$_GET['save_regimen_general_ret'];
 	$fec_ingreso		= date('Y-m-d');
+	$baseGrava_compra 	= 0;
 
 	//damos vuelta la fecha
 	$arr_fec_tmp = explode('-', $fec_compra);
