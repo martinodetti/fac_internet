@@ -704,8 +704,8 @@ class factura {
         $sql = "SELECT 	*, DATE_FORMAT(fecemi_fact,'%d-%m-%Y') fecemi_fact
 				FROM 	factura
 				WHERE 	id_cliente = " . $idcliente . " 
-				AND		estado_fact = 1";
-//				AND 	nota_credito = 0";
+				AND		estado_fact IN(1,2)
+				AND 	nota_credito = 0";
 
         $result = $this->_DB->select_query($sql);
 
