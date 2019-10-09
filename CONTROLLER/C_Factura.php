@@ -79,10 +79,12 @@ case '1': //add
 	if($tipo_fact == 'B' && $tipo_documento == 3) $CbteTipo = 7;
 	if($tipo_fact == 'B' && $tipo_documento == 2) $CbteTipo = 8;
 
+	//factura de crédito electronico
+	if($id_cliente == 102266 && $total_fact >= 100000) $CbteTipo = $CbteTipo + 200;
+
 	$param['FeCAEReq']['FeCabReq'] = array(	'CantReg' 	=> 1,
 											'PtoVta' 	=> $punto_de_venta,
 											'CbteTipo' 	=> $CbteTipo);
-
 
 	///vamos a obtener el proximo numero
 	$param1 = array('PtoVta' => $punto_de_venta , 'CbteTipo' => $CbteTipo);
