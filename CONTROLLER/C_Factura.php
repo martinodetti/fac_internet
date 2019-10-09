@@ -133,9 +133,14 @@ case '1': //add
 		$nuevafecha = strtotime ( '+60 day' , strtotime ( $fecha ) ) ;
 		$nuevafecha = date ( 'Ymd' , $nuevafecha );
 
-		$param['FeCAEReq']['FeDetReq']['FECAEDetRequest']'FchVtoPago'] = $nuevafecha;
+		$param['FeCAEReq']['FeDetReq']['FECAEDetRequest']['FchVtoPago'] = $nuevafecha;
+		$param['FeCAEReq']['FeDetReq']['FECAEDetRequest']['Opcionales'] = array(0 => 
+			array(
+				'Id' => 2101,
+				'Valor' => '1500087900051332139764'
+			)
+		);
 	}
-
 
 	$ret = $wsfe->ejecutar_metodo('FECAESolicitar',$param);
 
