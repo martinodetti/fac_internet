@@ -128,6 +128,14 @@ case '1': //add
 																'MonCotiz'	=> 1,
 																'Iva'		=> $IVA
 																);
+	if($CbteTipo > 200){
+		$fecha = date('Y-m-d');
+		$nuevafecha = strtotime ( '+60 day' , strtotime ( $fecha ) ) ;
+		$nuevafecha = date ( 'Ymd' , $nuevafecha );
+
+		$param['FeCAEReq']['FeDetReq']['FECAEDetRequest']'FchVtoPago'] = $nuevafecha;
+	}
+
 
 	$ret = $wsfe->ejecutar_metodo('FECAESolicitar',$param);
 
