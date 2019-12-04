@@ -331,9 +331,9 @@ class cheque {
 		$rs = $this->_DB->alteration_query($sql);
     }
 
-    public function existe($numero, $banco)
+    public function existe($numero, $banco, $monto = 0)
     {
-        $sql = "SELECT id_cheque from cheque where num_cheque = '" . $numero . "' and banco_cheque = '" . $banco . "'";
+        $sql = "SELECT id_cheque from cheque where num_cheque = '" . $numero . "' and banco_cheque = '" . $banco . "' and monto = " . $monto;
         $rs = $this->_DB->select_query($sql);
         return $rs;
     }

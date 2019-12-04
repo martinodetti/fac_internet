@@ -284,8 +284,9 @@ case '15':
 case '16':
 	$numero = $_POST['numero'];
 	$banco  = $_POST['banco'];
+	$monto= $_POST['monto'];
 	$clsCheque = new cheque();
-	$ret = $clsCheque->existe($numero, $banco);
+	$ret = $clsCheque->existe($numero, $banco, $monto);
 	if(isset($ret[0]['id_cheque'])){
 		$ret = 1;
 	}else{

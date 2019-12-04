@@ -1018,7 +1018,7 @@ $('#facturas_table').datagrid({
 
     	$.ajax({
 			type:"POST",
-			data:"&numero=" + $("#save_num_cheque").val() + "&banco=" + $("#save_banco_cheque").val(),
+			data:"&numero=" + $("#save_num_cheque").val() +"&monto=" + $("#save_monto_cheque").val() + "&banco=" + $("#save_banco_cheque").val(),
 			url:"CONTROLLER/C_Cheque.php?opc=16",
 			success:function(response){
 				if(response == 1){

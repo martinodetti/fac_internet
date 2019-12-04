@@ -421,7 +421,7 @@ $('#tt').datagrid('reloadFooter',[  //inicio foter del datagrid
 				$("#txt_vehiculo").val(row.vehiculo + ' ('+row.dominio+')');
 				$("#save_patente").val(row.dominio);
 				$("#div_deleteVehiculo").hide();
-				$("#txt_obs_vehiculo").val(row.obs_vehi);
+				//$("#txt_obs_vehiculo").val(row.obs_vehi);
 				$("#save_obs_orden").val($("#save_obs_orden").val() + ' - ' + row.obs_vehi);
 				$("#txt_porcentaje").val(row.porcentaje);
 				if(row.id_vehiculo > 0) {
