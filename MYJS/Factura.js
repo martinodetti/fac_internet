@@ -1446,6 +1446,11 @@ $(document).ready(function(){
 			var iva21		= $("#iva21_fact").val();
 			var sub			= $("#txt_temporal").val();
 			var url			= "factura_a_afip.php";
+
+			if((cli == 102266 || cli == 10727) && total >= 100000){
+				url = "factura_a_afip_credito.php";
+			}
+			
 			var tipofact	= "A";
 		}else{
 			var iva10		= '';
@@ -1476,27 +1481,7 @@ $(document).ready(function(){
         }else if(numero.length == 5){
             numero = "000"+numero;
         }
-/*
-		//le agrego los 0 (ceros) necesarios al punto de venta
-		if(p_de_v.length == 1){
-			p_de_v = "00"+p_de_v;
-		}else{
-			p_de_v = "0"+p_de_v;
-		}
 
-		//le agrego los 0 (ceros) necesarios al numero
-		if(numero.length == 1){
-			numero = "00000"+numero;
-		}else if(numero.length == 2){
-			numero = "0000"+numero;
-		}else if(numero.length == 3){
-			numero = "000"+numero;
-		}else if(numero.length == 4){
-			numero = "00"+numero;
-		}else if(numero.length == 5){
-			numero = "0"+numero;
-		}
-*/
         var remis			= $("#txt_idremitos").val();
         var ordens			= $("#txt_idordenes").val();
         var forpago			= $("#cmb_forma_pago").val();
@@ -1513,11 +1498,6 @@ $(document).ready(function(){
         var param			= param + "&tipo_fact="+tipofact+"&obs="+obs+"&cae="+cae+"&cae_vto="+cae_vto;
         var param           = param + "&tipo_doc="+tipo_doc;
         var win				= window.open(url+param, windowName, windowSize);
-
-
-//setTimeout(function() {win.close();}, 4000);
-
-
     }
 
 

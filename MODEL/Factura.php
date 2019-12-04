@@ -762,11 +762,11 @@ class factura {
     
     public function listUltimasFacturasCliente($idcliente) {
         $data = array();
-        $sql = "SELECT 	*, DATE_FORMAT(fecemi_fact,'%d-%m-%Y') fecemi_fact
-				FROM 	factura
+        $sql = "SELECT  f.*, DATE_FORMAT(fecemi_fact,'%d-%m-%Y') fecemi_fact
+                FROM    factura f
+                left JOIN recibo_factura using(id_fact)
 				WHERE 	id_cliente = " . $idcliente . " 
-				AND		estado_fact = 2
---				AND 	nota_credito = 0
+                AND     (recibo_factura.id_recibo is null or estado_fact = 4)
 				ORDER BY id_fact DESC
 				LIMIT 10";
 
