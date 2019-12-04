@@ -866,31 +866,6 @@ $('#tt').datagrid('reloadFooter',[  //inicio foter del datagrid
         return cade;
 	}
 
-	//Detalle de una orden de reparacion
-	/*
-	$(".clsMatrizVer").livequery("click", function(e){
-		$(".tag").remove();
-		var id_orden=$(this).attr("id").replace("btn_detalle","");
-
-		$('#table_detalle_orden_popup').dataTable({
-			"bServerSide": false,
-			"bFilter": false,
-			"bJQueryUI": true,
-			"bDestroy":true,
-			"sAjaxSource": "VIEW/WBuscarDetalleOrden.php?id_orden=" + id_orden,
-		   "sPaginationType": "full_numbers",
-			"sDom": '<"H"Tfr>t<"F"ip>',
-			"oTableTools": {
-				"aButtons": [
-				]
-			}
-		});
-
-		$('#dialg_form').dialog('open');
-	});
-	*/
-
-
 	//NUEVO PARA VER
 	//Con este vamos a modificar una orden de reparacion
 	$(".clsMatrizVer").livequery("click", function(e){

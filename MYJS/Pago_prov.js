@@ -1134,7 +1134,7 @@ $(document).ready(function(){
         var obs			= $("#save_obs_recibo").val();
         var efectivo	= $("#save_efectivo_recibo").val();
 		var debito		= $("#save_debito_recibo").val();
-        var total		= $("#total_remito").val();
+        var total		= $("#save_total_recibo").val();
         var saldo       = $("#save_saldo_recibo").val();
 
         var url 		= "orden_pago_pdf.php";
