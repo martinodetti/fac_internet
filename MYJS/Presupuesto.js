@@ -1038,7 +1038,7 @@ $(document).ready(function(){
 
     				$("#btn_Presupuesto_Close").show();
     				$("#btn_Presupuesto_Add").show();
-                    $("#btn_Presupuesto_Accepts").hide();
+                    $("#btn_Presupuesto_Accepts").show();
     				$("#btn_Presupuesto_Rechazar").show();
     				$("#btn_Presupuesto_Generar").show();
     				$("#btn_Presupuesto_Generar_2").show();
