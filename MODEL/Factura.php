@@ -468,31 +468,62 @@ class factura {
     }
     public function listJsonFacturas($fecIni, $fecFinal) {
 		//VAMOS A DAR VUELTA LA FECHA
-		$arr_ini = explode('/',$fecIni);
-		$fecIni = $arr_ini[2] . '-' . $arr_ini[1] . '-' . $arr_ini[0];
-		$arr_fin = explode('/',$fecFinal);
+		$arr_ini  = explode('/',$fecIni);
+		$fecIni   = $arr_ini[2] . '-' . $arr_ini[1] . '-' . $arr_ini[0];
+		$arr_fin  = explode('/',$fecFinal);
 		$fecFinal = $arr_fin[2] . '-' . $arr_fin[1] . '-' . $arr_fin[0];
-        $data = array();
+        $data     = array();
+        /*
         $sql = "SELECT 	*, concat(p.nom_persona, ' (',p.id_persona,')') cliente, DATE_FORMAT(fecemi_fact, '%d-%m-%Y') fecemi_fact, IF(nota_credito = 1,'Nc','Fx') AS tipo
         		FROM 	factura 
         		LEFT JOIN 
         				persona p on (p.id_persona = id_cliente) WHERE fecemi_fact>='" . $fecIni . "' AND fecemi_fact <='" . $fecFinal . "'";
+        */
+        $sql = "SELECT f.id_fact, f.obs_fact, f.descto_fact,
+                DATE_FORMAT(f.fecemi_fact, '%d-%m-%Y') fecemi_fact,
+                (CASE 
+                WHEN (nota_credito = 1) THEN 'NC'
+                ELSE (CASE 
+                WHEN (nota_debito = 1) THEN 'ND'
+                ELSE 'FX' 
+                 END)
+                 END) tipo ,
+                concat((CASE 
+                WHEN (tipo_fact = 1) THEN 'A'
+                ELSE 'B' 
+                 END)  , lpad(punto_venta,4,0),'-',lpad(num_fact,8,0)) comprobante, 
+                concat(p.nom_persona, ' (', p.id_persona, ')') cliente, 
+                p.ruc_persona cuit,  
+                round((f.iva105_fact / 0.105),2) neto105, f.iva105_fact , round((f.iva21_fact / 0.21),2) neto21, f.iva21_fact , f.total_fact, 
+                sum(m.importe) manoobra, sum(t.importe) torneria
+                FROM
+                    factura f
+                LEFT JOIN persona p on (p.id_persona = id_cliente)
+                LEFT JOIN manoobra m on (m.id_fac = f.id_fact)
+                LEFT JOIN torneria t on (t.id_fac = f.id_fact)
+                WHERE fecemi_fact>='" . $fecIni . "' AND fecemi_fact <='" . $fecFinal . "'
+                group by f.id_fact";
+
 		$result = $this->_DB->select_query($sql);
-        foreach ($result as $row) {
-//            $factura = new factura();
-//            $factura->set_id_fact($row['id_fact']);
-//            $factura->set_id_empresa($row['id_empresa']);
-//            $factura->set_id_cliente($row['id_cliente']);
-//            $factura->set_id_vendedor($row['id_vendedor']);
-//            $factura->set_descto_fact($row['descto_fact']);
-//            $factura->set_obs_fact($row['obs_fact']);
-//            $factura->set_iva12_fact($row['iva12_fact']);
-//            $factura->set_total_fact($row['total_fact']);
-//            $factura->set_fecemi_fact($row['fecemi_fact']);
-//            $factura->set_estado_fact($row['estado_fact']);
-            $data[] = array("id_fact"		=>$row['id_fact']		,"obs_fact"		=>$row['obs_fact']		,"descto_fact"	=>$row['descto_fact'],
-							"iva21_fact"	=>$row['iva21_fact']	,"iva105_fact"	=>$row['iva105_fact']	,"total_fact"	=>$row['total_fact'],
-							"fecemi_fact"	=>$row['fecemi_fact']	,"cliente" 		=>$row['cliente']		,"tipo"			=>$row['tipo'] );
+        
+        foreach ($result as $row) 
+        {
+            $multi = 1;
+            if($row['tipo'] == 'NC'){
+                $multi = -1;
+            }
+            $nogravado = 0;
+            if($row['total_fact'] - ($row['neto21'] + $row['iva21_fact'] + $row['iva105_fact'] + $row['neto105']) > 1)
+            {
+                $nogravado = $row['total_fact'] - ($row['neto21'] + $row['iva21_fact'] + $row['iva105_fact'] + $row['neto105']);
+            }
+
+            $data[] = array("id_fact"		=>$row['id_fact']		      ,"obs_fact"		=>$row['obs_fact']		       ,"descto_fact"	=>$row['descto_fact']*$multi,
+							"iva21_fact"	=>$row['iva21_fact']*$multi	  ,"iva105_fact"	=>$row['iva105_fact']*$multi   ,"total_fact"	=>$row['total_fact']*$multi,
+							"fecemi_fact"	=>$row['fecemi_fact']	      ,"cliente" 		=>$row['cliente']		       ,"tipo"			=>$row['tipo'] ,
+                            "comprobante"   =>$row['comprobante']         ,"neto21"         =>$row['neto21']*$multi        ,"neto105"       =>$row['neto105']*$multi,
+                            "nogravado"     =>$nogravado*$multi           ,"cuit"           =>$row['cuit']                 ,"manoobra"      =>($row['manoobra'] + $row['torneria'])*$multi
+                        );
         }
 
         return json_encode($data);

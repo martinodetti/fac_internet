@@ -57,11 +57,14 @@ var detalle=[];//modelo del grid
         $('#tt').datagrid('loadData', datainfo);
    }
    
-   $("#btn_Buscar").click(function(){
-       vaciarCabecera();
-       cargarFactura();
-       
-   });
+    $("#btn_Buscar").click(function(){
+        vaciarCabecera();
+        cargarFactura();
+    });
+
+    $("#btn_Exportar").click(function(){
+        $('#dg').datagrid('toExcel','ventas.xls');
+    });
    
     $('#dg').datagrid({
         url:"CONTROLLER/C_Factura.php?opc=8",
@@ -69,15 +72,18 @@ var detalle=[];//modelo del grid
 		textField:'id_fact',
         mode:'remote',
         columns:[[ 
-                 {field:'id_fact',title:'Id',width:15},
-                 {field:'tipo',title:'Tipo',width:15},
-                 {field:'fecemi_fact',title:'Fecha',width:35},
+                 {field:'fecemi_fact',title:'Fecha',width:30},
+                 {field:'comprobante',title:'Comprobante',width:35},
                  {field:'cliente',title:'Cliente',width:80},
-				 {field:'obs_fact',title:'Observación',width:100},  
-                 {field:'descto_fact',title:'Desc',width:25},  
-                 {field:'iva105_fact',title:'Iva 10,5%',width:30},  
-				 {field:'iva21_fact',title:'Iva 21%',width:30},  
-				 {field:'subtotal_fact',title:'Subtotal',width:30},  
+                 {field:'cuit',title:'Cuit',width:30},
+				 //{field:'obs_fact',title:'Observación',width:100},  
+                 //{field:'descto_fact',title:'Desc',width:25},  
+                 {field:'neto105',title:'Neto 10,5%',width:25},  
+                 {field:'iva105_fact',title:'Iva 10,5%',width:25},  
+                 {field:'neto21',title:'Neto 21%',width:25},  
+				 {field:'iva21_fact',title:'Iva 21%',width:25},  
+				 {field:'manoobra',title:'M.de Obra',width:30},  
+                 {field:'nogravado',title:'No grav.',width:25}, 
                  {field:'total_fact',title:'Total',width:30}
                  
             ]],
@@ -103,10 +109,10 @@ var detalle=[];//modelo del grid
        
     });
  
- function vaciarDetalle(){
-     detalle=[];
-     reloadDataDetalle();
- }
+    function vaciarDetalle(){
+        detalle=[];
+        reloadDataDetalle();
+    }
  
 	function vaciarCabecera(){
 		dat=[];
@@ -131,13 +137,19 @@ var detalle=[];//modelo del grid
 						id_fact:response[pi].id_fact,
 						tipo:response[pi].tipo,
 						cliente:response[pi].cliente,
+                        cuit:response[pi].cuit,
 						obs_fact:response[pi].obs_fact,
 						descto_fact:response[pi].descto_fact,
-						iva105_fact:response[pi].iva105_fact,
-						iva21_fact:response[pi].iva21_fact,
-						total_fact:response[pi].total_fact,
-						subtotal_fact:(parseFloat(response[pi].total_fact) - parseFloat(response[pi].iva21_fact) - parseFloat(response[pi].iva105_fact)).toFixed(2),
-						fecemi_fact:response[pi].fecemi_fact
+						iva105_fact:parseFloat(response[pi].iva105_fact),
+						iva21_fact:parseFloat(response[pi].iva21_fact),
+						total_fact:parseFloat(response[pi].total_fact),
+						manoobra:parseFloat(response[pi].manoobra),
+						fecemi_fact:response[pi].fecemi_fact, 
+                        neto21:parseFloat(response[pi].neto21),
+                        neto105:parseFloat(response[pi].neto105),
+                        comprobante:response[pi].comprobante,
+                        nogravado:response[pi].nogravado
+
                     };
                    dat.push(tmp_row);
                 }
@@ -153,10 +165,15 @@ var detalle=[];//modelo del grid
 		var sum=0;
 		var iva_21 = 0; //id 1
 		var iva_105 = 0; // id 2
-		var desc = 0;
+		var manoobra = 0;
         
         for(var t=0;t<lng;t++){
-        	if(tl[t]['tipo'] == "Fx")
+            sum     = sum       +   parseFloat(tl[t]['total_fact']);
+            iva_21  = iva_21    +   parseFloat(tl[t]['iva21_fact']);
+            iva_105 = iva_105   +   parseFloat(tl[t]['iva105_fact']);
+            manoobra    = manoobra +   parseFloat(tl[t]['manoobra']);
+            /*
+        	if(tl[t]['tipo'] == "FX")
         	{
 		        sum		= sum 		+ 	parseFloat(tl[t]['total_fact']) - parseFloat(tl[t]['iva21_fact']) - parseFloat(tl[t]['iva105_fact']);
 				iva_21 	= iva_21 	+ 	parseFloat(tl[t]['iva21_fact']);
@@ -170,14 +187,15 @@ var detalle=[];//modelo del grid
 				iva_105 = iva_105 	- 	parseFloat(tl[t]['iva105_fact']);
 				desc 	= desc 		- 	parseFloat(tl[t]['descto_fact']);
 			}
+            */
         }
-        var toto=sum+iva_21+iva_105;
+        //var toto=sum+iva_21+iva_105;
 
-        $("#label_subtotal").val(sum.toFixed(2));
+        //$("#label_subtotal").val(sum.toFixed(2));
         $("#label_iva105").val(iva_105.toFixed(2));
         $("#label_iva21").val(iva_21.toFixed(2));        
-        $("#label_total").val(toto.toFixed(2));
-		$("#label_desc").val(desc.toFixed(2));
+        $("#label_total").val(sum.toFixed(2));
+		$("#label_manoobra").val(manoobra.toFixed(2));
  
     }
  

@@ -329,7 +329,7 @@ $pdf->SetAutoPageBreak(false);
 	$pdf->Cell(35,5,'Débito',1,0,'R');
 	$pdf->SetFont('Times','B',12);
 	$pdf->Cell(40,5,"$".$debito,1,0,'C');
-	$total = $total_cheque + $total_retencion + $total_trans + $efectivo;
+	$total = $total_cheque + $total_retencion + $total_trans + $efectivo + $saldo;
 	$pdf->Ln();
 	$pdf->SetX(130);
 	$pdf->SetFont('Times','B',13);

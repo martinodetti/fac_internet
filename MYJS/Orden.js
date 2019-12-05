@@ -109,7 +109,7 @@ $('#tt').datagrid('reloadFooter',[  //inicio foter del datagrid
             var canti=$("#txt_cantidad").val();
             canti=parseInt(canti);
             var subt=$("#txt_sub").val();
-            subt=(parseFloat(subt)).toFixed(2);
+            subt=(parseFloat(subt)).toFixed(0);
             var tmp_row={
                 id:idprod,
                 codigo:codprod,
@@ -154,15 +154,15 @@ $('#tt').datagrid('reloadFooter',[  //inicio foter del datagrid
             //              var ret=tl[i]['producto'];
             sum=sum + parseFloat(tl[t]['total']);
         }
-        $("#txt_temporal").val(sum.toFixed(2));
+        $("#txt_temporal").val(sum.toFixed(0));
 
-//        iva=iva.toFixed(2);
+//        iva=iva.toFixed(0);
         var toto=sum;
         toto=toto;
-        toto=toto.toFixed(2);
+        toto=toto.toFixed(0);
 
         $('#tt').datagrid('reloadFooter',[
-           {cantidad:"SubTotal : ",total: sum.toFixed(2)},
+           {cantidad:"SubTotal : ",total: sum.toFixed(0)},
            {cantidad:"Total : ",total: toto}
         ]);
 
@@ -360,9 +360,9 @@ $('#tt').datagrid('reloadFooter',[  //inicio foter del datagrid
                 dataType:'json',
                 success:function(response){
 					$.each(response.detalle, function(i, item) {
-						precio=parseFloat(item._precio_detpresupuesto).toFixed(2);
+						precio=parseFloat(item._precio_detpresupuesto).toFixed(0);
 						canti=parseInt(item._canti_detpresupuesto);
-						subt=parseFloat(canti*precio).toFixed(2);
+						subt=parseFloat(canti*precio).toFixed(0);
 						var tmp_row={
 							id:item._id_producto,
 							codigo:item._nom_producto,
@@ -473,7 +473,7 @@ $('#tt').datagrid('reloadFooter',[  //inicio foter del datagrid
 				porctj = nuevo_porctj;
 			}
 			var precio_original = parseFloat(row.pvp1_producto);
-			var precio_con_porcentaje = Math.round(parseFloat(precio_original+(precio_original*porctj/100)).toFixed(2));
+			var precio_con_porcentaje = Math.round(parseFloat(precio_original+(precio_original*porctj/100)).toFixed(0));
 
 			$("#txt_idproducto").val(row.id_producto);
 			$("#txt_nom_producto").val(row.descrip_producto);
@@ -494,7 +494,7 @@ $('#tt').datagrid('reloadFooter',[  //inicio foter del datagrid
 		var v1= $("#txt_precio").val();
 		var v2= $("#txt_cantidad").val();
 		var v3=v1*v2;
-		$("#txt_sub").val(v3.toFixed(2));
+		$("#txt_sub").val(v3.toFixed(0));
 	});
 	$("#cmbDescto").change(function(){
 		sumatoria();
@@ -929,7 +929,7 @@ $('#tt').datagrid('reloadFooter',[  //inicio foter del datagrid
 					$.each(response.detalle, function(i, item) {
 						precio=parseFloat(item._precio_detorden);
 						if(response.estado == "Cerrado")
-							nuevo_precio = Math.round(precio+(precio*porctj/100)).toFixed(2);
+							nuevo_precio = Math.round(precio+(precio*porctj/100)).toFixed(0);
 						else
 							nuevo_precio = precio;
 
@@ -1052,7 +1052,7 @@ $('#tt').datagrid('reloadFooter',[  //inicio foter del datagrid
 
 					$.each(response.detalle, function(i, item) {
 						precio=parseFloat(item._precio_detorden);
-						nuevo_precio = Math.round(precio+(precio*porctj/100)).toFixed(2);
+						nuevo_precio = Math.round(precio+(precio*porctj/100)).toFixed(0);
 						canti=parseInt(item._canti_detorden);
 						subt=parseFloat(canti*nuevo_precio);
 						var tmp_row={

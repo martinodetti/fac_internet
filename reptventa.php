@@ -50,6 +50,7 @@ $arr_descto=$clsDescto->ComboDescuento_ventas();
         <script type="text/javascript" src="JS/jquery-ui-1.8.2.js" ></script>
         <script type="text/javascript" src="MYJS/datagrid-detailview.js" ></script>
         <script type="text/javascript" src="JS/jquery.validate.js" ></script>
+        <script type="text/javascript" src="JS/datagrid-export.js"></script>
         <script type="text/javascript" src="MYJS/Reporteventa.js" ></script>
 
 
@@ -115,55 +116,46 @@ $arr_descto=$clsDescto->ComboDescuento_ventas();
                                         
                                             
                                             <div id="tabs-1">
-                                                       <table border="0">
-                                                             <thead>
-                                                                 <tr>
-                                                                     <th style="width: 200px"></th>
-                                                                     <th style="width: 200px"></th>
-                                                                     <th style="width: 200px"></th>
-                                                                 </tr>
-                                                             </thead>
-                                                             <tbody>
-                                                                 <tr>
-                                                                     <td>
-                                                                          <label class="form-label required"> Fecha Inicial </label>
-                                                                          <input id="fec_ini" name="fec_ini" class="form-field datepicker" type="text"/>
-                                                                     </td>
-                                                                     <td>
-                                                                          <label class="form-label required"> Fecha Final </label>
-                                                                          <input id="fec_final" name="fec_final" class="form-field datepicker" type="text"/>
-                                                                     </td>
-                                                                     <td>
-                                                                              <input id="btn_Buscar" class="button themed" type="button" 
-                                                                   value="Buscar" name="btn_Buscar" />
-                                                                     </td>
-                                                                 </tr>
-                                                                
-                                                             </tbody>
-                                                         </table>
+                                                <table border="0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width: 200px"></th>
+                                                            <th style="width: 200px"></th>
+                                                            <th style="width: 200px"></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <label class="form-label required"> Fecha Inicial </label>
+                                                                <input id="fec_ini" name="fec_ini" class="form-field datepicker" type="text"/>
+                                                            </td>
+                                                            <td>
+                                                                <label class="form-label required"> Fecha Final </label>
+                                                                <input id="fec_final" name="fec_final" class="form-field datepicker" type="text"/>
+                                                            </td>
+                                                            <td>
+                                                                <input id="btn_Buscar" class="button themed" type="button" value="Buscar" name="btn_Buscar" />
+                                                            </td>
+                                                            <td>
+                                                                <input id="btn_Exportar" class="button themed" type="button" value="Exportar" name="btn_Exportar" />
+                                                            </td>
+                                                         </tr>
+                                                        
+                                                     </tbody>
+                                                </table>
                                                 <hr/>
                                                 <table id="dg" style="width:800px;height:250px" url="CONTROLLER/C_Factura.php?opc=8"  title="Reporte de Ventas" singleselect="true" fitcolumns="true">  
                                                         <thead>  
-                                                            <tr>
-	                                                            
-                                                                <th field="id_fact" width="60">Id</th>  
-                                                                <th field="tipo" width="60">Tipo</th>    
-                                                                <th field="cliente" width="100">Cliente</th> 
-                                                                <th field="obs_fact" width="100">Observación</th>  
-                                                                <th field="descto_fact" align="right" width="80">Descuento</th>  
-                                                                <th field="iva105_fact" align="right" width="40">Iva 10,5%</th>  
-																<th field="iva21_fact" align="right" width="40">Iva 21%</th>  
-                                                                <th field="total_fact" width="220">Total</th>  
-                                                                <th field="fecemi_fact" width="60" align="center">Fecha</th>  
-                                                            </tr>  
+                                                            
                                                         </thead>  
                                                     </table>  
                                                 <br/>
 												<div>
 													<table style="width:830px">
 														<tr>
-															<th> Subtotal <input id="label_subtotal" value="" disabled style="width:70px"/></th>
-															<th> Desc <input id="label_desc" value="" disabled style="width:70px"/></th>
+															<!--<th> Subtotal <input id="label_subtotal" value="" disabled style="width:70px"/></th>-->
+															<th> M.de Obra <input id="label_manoobra" value="" disabled style="width:70px"/></th>
 															<th> Iva 10,5% <input id="label_iva105" value="" disabled style="width:70px"/></th>
 															<th> Iva 21% <input id="label_iva21" value="" disabled style="width:70px"/></th>
 															<th> TOTAL <input id="label_total" value="" disabled style="width:70px"/></th>

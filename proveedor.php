@@ -256,7 +256,7 @@ $arr_prov = $provincia->listprovincias();
 												</div>
                                             </div>
                                             
-                                                <div id="tabs-2">
+                                            <div id="tabs-2">
                                                 
                                                  <form id="frmPersona_Add" method="post" action="">
                                                   <input type="hidden" id="save_id_tipoper" name="save_id_tipoper" value="3" />
