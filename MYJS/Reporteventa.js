@@ -147,7 +147,7 @@ var detalle=[];//modelo del grid
 						fecemi_fact:response[pi].fecemi_fact, 
                         neto21:parseFloat(response[pi].neto21),
                         neto105:parseFloat(response[pi].neto105),
-                        comprobante:response[pi].comprobante,
+                        comprobante:response[pi].tipo+' '+response[pi].comprobante,
                         nogravado:response[pi].nogravado
 
                     };

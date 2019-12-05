@@ -398,23 +398,37 @@ class compra {
 		$arr_fin = explode('-',$fecFinal);
 		$fecFinal = $arr_fin[2] . '-' . $arr_fin[1] . '-' . $arr_fin[0];
 
-        $sql = "SELECT *, DATE_FORMAT(fec_compra,'%d-%m-%Y') fec_compra,DATE_FORMAT(fec_ingreso,'%d-%m-%Y') fec_ingreso,
-        				 persona.nom_persona as proveedor, IF(nota_credito = 1, 'Nc', 'Fx') AS tipo
-        		FROM compra
-        		LEFT JOIN persona on (persona.id_persona = compra.id_provd)
+        $sql = "SELECT compra.*, 
+                DATE_FORMAT(fec_compra,'%d-%m-%Y') fec_compra,
+                (CASE 
+                WHEN (nota_credito = 1) THEN 'NC'
+                ELSE (CASE 
+                WHEN (nota_debito = 1) THEN 'ND'
+                ELSE 'FX' 
+                 END)
+                 END) tipo , 
+                persona.nom_persona as proveedor, 
+                persona.ruc_persona as cuit
+                FROM compra 
+                LEFT JOIN persona on (persona.id_persona = compra.id_provd)
         		WHERE fec_ingreso>='" . $fecIni . "' AND fec_ingreso<='" . $fecFinal . "'";
 
         $result = $this->_DB->select_query($sql);
         foreach ($result as $row) {
-            $data[] = array("id_compra"		=>$row['id_compra']		,"fec_compra"	=>$row['fec_compra']	,
-            				/*"obs_compra"	=>$row['obs_compra']	,*/"remito"		=>$row['guiacod_compra'] ,
-            				"iva21"			=>$row['iva21_compra']	,"iva10"		=>$row['iva10_compra'],
-							"total_compra"	=>$row['total_compra']	,"subtotal"		=>$row['subtotal_compra'],
-							"proveedor"		=>$row['proveedor']		,"iva_ret"		=>$row['iva_ret_compra'],
-							"iibb_ret"		=>$row['iibb_ret_compra'],"descuento"	=>$row['descuento_compra'],
-							"iva_ret"		=>$row['iva_ret_compra'],"ganancia_ret"	=>$row['ganancia_ret_compra'],
-							"fec_ingreso"	=>$row['fec_ingreso']	,"tipo"			=>$row['tipo'],
-							"concepto_nograv"=> $row['concepto_nograv']);
+            $multi = 1;
+            if($row['tipo'] == 'NC'){
+                $multi = -1;
+            }
+            $data[] = array("id_compra"		=>$row['id_compra']		          ,"fec_compra"	  =>$row['fec_compra']	,
+            				/*"obs_compra"	=>$row['obs_compra']	        ,*/"remito"		  =>$row['guiacod_compra'] ,
+            				"iva21"			=>$row['iva21_compra']*$multi     ,"iva10"		  =>$row['iva10_compra']*$multi,
+							"total_compra"	=>$row['total_compra']*$multi     ,"subtotal"	  =>$row['subtotal_compra']*$multi,
+							"proveedor"		=>$row['proveedor']		          ,"iva_ret"	  =>$row['iva_ret_compra']*$multi,
+							"iibb_ret"		=>$row['iibb_ret_compra']*$multi ,"descuento"	  =>$row['descuento_compra']*$multi,
+							"iva_ret"		=>$row['iva_ret_compra']*$multi   ,"ganancia_ret" =>$row['ganancia_ret_compra']*$multi,
+							"fec_ingreso"	=>$row['fec_ingreso']	          ,"tipo"		  =>$row['tipo'],
+							"concepto_nograv"=> $row['concepto_nograv'], 
+                            "cuit"          =>$row['cuit']);
         }
 
         return json_encode($data);

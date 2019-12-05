@@ -51,6 +51,7 @@ $arr_descto=$clsDescto->ComboDescuento_ventas();
         <script type="text/javascript" src="JS/jquery-ui-1.8.2.js" ></script>
         <script type="text/javascript" src="MYJS/datagrid-detailview.js" ></script>
         <script type="text/javascript" src="JS/jquery.validate.js" ></script>
+        <script type="text/javascript" src="JS/datagrid-export.js"></script>
         <script type="text/javascript" src="MYJS/Reportecompras.js" ></script>
 
 
@@ -168,6 +169,9 @@ $arr_descto=$clsDescto->ComboDescuento_ventas();
                                                                               <input id="btn_Buscar" class="button themed" type="button" 
                                                                    value="Buscar" name="btn_Buscar" />
                                                                      </td>
+                                                                     <td>
+                                                                        <input id="btn_Exportar" class="button themed" type="button" value="Exportar" name="btn_Exportar" />
+                                                                    </td>
                                                                  </tr>
                                                                 
                                                              </tbody>

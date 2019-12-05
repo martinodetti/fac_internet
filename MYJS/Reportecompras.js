@@ -80,13 +80,10 @@ var detalle=[];//modelo del grid
 		textField:'id_compra',
         mode:'remote',
         columns:[[ 
-                 {field:'remito',title:'Nº',width:60}, 
-                 {field:'tipo',title:'Tipo',width:15}, 
                  {field:'fec_compra',title:'Fecha',width:40},
-                 {field:'fec_ingreso',title:'Carga',width:40},
+                 {field:'comprobante',title:'Nº',width:60}, 
                  {field:'proveedor',title:'Proveedor',width:140}, 
-//                 {field:'obs_compra',title:'Observación',width:2},
-                 {field:'subtotal',title:'Subtotal',width:30}, 
+                 {field:'cuit',title:'Cuit',width:30}, 
                  {field:'iva21',title:'IVA21%',width:30}, 
                  {field:'iva10',title:'IVA10,5%',width:30},
                  {field:'iibb_ret',title:'Ret IIBB',width:30},
@@ -140,6 +137,10 @@ var detalle=[];//modelo del grid
 	 dat=[];
 	 reloadData();
 	}
+
+    $("#btn_Exportar").click(function(){
+        $('#dg').datagrid('toExcel','compras.xls');
+    });
  
 
  	function cargarCompra(){
@@ -172,7 +173,9 @@ var detalle=[];//modelo del grid
 				         ganancia_ret:response[pi].ganancia_ret,
 						 concepto_nograv:response[pi].concepto_nograv,
 				         descuento:response[pi].descuento,
-				         total_compra:response[pi].total_compra                  
+				         total_compra:response[pi].total_compra,
+                         comprobante:response[pi].tipo+' '+response[pi].remito,
+                         cuit:response[pi].cuit
                     };
                    dat.push(tmp_row);
             
@@ -197,34 +200,19 @@ var detalle=[];//modelo del grid
 		var concepto_nograv = 0;
         
         for(var t=0;t<lng;t++){
-        	if(tl[t]['tipo'] == 'Fx')
-        	{
-		    	sub		= sub		+ 	parseFloat(tl[t]['subtotal']);
-		        sum		= sum 		+ 	parseFloat(tl[t]['total_compra']);
-				iva_21 	= iva_21 	+ 	parseFloat(tl[t]['iva21']);
-				iva_105 = iva_105 	+ 	parseFloat(tl[t]['iva10']);
-				iva_ret = iva_ret 	+	parseFloat(tl[t]['iva_ret']);
-				iibb_ret= iibb_ret	+ 	parseFloat(tl[t]['iibb_ret']);
-				desc	= desc 		+ 	parseFloat(tl[t]['descuento']);
-				
-				concepto_nograv = concepto_nograv + parseFloat(tl[t]['concepto_nograv']);
+        	
+	    	sub		= sub		+ 	parseFloat(tl[t]['subtotal']);
+	        sum		= sum 		+ 	parseFloat(tl[t]['total_compra']);
+			iva_21 	= iva_21 	+ 	parseFloat(tl[t]['iva21']);
+			iva_105 = iva_105 	+ 	parseFloat(tl[t]['iva10']);
+			iva_ret = iva_ret 	+	parseFloat(tl[t]['iva_ret']);
+			iibb_ret= iibb_ret	+ 	parseFloat(tl[t]['iibb_ret']);
+			desc	= desc 		+ 	parseFloat(tl[t]['descuento']);
 			
-				ganancia_ret = ganancia_ret + parseFloat(tl[t]['ganancia_ret']);
-			}
-			else
-			{
-				sub		= sub		- 	parseFloat(tl[t]['subtotal']);
-		        sum		= sum 		- 	parseFloat(tl[t]['total_compra']);
-				iva_21 	= iva_21 	- 	parseFloat(tl[t]['iva21']);
-				iva_105 = iva_105 	- 	parseFloat(tl[t]['iva10']);
-				iva_ret = iva_ret 	-	parseFloat(tl[t]['iva_ret']);
-				iibb_ret= iibb_ret	- 	parseFloat(tl[t]['iibb_ret']);
-				desc	= desc 		- 	parseFloat(tl[t]['descuento']);
-				
-				concepto_nograv = concepto_nograv - parseFloat(tl[t]['concepto_nograv']);
+			concepto_nograv = concepto_nograv + parseFloat(tl[t]['concepto_nograv']);
+		
+			ganancia_ret = ganancia_ret + parseFloat(tl[t]['ganancia_ret']);
 			
-				ganancia_ret = ganancia_ret - parseFloat(tl[t]['ganancia_ret']);
-			}
         }
 //        var toto=sum+iva_21+iva_105;
 
