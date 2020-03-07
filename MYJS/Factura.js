@@ -1447,7 +1447,7 @@ $(document).ready(function(){
 			var sub			= $("#txt_temporal").val();
 			var url			= "factura_a_afip.php";
 
-			if((cli == 102266 || cli == 10727) && total >= 100000){
+			if((cli == 101601 || cli == 81 || cli == 102266 || cli == 10727 || cli == 213 || cli == 103542 || cli == 10283) && total >= 100000){
 				url = "factura_a_afip_credito.php";
 			}
 			
