@@ -26,13 +26,14 @@ class persona {
     public $_limite_ctacte;
     public $_id_listaprecio;
     public $_ganancia;
+    public $_factura_credito;
 
     public function __construct() {
 
         $this->_DB = new Database();
     }
 
-    public function persona($id_persona, $id_tipoper, $id_ciudad, $id_sexo, $id_civil, $nom_persona, $ape_persona, $ruc_persona, $direc_persona, $telf_persona, $cel_persona, $email_persona, $web_persona, $obs_persona, $fec_persona, $estado_persona, $clave_persona, $tiene_ctacte, $id_condiva, $telf_persona_2, $ganancia) {
+    public function persona($id_persona, $id_tipoper, $id_ciudad, $id_sexo, $id_civil, $nom_persona, $ape_persona, $ruc_persona, $direc_persona, $telf_persona, $cel_persona, $email_persona, $web_persona, $obs_persona, $fec_persona, $estado_persona, $clave_persona, $tiene_ctacte, $id_condiva, $telf_persona_2, $ganancia, $factura_credito) {
 
         $this->_id_persona = $id_persona;
 
@@ -75,6 +76,8 @@ class persona {
         $this->_id_condiva  = $id_condiva;
 
         $this->_ganancia = $ganancia;
+
+        $this->_factura_credito = $factura_credito;
     }
 
     public function get_id_persona() {
@@ -309,6 +312,16 @@ class persona {
         $this->_ganancia = $ganancia;
     }
 
+    public function get_factura_credito() {
+
+        return $this->_factura_credito;
+    }
+
+    public function set_factura_credito($factura_credito) {
+
+        $this->_factura_credito = $factura_credito;
+    }
+
     public function addPersona($persona) {
 
         $sql="";
@@ -355,7 +368,9 @@ class persona {
 
         $sql = $sql . ""  . $persona->get_ganancia() . ",";
 
-        $sql = $sql . ""  . $persona->get_limite_ctacte() . "";
+        $sql = $sql . ""  . $persona->get_limite_ctacte() . ",";
+
+        $sql = $sql . ""  . $persona->get_factura_credito() . "";
 
         $result = $this->_DB->select_query("call sp_personainsert (" . $sql . ")");
 
@@ -410,7 +425,9 @@ class persona {
 
         $sql = $sql . ""  . $persona->get_ganancia() . ",";
 
-        $sql = $sql . ""  . $persona->get_limite_ctacte() . "";
+        $sql = $sql . ""  . $persona->get_limite_ctacte() . ",";
+
+        $sql = $sql . ""  . $persona->get_factura_credito() . "";
 
         $result = $this->_DB->alteration_query("call sp_personaupdate (" . $sql . ")");
 

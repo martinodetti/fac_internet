@@ -259,8 +259,13 @@ $arr_ciudad=$Ciudad->listCiudads();
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td></td>
-                                                                    <td>
+                                                                    <td >
+                                                                      <label class="form-label required"> Factura Credito</label>
+                                                                   <div>
+                                                                    <input type="checkbox"  name="update_factura_credito" id="update_factura_credito">
+                                                                   </div>
+                                                                 </td>
+                                                                <td>
                                                                         <label class="form-label required"> Limite cuenta corriente</label>
                                                                         <input id="update_limite_ctacte" class="form-field width20" name="update_limite_ctacte" type="text" value="0"  maxlength="32"/>
 		                                                            </td>
@@ -410,7 +415,12 @@ $arr_ciudad=$Ciudad->listCiudads();
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td></td>
+                                                                <td >
+                                                                      <label class="form-label required"> Factura Credito</label>
+                                                                   <div>
+                                                                    <input type="checkbox"  name="save_factura_credito" id="save_factura_credito">
+                                                                   </div>
+                                                                 </td>
                                                                 <td>
                                                                     <label class="form-label required"> Limite cuenta corriente</label>
                                                                     <input id="save_limite_ctacte" class="form-field width20" name="save_limite_ctacte" type="text" value="0"  maxlength="32"/>

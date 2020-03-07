@@ -60,6 +60,7 @@ if($id_tipoper==1 || $id_tipoper == 4)
 	$ganancia		= 0;
 	$id_cliente		= 0;
     $limite_ctacte  = 0;
+    $factura_credito= 0;
 
 }
 else if($id_tipoper==2)
@@ -78,6 +79,7 @@ else if($id_tipoper==2)
 	$ganancia 		= 0;
 	$id_cliente		= 0;
     $limite_ctacte  = $_POST['save_limite_ctacte'];
+    $factura_credito= $_POST['save_factura_credito'];
 }
 else
 {//proveedor
@@ -95,7 +97,7 @@ else
 	$ganancia		= $_POST['save_ganancia_persona'];
 	$id_cliente 	= $_POST['update_id_cliente'];
     $limite_ctacte  = 0;
-
+    $factura_credito= 0;
 }
 
 $persona=new persona();
@@ -122,6 +124,7 @@ $persona->set_tiene_ctacte($tiene_ctacte);
 $persona->set_id_listaprecio($id_listaprecio);
 $persona->set_ganancia($ganancia);
 $persona->set_limite_ctacte($limite_ctacte);
+$persona->set_factura_credito($factura_credito);
 
 $ret=$persona->addPersona($persona);
 $id=$ret['0'][0]; //ID DE LA PERSONA
@@ -181,6 +184,7 @@ if ($id_tipoper == 1 || $id_tipoper == 4)
     $ganancia		= 0;
 	$id_cliente		= 0;
     $limite_ctacte  = 0;
+    $factura_credito= 0;
 
 }
 else if ($id_tipoper == 2)
@@ -201,6 +205,7 @@ else if ($id_tipoper == 2)
 	$ganancia		= 0;
 	$id_cliente		= 0;
     $limite_ctacte  = $_POST['update_limite_ctacte'];
+    $factura_credito= $_POST['factura_credito'];
 }
 else
 {//proveedor
@@ -218,6 +223,7 @@ else
     $id_listaprecio	= 1;
     $ganancia		= $_POST['update_ganancia_persona'];
     $limite_ctacte  = 0;
+    $factura_credito= 0;
 }
 
 
@@ -247,6 +253,7 @@ $persona->set_tiene_ctacte($tiene_ctacte);
 $persona->set_id_listaprecio($id_listaprecio);
 $persona->set_ganancia($ganancia);
 $persona->set_limite_ctacte($limite_ctacte);
+$persona->set_factura_credito($factura_credito);
 
 $ret=$persona->updatePersona($persona);
 

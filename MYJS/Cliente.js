@@ -506,6 +506,7 @@ $("#update_hora_detcliente").timepicker({
           $("#update_cel_persona").val(cel);
           $("#update_email_persona").val(email);
           $("#update_direc_persona").val(direc);
+          $("#update_factura_credito").val(factura_electronica);
 //          $("#update_obs_persona").val(obs);
 
 

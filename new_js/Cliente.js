@@ -599,6 +599,8 @@ $("#table-example_filter").children().children().focus();
 
                 $("#update_obs_persona").val(response._obs_persona);
 
+                $("#update_factura_credito").val(response._factura_credito);
+
                 if(parseFloat(response._id_ciudad) > 0){
                 	var id_c = response._id_ciudad;
                 	var id_p = 0;
