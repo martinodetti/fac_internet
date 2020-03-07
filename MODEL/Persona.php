@@ -506,6 +506,7 @@ class persona {
 		        $persona->set_id_listaprecio($row['id_listaprecio']);
 		        $persona->set_ganancia($row['ganancia']);
                 $persona->set_limite_ctacte($row['limite_ctacte']);
+                $persona->set_factura_credito($row['factura_credito']);
                 $persona->_saldo = $row['saldo'];
 				$persona->_id_cliente_proveedor = $row['id_cliente_proveedor'];
 		    }
