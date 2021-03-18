@@ -78,8 +78,10 @@ else if($id_tipoper==2)
 	$id_listaprecio	= $_POST['save_id_listaprecio'];
 	$ganancia 		= 0;
 	$id_cliente		= 0;
-    $limite_ctacte  = $_POST['save_limite_ctacte'];
-    $factura_credito= $_POST['save_factura_credito'];
+	$limite_ctacte  = $_POST['save_limite_ctacte'];
+	$factura_credito = 0;
+	if($_POST['save_factura_credito'] == 'on')
+    	$factura_credito= 1;
 }
 else
 {//proveedor
@@ -205,7 +207,9 @@ else if ($id_tipoper == 2)
 	$ganancia		= 0;
 	$id_cliente		= 0;
     $limite_ctacte  = $_POST['update_limite_ctacte'];
-    $factura_credito= $_POST['factura_credito'];
+	$factura_credito = 0;
+  	if($_POST['update_factura_credito'] == 'on')
+		$factura_credito= 1;
 }
 else
 {//proveedor

@@ -57,7 +57,7 @@ case '1': //add
 	$detalle		= 	$_POST['Detalle'];
 	$nro_documento 	= 	$_GET['txt_ruc_fact'];
 	$id_fact_nc		= 	$_GET['txt_id_fact_nc'];
-
+	$id_cond_iva	= 	$_GET['txt_id_condiva'];
 	$estado_fact	=	2; 
 	if($forma_pago == 3)
 		$estado_fact	=	1; 
@@ -80,7 +80,7 @@ case '1': //add
 	if($tipo_fact == 'B' && $tipo_documento == 2) $CbteTipo = 8;
 
 	//factura de crédito electronico
-	if(($id_cliente == 101601 || $id_cliente == 81 || $id_cliente == 103542 || $id_cliente == 102266 || $id_cliente == 213 || $id_cliente == 10727 || $id_cliente == 10283) && $total_fact >= 100000) $CbteTipo = $CbteTipo + 200;
+	if(($id_cliente == 101601 || $id_cliente == 81 || $id_cliente == 103542 || $id_cliente == 102266 || $id_cliente == 213 || $id_cliente == 10727 || $id_cliente == 10283) && $total_fact >= 146885) $CbteTipo = $CbteTipo + 200;
 
 	$param['FeCAEReq']['FeCabReq'] = array(	'CantReg' 	=> 1,
 											'PtoVta' 	=> $punto_de_venta,
@@ -102,6 +102,7 @@ case '1': //add
 	$DocTipo = 80; //CUIT
 	if($tipo_fact == 'B' && $total_fact >= 1000)	$DocTipo = 86; //si no es factura A entonces probamos con Otro documento a ver si pasa
 	if($tipo_fact == 'B' && $total_fact < 1000)		$DocTipo = 99;
+	if($tipo_fact == 'B' && $id_cond_iva == 5) 		$DocTipo = 91;
 	$nro_documento_afip = str_replace("-","",$nro_documento);
 	if($DocTipo == 99) $nro_documento_afip = 0;
 	$arr = explode("-", $fecemi_fact);
@@ -128,9 +129,9 @@ case '1': //add
 																'MonCotiz'	=> 1,
 																'Iva'		=> $IVA
 																);
-	if($CbteTipo > 200){
+	if($CbteTipo == 201){
 		$fecha = date('Y-m-d');
-		$nuevafecha = strtotime ( '+60 day' , strtotime ( $fecha ) ) ;
+		$nuevafecha = strtotime ( '+30 day' , strtotime ( $fecha ) ) ;
 		$nuevafecha = date ( 'Ymd' , $nuevafecha );
 
 		$param['FeCAEReq']['FeDetReq']['FECAEDetRequest']['FchVtoPago'] = $nuevafecha;
@@ -141,9 +142,27 @@ case '1': //add
 			)
 		);
 	}
-
+/*
+	if($CbteTipo == 202 || $CbteTipo == 203 ){
+		$param['FeCAEReq']['FeDetReq']['FECAEDetRequest']['CbtesAsoc'] = array(0 => 
+			array(
+				'Tipo' 	=> 201,
+				'PtoVta'=> 2,
+				'Nro' 	=> 6,
+				'Cuit'	=> 30709716006,
+				'CbteFch'=>'20191218'
+			)
+		);
+		
+		$param['FeCAEReq']['FeDetReq']['FECAEDetRequest']['Opcionales'] = array(0 =>
+	   		array(
+                'Id' => 22,
+				'Valor' => 'S'
+			)
+		); 
+	}
+ */
 	$ret = $wsfe->ejecutar_metodo('FECAESolicitar',$param);
-
 
 	$cae = "";
 	$cae_vto = "";

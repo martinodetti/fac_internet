@@ -47,6 +47,9 @@ $barcode = '307097160060' . $tipo_doc . $arr_num[0] . $cae . $tmp_vto . '6';
 
 $arr_fecemi = explode("-",$fecha);
 
+$time = strtotime($arr_fecemi[2]."-".$arr_fecemi[1]."-".$arr_fecemi[0]);
+$fecvenc = date("d-m-Y", strtotime("+35 days", $time));
+
 
 $re_y_or = "";
 if($remis !="" )
@@ -124,8 +127,14 @@ for($i=0; $i<2; $i++)
 	$pdf->setXY(99,7);
 	$pdf->Cell(11,14,"A",1,0,"C");
     $pdf->SetFont('Times','',8);
-    $pdf->setXY(101,18);
-    $pdf->Cell(7,2,"Cod. 0".$tipo_doc,0,0,"C");
+	$pdf->setXY(101,18);
+
+	if($tipo_doc == 2)
+    	$pdf->Cell(7,2,"Cod. 203",0,0,"C");
+	if($tipo_doc == 3)
+		$pdf->Cell(7,2,"Cod. 202",0,0,"C");
+	if($tipo_doc == 1)
+		$pdf->Cell(7,2,"Cod. 201",0,0,"C");
 
     //original o duplicado
     $pdf->setFont('Courier','B',16);
@@ -164,8 +173,10 @@ for($i=0; $i<2; $i++)
 
 	//fecha
 	$pdf->SetFont('Times','',13);
-	$pdf->SetXY(115,16);
+	$pdf->SetXY(115,13);
 	$pdf->Cell(38,5,"Fecha: " . $fecha,$bd,0);
+	$pdf->SetXY(115,18);
+	$pdf->Cell(38,5,"Vto.:    " . $fecvenc, $bd,0);
 	//numero
 	$pdf->SetXY(165,16);
 	$pdf->Cell(40,5,"Nº: ".$numero,$bd);

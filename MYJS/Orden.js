@@ -413,7 +413,6 @@ $('#tt').datagrid('reloadFooter',[  //inicio foter del datagrid
 			if(row.id_cliente == '0'){
 				$("#dialg_nuevoCliente").dialog('open');
 			}else{
-
 				$("#label_cliente_vehiculo").show();
 				$("#save_id_cliente").val(row.id_cliente);
 				$("#save_id_vehiculo").val(row.id_vehiculo);
@@ -422,7 +421,8 @@ $('#tt').datagrid('reloadFooter',[  //inicio foter del datagrid
 				$("#save_patente").val(row.dominio);
 				$("#div_deleteVehiculo").hide();
 				//$("#txt_obs_vehiculo").val(row.obs_vehi);
-				$("#save_obs_orden").val($("#save_obs_orden").val() + ' - ' + row.obs_vehi);
+				$("#save_obs_orden").val(row.obs_vehi);
+				//$("#save_obs_orden").val($("#save_obs_orden").val() + ' - ' + row.obs_vehi);
 				$("#txt_porcentaje").val(row.porcentaje);
 				if(row.id_vehiculo > 0) {
 					$("#div_deleteVehiculo").show();

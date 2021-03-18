@@ -209,8 +209,8 @@ $(document).ready(function(){
 	function reloadData(){
 		for(var t=0;t<dat.length;t++)
 		{
-			dat[t].precio = Math.round(dat[t].precio);
-			dat[t].total = Math.round(dat[t].precio * dat[t].cantidad);
+			dat[t].precio = dat[t].precio;
+			dat[t].total = dat[t].precio * dat[t].cantidad;
 		}
         var datainfo = {
             "total":0,
@@ -953,7 +953,7 @@ $(document).ready(function(){
 						id_fact:arr_det[i]['id_fact']
 					};
 
-					if($("#save_tipo_fact").val() == "B"){
+					if($("#save_tipo_fact").val() == "B" && $("#cmb_tipo_fact").val() == 1){
 						tmp_row.precio 	= (parseFloat(arr_det[i]['precio_detfact']) * 1.21).toFixed(2),
 						tmp_row.total	= (subtotal * 1.21).toFixed(2)
 					}
@@ -1447,7 +1447,7 @@ $(document).ready(function(){
 			var sub			= $("#txt_temporal").val();
 			var url			= "factura_a_afip.php";
 
-			if((cli == 101601 || cli == 81 || cli == 102266 || cli == 10727 || cli == 213 || cli == 103542 || cli == 10283) && total >= 100000){
+			if((cli == 101601 || cli == 81 || cli == 102266 || cli == 10727 || cli == 213 || cli == 103542 || cli == 10283) && total >= 146885){
 				url = "factura_a_afip_credito.php";
 			}
 			
@@ -1625,7 +1625,7 @@ $(document).ready(function(){
 				var portj = 0;
 //				if(response._estado_fact == 1)
 //					portj = parseFloat(response.porcentaje);
-
+console.log(response.detalle);
 				$.each(response.detalle, function(i, item) {
 
 					if(parseInt(item._id_producto) > 0){
@@ -1639,7 +1639,7 @@ $(document).ready(function(){
 
 					if(item._id_producto == '0'){
 						if(response._tipo_fact != "1"){
-                            precio = parseFloat(precio*1.21);
+                            precio = parseFloat(precio*1);
                         }
 						$("#txt_importe_manoobra").val(precio);
 						$("#txt_descripcion_manoobra").val(item._descrip_producto);
@@ -1648,7 +1648,7 @@ $(document).ready(function(){
 					}
 					if(item._id_producto == '-2'){
 						if(response._tipo_fact != "1"){
-							precio = parseFloat(precio*1.21);
+							precio = parseFloat(precio*1);
 						}
 						$("#txt_importe_manoobra2").val(precio);
 						$("#txt_descripcion_manoobra2").val(item._descrip_producto);
@@ -1657,7 +1657,7 @@ $(document).ready(function(){
 					}
 					if(item._id_producto == '-1'){
 						if(response._tipo_fact != "1"){
-	                  		precio = parseFloat(precio*1.21);
+	                  		precio = parseFloat(precio*1);
                         }
 						$("#txt_importe_torneria").val(precio);
 						$("#txt_descripcion_torneria").val(item._descrip_producto);

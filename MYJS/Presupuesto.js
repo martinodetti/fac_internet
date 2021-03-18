@@ -391,6 +391,8 @@ $(document).ready(function(){
 
 			row = eliminaNull(row);
 
+			obsplus = $("#save_obs_presupuesto").val() + ' - ' + row.obs_vehi;
+
 			if(row.id_cliente == '0'){
 				$("#dialg_nuevoCliente").dialog('open');
 			}else{
@@ -402,7 +404,7 @@ $(document).ready(function(){
 				$("#txt_vehiculo").val(row.vehiculo + ' ('+row.dominio+')');
 				$("#save_patente").val(row.dominio);
 				$("#txt_obs_vehiculo").val(row.obs_vehi);
-				$("#save_obs_presupuesto").val($("#save_obs_presupuesto").val() + ' - ' + row.obs_vehi);
+				$("#save_obs_presupuesto").val(obsplus);
 				$("#div_deleteVehiculo").hide();
 				$("#txt_porcentaje").val(row.porcentaje);
 				if(row.id_vehiculo > 0) {

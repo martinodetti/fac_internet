@@ -238,7 +238,8 @@ $arr_ciudad=$Ciudad->listCiudads();
                                                                           	<option value="1">Responsable Inscripto</option>
                                                                           	<option value="2">Monotrobutista</option>
                                                                           	<option value="3">Consumidor final</option>
-                                                                          	<option value="4">Exento</option>
+																			<option value="4">Exento</option>
+																			<option value="5">Cliente extranjero</option>
                                                                         </select>
                                                                     </td>
 

@@ -75,10 +75,13 @@ switch($forpago){
 }
 
 $tipo_doc_desc = 'FACTURA';
+$codigo = 6;
 if($tipo_doc == 2){
-    $tipo_doc_desc = 'NOTA DE CREDITO';
+	$tipo_doc_desc = 'NOTA DE CREDITO';
+	$codigo = 8;
 }elseif($tipo_doc == 3){
-    $tipo_doc_desc = 'NOTA DE DEBITO';
+	$tipo_doc_desc = 'NOTA DE DEBITO';
+	$codigo = 7;
 }
 
 
@@ -121,7 +124,7 @@ for($i=0; $i<2; $i++)
     $pdf->Cell(11,14,"B",1,0,"C");
     $pdf->SetFont('Times','',8);
     $pdf->setXY(101,18);
-    $pdf->Cell(7,2,"Cod. 0".$tipo_doc,0,0,"C");
+    $pdf->Cell(7,2,"Cod. 0".$codigo,0,0,"C");
 
     //original o duplicado
     $pdf->setFont('Courier','B',16);
