@@ -6,9 +6,9 @@ include 'afip/awsfe.php';
 
 $acon = new awsfe();
 
-$param['FeCompConsReq'] = array( 'CbteNro'   => 169,
+$param['FeCompConsReq'] = array( 'CbteNro'   => 11237,
                                  'PtoVta'    => 2,
-                                 'CbteTipo'  => 6);
+                                 'CbteTipo'  => 1);
 
 
 echo '<pre>';

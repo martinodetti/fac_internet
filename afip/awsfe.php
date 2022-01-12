@@ -29,9 +29,9 @@ class awsfe
     function ejecutar_metodo($metodo = "", $param = array())
     {
 		//vamos a logear los parametros que recibe
-		logger("Metodo: " . $metodo);
-		logger("Parametros:");
-		logger(print_r($param,true));
+		//logger("Metodo: " . $metodo);
+		//logger("Parametros:");
+		//logger(print_r($param,true));
 		
         $return = array();
         

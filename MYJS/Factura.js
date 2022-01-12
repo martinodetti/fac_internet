@@ -562,7 +562,7 @@ $(document).ready(function(){
 				$.ajax({
 					type:"POST",
 					url:"CONTROLLER/C_Factura.php?",
-					data:"opc=17&id_cli=" + row.id_persona,
+					data:"opc=20&id_cli=" + row.id_persona,
 					success:function(response){
 						var arr = response.split("|");
 						var length = arr.length - 1;
@@ -963,6 +963,21 @@ $(document).ready(function(){
 						$("#descripcion_manoobra").val(tmp_row.producto);
 						$("#txt_importe_manoobra").val(tmp_row.precio);
 						$("#txt_descripcion_manoobra").val(tmp_row.producto);
+					}
+
+
+					if(tmp_row.id == '-2'){
+						$("#importe_manoobra2").val(tmp_row.precio);
+						$("#descripcion_manoobra2").val(tmp_row.producto);
+                        $("#txt_importe_manoobra2").val(tmp_row.precio);
+                        $("#txt_descripcion_manoobra2").val(tmp_row.producto);
+                    }
+
+					if(tmp_row.id == '-1'){
+						$("#importe_torneria").val(tmp_row.precio);
+						$("#descripcion_torneria").val(tmp_row.producto);
+						$("#txt_importe_torneria").val(tmp_row.precio);
+						$("#txt_descripcion_torneria").val(tmp_row.producto);
 					}
 
 					dat.push(tmp_row);
@@ -1447,7 +1462,7 @@ $(document).ready(function(){
 			var sub			= $("#txt_temporal").val();
 			var url			= "factura_a_afip.php";
 
-			if((cli == 101601 || cli == 81 || cli == 102266 || cli == 10727 || cli == 213 || cli == 103542 || cli == 10283) && total >= 146885){
+			if((cli == 104121 || cli == 101601 || cli == 81 || cli == 102266 || cli == 10727 || cli == 213 || cli == 103542 || cli == 10283) && total >= 195698){
 				url = "factura_a_afip_credito.php";
 			}
 			

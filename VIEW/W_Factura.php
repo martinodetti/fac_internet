@@ -129,7 +129,34 @@ class W_factura {
         $ret = $ret . "</tbody>";
 
         $ret = $ret . "</table>";
-    }
+	}
+
+	public function printfacturasClienteToNotaCredito($idCliente){
+		$factura = new factura();
+		$ret = "";
+		$data = array();
+		$data = $this->Factura->listFacturasClienteToNotaCredito($idCliente);
+
+		foreach ($data as $factura) {
+
+			$ret = $ret . trim($factura->get_id_fact()) . ";";
+
+			$ret = $ret . trim($factura->get_num_fact()) . ";";
+
+			$ret = $ret . trim($factura->get_total_fact()) . ";";
+			
+			$ret = $ret . trim($factura->get_fecemi_fact()) . ";";
+													            
+			$ret = $ret . trim($factura->get_or_y_remito_fact());
+			$ret = $ret . "|";
+																            
+			$factura = new factura();
+
+		}
+
+		return trim($ret);
+
+	}		
     
     public function printfacturasCliente($idCliente) {
 		

@@ -54,6 +54,14 @@ $(document).ready(function(){
 		{cantidad:"Total : ",total: 0}
 	]);
 
+	$('#ttt').datagrid('reloadFooter',[  //inicio foter del datagrid
+        {cantidad:"Total : ",total: 0}
+    ]);
+
+	$('#ttr').datagrid('reloadFooter',[  //inicio foter del datagrid
+        {cantidad:"Total : ",total: 0}
+    ]);
+
     $(".datepicker").datepicker();
     $('.datepicker').datepicker('option', {dateFormat: 'dd-mm-yy'});
     //carga la fecha actual
@@ -179,13 +187,13 @@ $(document).ready(function(){
 
     function sumatoriaTransferencia(){//total de footer
         var tl=$("#ttt").datagrid('getRows');
-        var lng=tl.length;
+		var lng=tl.length;
         var sum=0;
-
         for(var t=0;t<lng;t++){
-            sum=sum + parseFloat(tl[t]['monto']);
+			sum=sum + parseFloat(tl[t]['monto']);
         }
-        var toto = 0;
+		
+		var toto = 0;
         var toto = sum;
 
         $("#total_transferencias").empty();

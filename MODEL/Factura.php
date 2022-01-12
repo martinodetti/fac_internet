@@ -566,19 +566,29 @@ class factura {
 
    public function listJsonFacuraDetalle_dos($id_fact){
        $data = array();
-        $sql = "SELECT d.*, p.id_tipoiva FROM v_factura_detalle d
+       $sql = "(SELECT d.*, p.id_tipoiva FROM v_factura_detalle d
                 JOIN    producto p USING(id_producto)
-                WHERE d.id_fact=".$id_fact;
-        $result = $this->_DB->select_query($sql);  
-		
-       foreach ($result as $row) {
+				WHERE d.id_fact=".$id_fact . ")
+				UNION
+				(select m2.id_fac , 0, 'Mano de obra', m2.descripcion , 1, m2.importe , m2.importe , 1 from manoobra m2  where id_fac = ".$id_fact.")
+				union
+				(select t2.id_fac , -1, 'Torneria', t2.descripcion, 1, t2.importe , t2.importe , 1 from torneria t2 where t2.id_fac = ".$id_fact.")";
+	   $result = $this->_DB->select_query($sql); 
+
+	   $siguiente_mano_obra = false;
+	   foreach ($result as $row) {
+		   if($row['id_producto'] == '0' && !$siguiente_mano_obra){
+ 			  $siguiente_mano_obra = true;
+			  $row['id_producto'] = '-2';
+		   }
+
             $data[]=array(	"id_fact"		=>$row['id_fact']		,"nom_producto"		=>$row['nom_producto'], 
 							"canti_detfact"	=>$row['canti_detfact']	,"precio_detfact"	=>$row['precio_detfact'],
                             "id_producto"   =>$row['id_producto']   ,"descrip_producto"	=>$row['descrip_producto'],
                             "id_tipoiva"    =>$row['id_tipoiva']
                         );
-        }
-        return json_encode($data);
+	   }
+       return json_encode($data);
        
    }
    /**
@@ -789,7 +799,64 @@ class factura {
         }
 
         return $data;
-    }
+	}
+
+
+	public function listFacturasClienteToNotaCredito($idcliente) {
+		$data = array();
+		$sql = "SELECT  *, DATE_FORMAT(fecemi_fact,'%d-%m-%Y') fecemi_fact
+			FROM    factura
+			WHERE   id_cliente = " . $idcliente . " 
+			AND     estado_fact IN(1,2)
+			AND     nota_credito = 0";
+
+        $result = $this->_DB->select_query($sql);
+
+        foreach ($result as $row) {
+			if($row['tipo_fact'] == 1)
+				$tipo_num = 'A'.$row['num_fact'];
+			else
+				$tipo_num = 'B'.$row['num_fact'];
+
+			$factura = new factura();
+			$factura->set_id_fact(      $row['id_fact']     );
+			$factura->set_total_fact(   $row['total_fact']  );
+			$factura->set_fecemi_fact(  $row['fecemi_fact'] );
+			$factura->set_estado_fact(  $row['estado_fact'] );
+			$factura->set_num_fact(     $tipo_num           );
+			$factura->set_or_y_remito_fact($row['or_y_remito_fact']);
+			$data[] = $factura;
+		}
+
+        //ahora las facturas pendientes parciales
+		
+		$sql1 = "SELECT  *, DATE_FORMAT(fecemi_fact,'%d-%m-%Y') fecemi_fact, rf.saldo_fact
+				FROM    factura	
+				JOIN    recibo_factura rf USING(id_fact)
+			    WHERE   id_cliente = " . $idcliente . " 
+			  	AND     estado_fact = 4
+				AND     nota_credito = 0";
+
+        $result1 = $this->_DB->select_query($sql1);
+		foreach ($result1 as $row) {
+
+			if($row['tipo_fact'] == 1)
+				$tipo_num = 'A'.$row['num_fact'];
+			else
+				$tipo_num = 'B'.$row['num_fact'];
+
+			$factura = new factura();
+			$factura->set_id_fact(      $row['id_fact']     );
+			$factura->set_total_fact(   $row['saldo_fact']  );
+			$factura->set_fecemi_fact(  $row['fecemi_fact'] );
+			$factura->set_estado_fact(  $row['estado_fact'] );
+			$factura->set_num_fact(     $tipo_num           );
+			$factura->set_or_y_remito_fact($row['or_y_remito_fact']);
+			$data[] = $factura;
+			}
+
+  		return $data;
+	}
     
     public function listUltimasFacturasCliente($idcliente) {
         $data = array();

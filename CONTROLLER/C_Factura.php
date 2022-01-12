@@ -80,7 +80,7 @@ case '1': //add
 	if($tipo_fact == 'B' && $tipo_documento == 2) $CbteTipo = 8;
 
 	//factura de crédito electronico
-	if(($id_cliente == 101601 || $id_cliente == 81 || $id_cliente == 103542 || $id_cliente == 102266 || $id_cliente == 213 || $id_cliente == 10727 || $id_cliente == 10283) && $total_fact >= 146885) $CbteTipo = $CbteTipo + 200;
+	if(($id_cliente == 104121 || $id_cliente == 101601 || $id_cliente == 81 || $id_cliente == 103542 || $id_cliente == 102266 || $id_cliente == 213 || $id_cliente == 10727 || $id_cliente == 10283) && $total_fact >= 195698) $CbteTipo = $CbteTipo + 200;
 
 	$param['FeCAEReq']['FeCabReq'] = array(	'CantReg' 	=> 1,
 											'PtoVta' 	=> $punto_de_venta,
@@ -103,6 +103,7 @@ case '1': //add
 	if($tipo_fact == 'B' && $total_fact >= 1000)	$DocTipo = 86; //si no es factura A entonces probamos con Otro documento a ver si pasa
 	if($tipo_fact == 'B' && $total_fact < 1000)		$DocTipo = 99;
 	if($tipo_fact == 'B' && $id_cond_iva == 5) 		$DocTipo = 91;
+	if($tipo_fact == 'B' && $id_cliente == 102902)	$DocTipo = 80;
 	$nro_documento_afip = str_replace("-","",$nro_documento);
 	if($DocTipo == 99) $nro_documento_afip = 0;
 	$arr = explode("-", $fecemi_fact);
@@ -135,33 +136,39 @@ case '1': //add
 		$nuevafecha = date ( 'Ymd' , $nuevafecha );
 
 		$param['FeCAEReq']['FeDetReq']['FECAEDetRequest']['FchVtoPago'] = $nuevafecha;
-		$param['FeCAEReq']['FeDetReq']['FECAEDetRequest']['Opcionales'] = array(0 => 
+		$param['FeCAEReq']['FeDetReq']['FECAEDetRequest']['Opcionales'] = 
 			array(
-				'Id' => 2101,
-				'Valor' => '1500087900051332139764'
-			)
-		);
+				0 => array(
+					'Id' => 2101,
+					'Valor' => '1500087900051332139764'
+				),
+				1 => array(
+					'Id' => 27,
+					'Valor' => 'ADC'
+				)
+			);
 	}
-/*
-	if($CbteTipo == 202 || $CbteTipo == 203 ){
+
+	if($CbteTipo == 2 || $CbteTipo == 3 || $CbteTipo == 7 || $CbteTipo == 8 ){
 		$param['FeCAEReq']['FeDetReq']['FECAEDetRequest']['CbtesAsoc'] = array(0 => 
 			array(
-				'Tipo' 	=> 201,
+				'Tipo' 	=> 1,
 				'PtoVta'=> 2,
-				'Nro' 	=> 6,
+				'Nro' 	=> 12244,
 				'Cuit'	=> 30709716006,
-				'CbteFch'=>'20191218'
+				'CbteFch'=>'20210923'
 			)
 		);
-		
+/*		
 		$param['FeCAEReq']['FeDetReq']['FECAEDetRequest']['Opcionales'] = array(0 =>
 	   		array(
                 'Id' => 22,
 				'Valor' => 'S'
 			)
-		); 
+		);
+ */			
 	}
- */
+ 
 	$ret = $wsfe->ejecutar_metodo('FECAESolicitar',$param);
 
 	$cae = "";
@@ -464,8 +471,14 @@ case '19'://cabecera mediante fechas
 	$clsFactura=new factura();
     $idc=$_POST['idc'];
 	$out=$clsFactura->listJsonFacturasCtaCte($idc);
+	break;
+	
+case '20': //facturas para hacer nota de credito
+	$id_cli = $_POST['id_cli'];
+	$clsFact = new w_factura();
+	$out = $clsFact->printfacturasClienteToNotaCredito($id_cli);	    
+	break;
 
-break;
 
 }
  

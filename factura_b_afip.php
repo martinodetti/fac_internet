@@ -6,6 +6,7 @@ include 'MODEL/Persona.php';
 include 'MODEL/Ciudad.php';
 include 'MODEL/Vehiculo.php';
 include 'fpdf17/fpdf_i25.php';
+include 'fpdf17/qrcode.class.php';
 
 //inicializo todas las variables
 $id_cli		= $_GET['id_cliente'];
@@ -41,8 +42,12 @@ $id_fact 	= $_GET['tipo_fact'] . $_GET['numero'];
 $arr_num = explode('-',$numero);
 $tmp_vto = str_replace('-','',$cae_vto);
 $barcode = '307097160060' . $tipo_doc . $arr_num[0] . $cae . $tmp_vto . '6';
-
 $arr_fecemi = explode("-",$fecha);
+
+$json_qr = base64_encode(json_encode(array("ver"=> 1,"fecha"=> $arr_fecemi[2].'-'.$arr_fecemi[1].'-'.$arr_fecemi[0] ,"cuit" => 30709716006,"ptoVta" => 2,"tipoCmp" => intval($tipo_doc),"nroCmp" => intval(explode('-',$_GET['numero'])[1]),"importe"=> floatval(str_replace('.','',$total)),"moneda" => 'PES',"ctz" => 1,"tipoDocRec" => 99,"nroDocRec" => intval($clsCliente->get_ruc_persona()) ,"tipoCodAut"=> "E","codAut" => intval($cae))));
+$qrdata  = 'https://www.afip.gob.ar/fe/qr/?p='.$json_qr;
+
+
 
 $re_y_or = "";
 if($remis !="" )
@@ -253,10 +258,10 @@ for($i=0; $i<2; $i++)
 	$pdf->Cell(28,5,"PRECIO",1,0,'C');
 	$pdf->setFont('Times','',12);
 
-	$pdf->Line(20,79,20,275);
-	$pdf->Line(49,79,49,275);
-	$pdf->Line(149,79,149,275);
-	$pdf->Line(177,79,177,275);
+	$pdf->Line(20,79,20,265);
+	$pdf->Line(49,79,49,265);
+	$pdf->Line(149,79,149,265);
+	$pdf->Line(177,79,177,265);
 
 	$pdf->Ln();
 	foreach($arr as $id){
@@ -286,9 +291,11 @@ for($i=0; $i<2; $i++)
 
 	//TOTALES
 	//$pdf->SetY(325);
-	$pdf->Line(5,275,200,275);
-	$pdf->i25(33,277,$barcode,0.5,8);
-	$pdf->SetY(275);
+	$pdf->Line(5,265,200,265);
+	$pdf->i25(44,272,$barcode,0.5,8);
+	$qrcode = new QRcode($qrdata, 'H'); // error level : L, M, Q, H
+	$qrcode->displayFPDF($pdf, 5, 265, 25);
+	$pdf->SetY(265);
 	$pdf->setFont('Times','B',13);
 	$pdf->Cell(125,6,"",$bd);
 	$pdf->Cell(40,6,"DESCUENTO",1,0,"C");
@@ -296,8 +303,8 @@ for($i=0; $i<2; $i++)
 	$pdf->Ln();
 	$pdf->Cell(125,9,"",$bd);
 	$pdf->setFont('Arial','',14);
-	$pdf->Cell(40,9,$descu,1,0,"C");
-	$pdf->Cell(40,9,$total,1,0,"C");
+	$pdf->Cell(40,19,$descu,1,0,"C");
+	$pdf->Cell(40,19,$total,1,0,"C");
 
 	$pdf->setFont('Times','',10);
 	$pdf->setXY(5,291);
