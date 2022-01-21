@@ -27,6 +27,9 @@ class Database extends PDO {
     }
 
     public function alteration_query($query) {
+
+        $logFile = fopen("log.txt", 'a') ;
+
         parent::exec("SET names UTF8");
         $count = parent::exec($query);
 
@@ -38,6 +41,12 @@ class Database extends PDO {
         }
 
         return $resultarray = array('rows_affected' => $count, 'error' => $error[2]);
+
+        fwrite($logFile, "Inserción de datos, Alteration_Query".PHP_EOL);
+        fwrite($logFile, date("d/m/Y H:i:s")." Query: ".print_r($query, true).PHP_EOL);
+        fwrite($logFile, date("d/m/Y H:i:s")." Resultarray: ".print_r($resultarray, true).PHP_EOL);
+        fwrite($logFile, "Fin inserción de datos, Alteration_Query".PHP_EOL);
+        fclose($logFile);
 
         $count = null;
 
