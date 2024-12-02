@@ -386,11 +386,11 @@ if(isset ($_SESSION['id_persona'])){
 														<tr>
 															<td>
 																<label class="form-label required"> Efectivo: </label>
-																<input id="save_efectivo_recibo" class="form-field width20" name="save_efectivo_recibo" type="text" value="" maxlength="10"/>
+																<input id="save_efectivo_recibo" class="form-field width20" name="save_efectivo_recibo" type="text" value="0" maxlength="10"/>
 															</td>
 															<td>
 																<label class="form-label required"> Saldo a favor: </label>
-																<input id="save_saldo_recibo" class="form-field width20" name="save_saldo_recibo" type="text" value="" maxlength="10"/>
+																<input id="save_saldo_recibo" class="form-field width20" name="save_saldo_recibo" type="text" value="0" maxlength="10"/>
 															</td>
 
 														</tr>
@@ -416,12 +416,12 @@ if(isset ($_SESSION['id_persona'])){
 														<table id="tt" class="easyui-datagrid" style="width:360px;height:560px" fitColumns="true" title="Facturas"  singleSelect="true" showFooter="true" rownumbers="false" >
 						                                    <thead>
 																<tr>
-																	<th field="id" width="30">ID</th>
-																	<th field="tipo_num" width="80">Número</th>
-																	<th field="fecha" width="100">Fecha</th>
-																	<th field="total" width="60">A cobrar</th>
-																	<th field="pendiente" width="60">Pendiente</th>
-																	<th field="check" width="20"></th>
+																	<th field="id" width="20">ID</th>
+																	<th field="tipo_num" width="55">Número</th>
+																	<th field="fecha" width="70">Fecha</th>
+																	<th field="total" width="90" align="right" >A cobrar</th>
+																	<th field="pendiente" width="90" align="right" >Pendiente</th>
+																	<th field="check" width="25"></th>
 																</tr>
 															</thead>
 														</table>

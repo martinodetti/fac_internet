@@ -387,7 +387,7 @@ case 14://json array
     $strApeCliente = isset($_POST['q']) ? strval($_POST['q']) : '';
     $clsPersona=new persona();
 	$out = '';
-	if(strlen($strApeCliente)>= 3)
+	if(strlen($strApeCliente)>= 5)
 	{
 		$out=$clsPersona->listClientePorApejson($strApeCliente);
 	}
@@ -450,7 +450,7 @@ case '22': //clientes por vehiculo
 case '23': //clientes y vehiculos
 	$strFiltro = isset($_POST['q']) ? strval($_POST['q']) : '';
 	$out = '';
-	if(strlen($strFiltro) >= 3) {
+	if(strlen($strFiltro) >= 4) {
 		$clsPersona = new persona();
 		$out = $clsPersona->listClienteConVehiculojson($strFiltro);
 	}
@@ -598,7 +598,7 @@ case 30://json array
     $strApeCliente = isset($_POST['q']) ? strval($_POST['q']) : '';
     $clsPersona=new persona();
 	$out = '';
-	if(strlen($strApeCliente)>= 3)
+	if(strlen($strApeCliente)>= 5)
 	{
 		$out=$clsPersona->listClientePorApejsonConFxPendientes($strApeCliente);
 	}
@@ -608,7 +608,7 @@ case 31://json array
     $strApeProvee = isset($_POST['q']) ? strval($_POST['q']) : '';
     $clsPersona=new persona();
 	$out = '';
-	if(strlen($strApeProvee)>= 3)
+	if(strlen($strApeProvee)>= 5)
 	{
 		$out=$clsPersona->listProveePorApejsonConFxPendientes($strApeProvee);
 	}
@@ -617,7 +617,7 @@ case 31://json array
 case 32: //clientes
 	$strFiltro = isset($_POST['q']) ? strval($_POST['q']) : '';
 	$out = '';
-	if(strlen($strFiltro) >= 3) {
+	if(strlen($strFiltro) >= 5) {
 		$clsPersona = new persona();
 		$out = $clsPersona->CargarJsonClienteNombreCtaCte($strFiltro);
 	}

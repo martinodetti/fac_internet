@@ -157,7 +157,7 @@ $pdf->SetAutoPageBreak(false);
 	*/
 
 	$pdf->setXY(5,92);
-	$pdf->SetFont('Times','B',13);
+	$pdf->SetFont('Times','B',12);
 	$pdf->Cell(200,8,"DETALLE DEL PRESUPUESTO", 1,0,'C');
 	$pdf->Ln();
 	$pdf->SetX(5);
@@ -165,16 +165,16 @@ $pdf->SetAutoPageBreak(false);
 	$pdf->Cell(29,6,"Codigo",1,0,'C');
 	if($mostrar_precios == 1)
 	{
-		$pdf->Cell(115,6,"Detalle",1,0,'C');
-		$pdf->Cell(20,6,"Unit",1,0,'C');
-		$pdf->Cell(20,6,"Precio",1,0,'C');
+		$pdf->Cell(105,6,"Detalle",1,0,'C');
+		$pdf->Cell(25,6,"Unit",1,0,'C');
+		$pdf->Cell(25,6,"Precio",1,0,'C');
 	}
 	else
 	{
 		$pdf->Cell(155,6,"Detalle",1,0,'C');
 	}
 
-	$pdf->SetFont('Times','',13);
+	$pdf->SetFont('Times','',12);
 	$pdf->SetLineWidth(0.2);
 	$arr_mo_to = array('MO1','TO','MO2');
 	foreach($arr as $id)
@@ -192,11 +192,11 @@ $pdf->SetAutoPageBreak(false);
         	case -1:
         	case -2:
         		if($mostrar_precios == 1){
-        			$pdf->SetX(165);
-        			$pdf->Cell(20,5,$tmp[2],1,0,'R');
-        			$pdf->Cell(20,5,$tmp[4],1,0,'R');
+        			$pdf->SetX(155);
+        			$pdf->Cell(25,5,$tmp[2],1,0,'R');
+        			$pdf->Cell(25,5,$tmp[4]*1.21,1,0,'R');
         			$pdf->SetX(50);
-        			$pdf->MultiCell(115,5,$tmp[1],1);
+        			$pdf->MultiCell(105,5,$tmp[1],1);
         		}else{
         			$pdf->MultiCell(145,5,$tmp[1],1);
         		}
@@ -204,9 +204,9 @@ $pdf->SetAutoPageBreak(false);
         		break;
         	default:
         		if($mostrar_precios == 1){
-        			$pdf->Cell(115,5,$tmp[1],1);
-        			$pdf->Cell(20,5,$tmp[2],1,0,'R');
-        			$pdf->Cell(20,5,$tmp[4],1,0,'R');
+        			$pdf->Cell(105,5,$tmp[1],1);
+        			$pdf->Cell(25,5,$tmp[2],1,0,'R');
+        			$pdf->Cell(25,5,$tmp[4]*1.21,1,0,'R');
         		}else{
         			$pdf->Cell(145,5,$tmp[1],1);
         		}
@@ -221,9 +221,9 @@ $pdf->SetAutoPageBreak(false);
         $pdf->Cell(16,5,"",1,0,'C');
         $pdf->Cell(29,5,"",1,0,'C');
         if($mostrar_precios == 1){
-			$pdf->Cell(115,5,"",1);
-			$pdf->Cell(20,5,"",1,0,'C');
-			$pdf->Cell(20,5,"",1,0,'C');
+			$pdf->Cell(105,5,"",1);
+			$pdf->Cell(25,5,"",1,0,'C');
+			$pdf->Cell(25,5,"",1,0,'C');
 		}else{
 			$pdf->Cell(145,5,"",1);
 		}
@@ -244,12 +244,12 @@ $pdf->SetAutoPageBreak(false);
 		$pdf->SetX(145);
 		$pdf->Cell(20,5,"TOTAL",1,0,'R');
 		$pdf->SetX(185);
-		$pdf->Cell(20,5,"$".$total,0,0,'R');
+		$pdf->Cell(20,5,"$".$total*1.21,0,0,'R');
 	}
 	$pdf->Ln();
 	$pdf->SetX(5);
 	$pdf->SetFont('Times','',11);
-	$pdf->Cell(200,6,"Los precios expresados no incluyen IVA y pueden variar sin previo aviso",1,0,'C');
+	$pdf->Cell(200,6,"Los precios expresados incluyen IVA y pueden variar sin previo aviso",1,0,'C');
 
 /*
 	//DETALLE

@@ -344,7 +344,8 @@ class factura {
             $factura->set_fecemi_fact($row['fecemi_fact']);
             $factura->set_estado_fact($row['estado_fact']);
             $factura->set_num_fact($row['num_fact']);
-            $factura->set_or_y_remito_fact($row['or_y_remito_fact']);
+			$factura->set_punto_de_venta($row['punto_venta']);
+			$factura->set_or_y_remito_fact($row['or_y_remito_fact']);
             
             $factura->detalle = array();
         }
@@ -773,12 +774,14 @@ class factura {
         }
         
         //ahora las facturas pendientes parciales
-        $sql1 = "SELECT 	*, DATE_FORMAT(fecemi_fact,'%d-%m-%Y') fecemi_fact, rf.saldo_fact
-				FROM 	factura
+        $sql1 = "SELECT f.*, DATE_FORMAT(fecemi_fact,'%d-%m-%Y') fecemi_fact, MIN(rf.saldo_fact) as saldo_fact
+				FROM 	factura f
 				JOIN 	recibo_factura rf USING(id_fact)
-				WHERE 	id_cliente = " . $idcliente . " 
-				AND		estado_fact = 4
-				AND 	nota_credito = 0";
+				join 	recibo r on (r.id_recibo = rf.id_recibo and r.id_cliente = f.id_cliente)
+				WHERE 	f.id_cliente = " . $idcliente . " 
+				AND		f.estado_fact = 4
+				AND 	f.nota_credito = 0
+				GROUP BY f.id_fact";
 				
 		$result1 = $this->_DB->select_query($sql1);
 
@@ -859,15 +862,27 @@ class factura {
 	}
     
     public function listUltimasFacturasCliente($idcliente) {
-        $data = array();
+		$data = array();
+		/*
         $sql = "SELECT  f.*, DATE_FORMAT(fecemi_fact,'%d-%m-%Y') fecemi_fact
                 FROM    factura f
                 left JOIN recibo_factura using(id_fact)
 				WHERE 	id_cliente = " . $idcliente . " 
-                AND     (recibo_factura.id_recibo is null or estado_fact = 4)
+                AND     (recibo_factura.id_recibo is null)
 				ORDER BY id_fact DESC
 				LIMIT 10";
-
+		*/
+		$sql = "SELECT  f.*, DATE_FORMAT(fecemi_fact,'%d-%m-%Y') fecemi_fact
+				FROM    factura f
+				left join (
+					select r.id_recibo, r.id_cliente, rf.id_fact 
+					from recibo r
+					join recibo_factura rf using(id_recibo) 
+					) as recibos ON (recibos.id_cliente = f.id_cliente and recibos.id_fact = f.id_fact )
+				WHERE 	f.id_cliente = ".$idcliente." 
+				AND     (recibos.id_recibo is null)
+				ORDER BY f.id_fact DESC
+				LIMIT 10";
         $result = $this->_DB->select_query($sql);
 
         foreach ($result as $row) {

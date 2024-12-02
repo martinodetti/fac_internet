@@ -386,17 +386,17 @@ if(isset ($_SESSION['id_persona'])){
                                             </form>
                                             <hr/>
 
-                                            <table border=0 width="750px">
+                                            <table border=0 width="770px">
                                             	<tr>
                                             		<td>
-														<table id="tt" class="easyui-datagrid" style="width:360px;height:500px" fitColumns="true" title="Facturas"  singleSelect="true" showFooter="true" rownumbers="false" >
+														<table id="tt" class="easyui-datagrid" style="width:380px;height:500px" fitColumns="true" title="Facturas"  singleSelect="true" showFooter="true" rownumbers="false" >
 						                                    <thead>
 																<tr>
 																	<th field="id" width="30">ID</th>
 																	<th field="tipo_num" width="80">Número</th>
-																	<th field="fecha" width="100">Fecha</th>
-																	<th field="total" width="60">A cobrar</th>
-																	<th field="pendiente" width="60">Pendiente</th>
+																	<th field="fecha" width="70">Fecha</th>
+																	<th field="total" width="90" align="right">A cobrar</th>
+																	<th field="pendiente" width="90" align="right">Pendiente</th>
 																	<th field="check" width="20"></th>
 																</tr>
 															</thead>

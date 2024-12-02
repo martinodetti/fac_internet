@@ -737,6 +737,7 @@ class persona {
 
    public function listClientePorApejson($CliApe, $pendientes = 0){
         $data = array();
+/*		
 		$sql = "SELECT 	persona.*, vcc.pendiente, COUNT(id_remito)+(select count(id_orden) from orden_reparacion where estado = 2 and id_cliente = id_persona) pendientes, nombre_listaprecio AS listaprecio, listaprecio.id_listaprecio, porcentaje_listaprecio
 				FROM 	persona
 				LEFT JOIN remito
@@ -746,10 +747,29 @@ class persona {
                 LEFT JOIN v_cliente_ctacte vcc
                     USING(id_persona)
 				WHERE	persona.id_tipoper=2
-				AND		(persona.ape_persona like '%".$CliApe."%' OR persona.nom_persona like '%".$CliApe."%' OR persona.ruc_persona like '%".$CliApe."%')
+				AND		persona.nom_persona like '%".$CliApe."%'
 				GROUP BY
 						persona.id_persona";
 //			$sql = "SELECT * FROM persona WHERE id_tipoper=2 AND ape_persona like '".$CliApe."%' OR nom_persona like '".$CliApe."%'";
+*/
+		$sql = "SELECT 	persona.*,
+						sum(if((factura.estado_fact = 1), factura.total_fact , recibo_factura.saldo_fact)) AS pendiente,
+						COUNT(id_remito)+(select count(id_orden) from orden_reparacion where estado = 2 and id_cliente = id_persona) pendientes, 
+						nombre_listaprecio AS listaprecio, listaprecio.id_listaprecio, porcentaje_listaprecio
+				FROM 	persona
+				LEFT JOIN remito
+					ON (id_persona = id_cliente AND estado_remi = 1)
+				LEFT JOIN listaprecio
+					USING(id_listaprecio)
+				LEFT JOIN factura
+					ON (factura.id_cliente = persona.id_persona and factura.estado_fact in (1,4) and factura.forma_pago = 3)
+				LEFT JOIN recibo_factura
+					ON (recibo_factura.id_fact = factura.id_fact)
+				WHERE	persona.id_tipoper=2
+				AND		persona.nom_persona like '%".$CliApe."%'
+				GROUP BY 
+					persona.id_persona";
+
 
         $result = $this->_DB->select_query($sql);
 		foreach ($result as $row) {
@@ -901,7 +921,7 @@ class persona {
 	public function listClienteConVehiculojson($str) {
 		$data = array();
 		$sql = "(SELECT 	p.`nom_persona`, p.`ape_persona`, v.`dominio`, v.`modelo`, v.`id_vehiculo`, p.`id_persona` AS id_cliente, v.`marca`,
-						v.observacion as obs_vehi, lp.porcentaje_listaprecio, p.tiene_ctacte, p.limite_ctacte, vcc.pendiente as saldo
+						v.observacion as obs_vehi, lp.porcentaje_listaprecio, p.tiene_ctacte, p.limite_ctacte, '' as saldo
 				FROM 	persona p
 				LEFT JOIN 	vehiculo_cliente vc
 					ON (p.id_persona = vc.`id_cliente`)
@@ -909,30 +929,22 @@ class persona {
 					ON (v.`id_vehiculo` = vc.`id_vehiculo`)
 				LEFT JOIN listaprecio lp
 					USING(id_listaprecio)
-                LEFT JOIN v_cliente_ctacte vcc
-                    ON (p.id_persona = vcc.id_persona)
 				WHERE 	p.`id_tipoper` = 2
 				AND (
 					p.`nom_persona` 	LIKE '%".$str."%'
-					OR p.`ape_persona` 	LIKE '%".$str."%'
 					OR v.`dominio` 		LIKE '%".$str."%'
-					OR v.`modelo` 		LIKE '%".$str."%'
-					OR v.`marca` 		LIKE '%".$str."%'
 				)
                 )
                 union
                 (
                 SELECT  p.`nom_persona`, p.`ape_persona`,  '' `dominio`,  '' `modelo`, '' `id_vehiculo`, p.`id_persona` AS id_cliente, '' `marca`,
-                        '' as obs_vehi, lp.porcentaje_listaprecio,p.tiene_ctacte, p.limite_ctacte, vcc.pendiente as saldo
+                        '' as obs_vehi, lp.porcentaje_listaprecio,p.tiene_ctacte, p.limite_ctacte, '' as saldo
                 FROM    persona p
                 LEFT JOIN listaprecio lp
                     USING(id_listaprecio)
-                LEFT JOIN v_cliente_ctacte vcc
-                    ON (p.id_persona = vcc.id_persona)
                 WHERE   p.`id_tipoper` = 2
                 AND (
                     p.`nom_persona`     LIKE '%".$str."%'
-                    OR p.`ape_persona`  LIKE '%".$str."%'
                 )
                 )
                 ORDER by id_cliente, id_vehiculo";
@@ -982,7 +994,8 @@ class persona {
 		//remitos
 		$sql = "SELECT 	factura.id_fact, num_fact, date_format(fecemi_fact, '%d-%m-%Y') fecha,remitos_fact, dominio,
 				v_remito.fecha fec_remi,
-				IF(recibo_factura.id_recibo is null, factura.total_fact,recibo_factura.saldo_fact) total_fact
+			--	IF(recibo_factura.id_recibo is null, factura.total_fact,recibo_factura.saldo_fact) total_fact,
+				IF(factura.estado_fact = 1, factura.total_fact,recibo_factura.saldo_fact) total_fact
 				FROM 	factura
 				JOIN 	v_remito ON (id_remito = remitos_fact)
 				left JOIN recibo_factura ON(recibo_factura.id_fact = factura.id_fact and saldo_fact > 0)
@@ -1049,7 +1062,8 @@ class persona {
                             "dominio"   =>  $row['dominio']             , "total"   =>  $acomodador * $row['total_fact']);
         }
 
-		//ordenes de reparacion
+	//ordenes de reparacion
+	//TODO: esta quiery la tengo que modificar porque est√ trayendo saldos de facturas de compra porque coinciden los id de recibo
 		$sql1= "SELECT 	f.id_fact, f.num_fact, date_format(f.fecemi_fact, '%d-%m-%Y') fecha, GROUP_CONCAT(id_orden) AS ordenes,
 						v.dominio, date_format(o.fecemi_orden, '%d-%m-%Y') fec_orden,
 						IF(recibo_factura.id_recibo is null, f.total_fact,min(recibo_factura.saldo_fact)) total_fact

@@ -806,8 +806,8 @@ $(document).ready(function(){
 						};
 						dat_fact.push(tmp_row);
     				});
-    				sumatoria();
-					reloadData();
+    				//sumatoria();
+					//reloadData();
 
     				//cheques
     				$.each(response.cheques, function(i, item) {
@@ -849,6 +849,11 @@ $(document).ready(function(){
 						dat_transferencias.push(tmp_row);
     				});
     				reloadDataTransferencia();
+					sumatoriaTransferencia();
+						
+
+					sumatoria();
+					reloadData();
 
 					$("#btn_Recibo_Add").hide();
 					$(".tabs").tabs('select','#tabs-1');

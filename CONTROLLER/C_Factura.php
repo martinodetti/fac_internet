@@ -80,7 +80,7 @@ case '1': //add
 	if($tipo_fact == 'B' && $tipo_documento == 2) $CbteTipo = 8;
 
 	//factura de crédito electronico
-	if(($id_cliente == 198 || $id_cliente == 104121 || $id_cliente == 101601 || $id_cliente == 81 || $id_cliente == 103542 || $id_cliente == 102266 || $id_cliente == 213 || $id_cliente == 10727 || $id_cliente == 10283) && $total_fact >= 195698) $CbteTipo = $CbteTipo + 200;
+	if(($id_cliente == 11316 || $id_cliente == 101618 || $id_cliente ==102930 || $id_cliente == 103453 || $id_cliente == 198 || $id_cliente == 104121 || $id_cliente == 101601 || $id_cliente == 81 || $id_cliente == 103542 || $id_cliente == 213 || $id_cliente == 10727 || $id_cliente == 10283 || $id_cliente == 141) && $total_fact >= 1357480) $CbteTipo = $CbteTipo + 200;
 
 	$param['FeCAEReq']['FeCabReq'] = array(	'CantReg' 	=> 1,
 											'PtoVta' 	=> $punto_de_venta,
@@ -100,9 +100,10 @@ case '1': //add
 
 	//informacion de la factura
 	$DocTipo = 80; //CUIT
-	if($tipo_fact == 'B' && $total_fact >= 1000)	$DocTipo = 86; //si no es factura A entonces probamos con Otro documento a ver si pasa
-	if($tipo_fact == 'B' && $total_fact < 1000)		$DocTipo = 99;
+	if($tipo_fact == 'B' && $total_fact >= 61534)	$DocTipo = 86; //si no es factura A entonces probamos con Otro documento a ver si pasa
+	if($tipo_fact == 'B' && $total_fact < 61534)		$DocTipo = 99;
 	if($tipo_fact == 'B' && $id_cond_iva == 5) 		$DocTipo = 91;
+	if($tipo_fact == 'B' && $id_cond_iva == 4)      $DocTipo = 80;
 	if($tipo_fact == 'B' && $id_cliente == 102902)	$DocTipo = 80;
 	$nro_documento_afip = str_replace("-","",$nro_documento);
 	if($DocTipo == 99) $nro_documento_afip = 0;
@@ -149,26 +150,31 @@ case '1': //add
 			);
 	}
 
-	if($CbteTipo == 2 || $CbteTipo == 3 || $CbteTipo == 7 || $CbteTipo == 8 ){
+	if($CbteTipo == 2 || $CbteTipo == 202 ||  $CbteTipo == 3 ||  $CbteTipo == 203 || $CbteTipo == 7 || $CbteTipo == 8 ){
+		$fac = new factura();
+		$fac_orig = $fac->showFactura($id_fact_nc);
+
 		$param['FeCAEReq']['FeDetReq']['FECAEDetRequest']['CbtesAsoc'] = array(0 => 
 			array(
-				'Tipo' 	=> 1,
-				'PtoVta'=> 2,
-				'Nro' 	=> 12244,
+				'Tipo' 	=> $fac_orig->get_tipo_fact()==2?6:$fac_orig->get_tipo_fact(),
+				'PtoVta'=> $fac_orig->get_punto_de_venta(),
+				'Nro' 	=> $fac_orig->get_num_fact(),
 				'Cuit'	=> 30709716006,
-				'CbteFch'=>'20210923'
+				'CbteFch'=>str_replace('-','',$fac_orig->get_fecemi_fact())
 			)
 		);
-/*		
-		$param['FeCAEReq']['FeDetReq']['FECAEDetRequest']['Opcionales'] = array(0 =>
-	   		array(
-                'Id' => 22,
-				'Valor' => 'S'
-			)
-		);
- */			
+		if($CbteTipo == 202 ||  $CbteTipo == 203){	
+			$param['FeCAEReq']['FeDetReq']['FECAEDetRequest']['Opcionales'] = array(0 =>
+	   			array(
+           	     	'Id' => 22,
+					'Valor' => 'S'
+				)
+			);
+		}
+
+ 			
 	}
- 
+
 	$ret = $wsfe->ejecutar_metodo('FECAESolicitar',$param);
 
 	$cae = "";

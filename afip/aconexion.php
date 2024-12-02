@@ -119,8 +119,9 @@ class aconexion
         }    
 		if (is_soap_fault($results)) 
         {
-            $this->error = "SOAP Fault: ".$results->faultcode."\n".$results->faultstring;
-            exit();
+            $this->error = "SOAP Fault: ".$results->getCode()."\n".$results->getMessage();
+			pr($this->error);
+			exit();
         }
         
         //guardamos los archivos para debug

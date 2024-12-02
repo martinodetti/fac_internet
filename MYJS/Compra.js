@@ -486,6 +486,10 @@ $('#tt').datagrid('reloadFooter',[  //inicio foter del datagrid
     $("#save_iva_ret").keyup(function(){
     	sumatoria();
     });
+
+	$("#save_regimen_general_ret").keyup(function(){
+        sumatoria();
+    })
     
     $("#save_iibb_ret").keyup(function(){
     	sumatoria();

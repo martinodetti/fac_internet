@@ -462,11 +462,11 @@ $(document).ready(function(){
 		mode:'remote',
 		fitColumns:true,
 		columns:[[
-			{field:'id_persona',title:'Id',width:20},
-			{field:'nom_persona',title:'Nombre',align:'right',width:100},
-			{field:'ape_persona',title:'Apellido',align:'right',width:100},
+			{field:'id_persona',title:'Id',hidden:true},
+			{field:'nom_persona',title:'Nombre',align:'left',width:250},
+			{field:'ape_persona',title:'Apellido',align:'right',hidden:true},
 			{field:'ruc_persona',title:'CUIT',align:'right',width:100},
-			{field:'listaprecio',title:'Precios', align:'right', width:100},
+			{field:'listaprecio',title:'Precios', align:'right', width:70},
 			{field:'pendientes',title:'Pend',align:'right',width:30},
 			{field:'id_listaprecio',title:'',align:'right', hidden:true },
 			{field:'porcentaje',title:'',align:'right', hidden:true },
@@ -557,7 +557,7 @@ $(document).ready(function(){
 				recalcularPrecios();
 				sumatoria();
 
-			}else if($("#cmb_tipo_fact").val() == 2 ) {
+			}else if($("#cmb_tipo_fact").val() == 2 || $("#cmb_tipo_fact").val() == 3 ) {
 				dat_facturas = [];
 				$.ajax({
 					type:"POST",
@@ -765,7 +765,7 @@ $(document).ready(function(){
 		};
 		$("#facturas_table").datagrid('loadData',datainfo);
 
-		if(row != null) {
+		if(row != null && $("#cmb_tipo_fact").val() == 2) {
 			sumarDetalleFact(row.id);
 		}
 		$("#save_obs_fact").val('Sobre factura Nº: ' + row.tipo_num);
@@ -1462,7 +1462,7 @@ $(document).ready(function(){
 			var sub			= $("#txt_temporal").val();
 			var url			= "factura_a_afip.php";
 
-			if((cli == 198 || cli == 104121 || cli == 101601 || cli == 81 || cli == 102266 || cli == 10727 || cli == 213 || cli == 103542 || cli == 10283) && total >= 195698){
+			if((cli == 102930 || cli == 11316 || cli == 103453 || cli == 198 || cli == 101618 || cli == 104121 || cli == 101601 || cli == 81 || cli == 10727 || cli == 213 || cli == 103542 || cli == 10283 || cli == 141) && total >= 1357480){
 				url = "factura_a_afip_credito.php";
 			}
 			
@@ -1640,7 +1640,6 @@ $(document).ready(function(){
 				var portj = 0;
 //				if(response._estado_fact == 1)
 //					portj = parseFloat(response.porcentaje);
-console.log(response.detalle);
 				$.each(response.detalle, function(i, item) {
 
 					if(parseInt(item._id_producto) > 0){
@@ -1649,9 +1648,8 @@ console.log(response.detalle);
 						precio = item._precio_detfact;
 					}
 
-					canti=parseInt(item._canti_detfact);
+					canti=parseFloat(item._canti_detfact);
 					subt=parseFloat(canti*precio);
-
 					if(item._id_producto == '0'){
 						if(response._tipo_fact != "1"){
                             precio = parseFloat(precio*1);

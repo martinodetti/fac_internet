@@ -174,7 +174,7 @@ $pdf->SetAutoPageBreak(false);
 	*/
 	
 	$pdf->setXY(5,92);
-	$pdf->SetFont('Times','B',13);
+	$pdf->SetFont('Times','B',12);
 	$pdf->Cell(200,8,"DETALLE DE LA ORDEN DE REPARACIÓN", 1,0,'C');
 	$pdf->Ln();
 	$pdf->SetX(5);
@@ -190,7 +190,7 @@ $pdf->SetAutoPageBreak(false);
 		$pdf->Cell(155,6,"DETALLE",1,0,'C');
 	}
 
-	$pdf->SetFont('Times','',13);
+	$pdf->SetFont('Times','',12);
 	$pdf->SetLineWidth(0.2);
 	$arr_mo_to = array('MO1','TO','MO2');
 

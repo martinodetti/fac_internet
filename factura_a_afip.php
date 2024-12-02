@@ -295,18 +295,18 @@ for($i=0; $i<2; $i++)
     $pdf->setFont('Times','B',12);
 	$pdf->Cell(22,6,"Subtotal",1,0,'C');
 	$pdf->Cell(21,6,"Bonif.",1,0,'C');
-	$pdf->Cell(22,6,"Iva 10.5",1,0,'C');
-	$pdf->Cell(22,6,"Iva 21",1,0,'C');
-	$pdf->Cell(24,6,"TOTAL",1,0,'C');
+	$pdf->Cell(20,6,"Iva 10.5",1,0,'C');
+	$pdf->Cell(20,6,"Iva 21",1,0,'C');
+	$pdf->Cell(28,6,"TOTAL",1,0,'C');
 	$pdf->Ln();
 //	$pdf->SetY(325);
-	$pdf->setFont('Arial','',13);
+	$pdf->setFont('Arial','',12);
 	$pdf->SetX(94);
 	$pdf->Cell(22,19,$subtotal,1,0,'C');
 	$pdf->Cell(21,19,$descu,1, 0,'C');
-	$pdf->Cell(22,19,$iva10,1,0,'C');
-	$pdf->Cell(22,19,$iva21,1,0,'C');
-	$pdf->Cell(24,19,$total,1, 0,'C');
+	$pdf->Cell(20,19,$iva10,1,0,'C');
+	$pdf->Cell(20,19,$iva21,1,0,'C');
+	$pdf->Cell(28,19,$total,1, 0,'C');
 
 	$pdf->setFont('Times','',10);
 	$pdf->setXY(5,291);

@@ -5,7 +5,7 @@ include 'MODEL/Persona.php';
 include 'MODEL/Ciudad.php';
 include 'MODEL/Vehiculo.php';
 include 'fpdf17/fpdf_i25.php';
-
+include 'fpdf17/qrcode.class.php';
 
 //inicializo todas las variables
 $id_cli		= $_GET['id_cliente'];
@@ -44,8 +44,10 @@ $id_fact 	= $_GET['tipo_fact'] . $_GET['numero'];
 $arr_num = explode('-',$numero);
 $tmp_vto = str_replace('-','',$cae_vto);
 $barcode = '307097160060' . $tipo_doc . $arr_num[0] . $cae . $tmp_vto . '6';
-
 $arr_fecemi = explode("-",$fecha);
+
+$json_qr = base64_encode(json_encode(array("ver"=> 1,"fecha"=> $arr_fecemi[2].'-'.$arr_fecemi[1].'-'.$arr_fecemi[0] ,"cuit" => 30709716006,"ptoVta" => 2,"tipoCmp" => intval($tipo_doc),"nroCmp" => intval(explode('-',$_GET['numero'])[1]),"importe"=> floatval(str_replace('.','',$total)),"moneda" => 'PES',"ctz" => 1,"tipoDocRec" => 80,"nroDocRec" => intval($clsCliente->get_ruc_persona()) ,"tipoCodAut"=> "E","codAut" => intval($cae))));
+$qrdata  = 'https://www.afip.gob.ar/fe/qr/?p='.$json_qr;
 
 $time = strtotime($arr_fecemi[2]."-".$arr_fecemi[1]."-".$arr_fecemi[0]);
 $fecvenc = date("d-m-Y", strtotime("+35 days", $time));
@@ -263,10 +265,10 @@ for($i=0; $i<2; $i++)
 	$pdf->Cell(28,5,"PRECIO",1,0,'C');
 	$pdf->setFont('Times','',12);
 
-	$pdf->Line(20,79,20,275);
-	$pdf->Line(49,79,49,275);
-	$pdf->Line(149,79,149,275);
-	$pdf->Line(177,79,177,275);
+	$pdf->Line(20,79,20,265);
+	$pdf->Line(49,79,49,265);
+	$pdf->Line(149,79,149,265);
+	$pdf->Line(177,79,177,265);
 
 
 	$pdf->Ln();
@@ -297,25 +299,27 @@ for($i=0; $i<2; $i++)
 
 
 	//TOTALES
-	$pdf->SetXY(5,275);
+	$pdf->SetXY(5,265);
 	$pdf->setFont('Arial','',10);
-	$pdf->Cell(75,15,"",1,0,'C');
-	$pdf->i25(10,277,$barcode,0.5,8);
-    $pdf->setFont('Times','B',12);
-	$pdf->Cell(25,6,"SUBTOTAL",1,0,'C');
-	$pdf->Cell(25,6,"BONIF.",1,0,'C');
-	$pdf->Cell(25,6,"IVA 10.5",1,0,'C');
-	$pdf->Cell(25,6,"IVA 21",1,0,'C');
-	$pdf->Cell(25,6,"TOTAL",1,0,'C');
+	$pdf->Cell(89,25,"",1,0,'C');
+	$pdf->i25(31,272,$barcode,0.5,8);
+	$qrcode = new QRcode($qrdata, 'H'); // error level : L, M, Q, H
+	$qrcode->displayFPDF($pdf, 5, 265, 25);
+	$pdf->setFont('Times','B',12);
+	$pdf->Cell(22,6,"SUBTOTAL",1,0,'C');
+	$pdf->Cell(21,6,"BONIF.",1,0,'C');
+	$pdf->Cell(22,6,"IVA 10.5",1,0,'C');
+	$pdf->Cell(22,6,"IVA 21",1,0,'C');
+	$pdf->Cell(24,6,"TOTAL",1,0,'C');
 	$pdf->Ln();
 //	$pdf->SetY(325);
 	$pdf->setFont('Arial','',13);
-	$pdf->SetX(80);
-	$pdf->Cell(25,9,$subtotal,1,0,'C');
-	$pdf->Cell(25,9,$descu,1, 0,'C');
-	$pdf->Cell(25,9,$iva10,1,0,'C');
-	$pdf->Cell(25,9,$iva21,1,0,'C');
-	$pdf->Cell(25,9,$total,1, 0,'C');
+	$pdf->SetX(94);
+	$pdf->Cell(22,19,$subtotal,1,0,'C');
+	$pdf->Cell(21,19,$descu,1, 0,'C');
+	$pdf->Cell(22,19,$iva10,1,0,'C');
+	$pdf->Cell(22,19,$iva21,1,0,'C');
+	$pdf->Cell(24,19,$total,1, 0,'C');
 
 	$pdf->setFont('Times','',10);
 	$pdf->setXY(5,291);

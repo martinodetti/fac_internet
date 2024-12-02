@@ -803,26 +803,22 @@ $('#facturas_table').datagrid({
     // save_estado_fact 0
 
     function Recibo_Add(){
-			/*
-					validador= validarCombos();
-					var opc = 1;
-					if(validador == 'C'){
-			*/
 
-			if($("#tipo_guardar").val() == "nuevo"){
-				opc = 1;
-			}else{
-				opc = 20;
-			}
+		if($("#tipo_guardar").val() == "nuevo"){
+			opc = 1;
+		}else{
+			opc = 20;
+		}
 
-			var frmRecibo=$("#frm_recibo").serialize();
+		var frmRecibo=$("#frm_recibo").serialize();
 
-			$.ajax({
-				type:"POST",
-				url:"CONTROLLER/C_Recibo.php?opc="+opc+"&"+frmRecibo,
-				data:({cheques: dat_cheques,facturas: dat_fact, retenciones: dat_retencion, transferencias: dat_transferencias, fact_prov: dat_fact_prov}),
-				dataType:'json',
-				success:function(response){
+		$.ajax({
+			type:"POST",
+			url:"CONTROLLER/C_Recibo.php?opc="+opc+"&"+frmRecibo,
+			data:({cheques: dat_cheques,facturas: dat_fact, retenciones: dat_retencion, transferencias: dat_transferencias, fact_prov: dat_fact_prov}),
+			dataType:'json',
+			success:function(response){
+				if(response.estado == 1){
 					$('#dialg_msg').dialog('open');
 					$("#msg").text(response.txt);
 
@@ -830,14 +826,12 @@ $('#facturas_table').datagrid({
 					vaciarVector();
 					$("#frm_recibo .form-field").val ("");
 					vaciarCampos();
-				}
-			});
-/*
-		}else{
-			$('#error_msg').dialog('open');
-			$("#msg_err").text("Debe completar los campos: " + validador);
-		}
-*/
+				 }else{
+                    $('#dialg_error').dialog('open');
+					$("#msg_err").text(response.error);
+                }
+			}
+		});
     }
 
     $("#btn_Recibo_Add").click(function(){

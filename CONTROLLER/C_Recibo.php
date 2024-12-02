@@ -67,6 +67,10 @@ case '1': //add
 
 	$ret=$recibo->addrecibo(	$recibo);
 	$id_recibo=$ret['0'][0]; //last_id de recibo
+	
+	if($id_recibo > 0)
+	{
+
 
 	//guardar los cheques del detalle
 	foreach($cheques as $cheque)
@@ -147,6 +151,12 @@ case '1': //add
 	}
 
  	$out=$recibo->json("1", "Los datos se han guardado correctamente.");
+
+	}
+	else
+	{
+		$out=$recibo->json("2", "Error al guardar el recibo");
+	}
 
 	break;
 
