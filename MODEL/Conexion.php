@@ -3,9 +3,9 @@
 class conexion{
 	var $db_host	= "localhost";		// Host, nombre o IP del servidor Mysql.
 	var $db_user	= "root";   		// Usuario de Mysql
-	var $db_pass	= "";   	  		// contraseña de Mysql
+	var $db_pass	= "";   	  		// contraseï¿½a de Mysql
 	var $database 	= "fac_internet";	// Nombre de la base de datos
-	public static $conexion=NULL;		// Variable que contiene el objeto conexión singleton
+	public static $conexion=NULL;		// Variable que contiene el objeto conexiï¿½n singleton
 	
 	/**
 	 * Constructor

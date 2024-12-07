@@ -1,9 +1,13 @@
 <?php
 include_once 'CONTROLLER/C_Debug.php';
+include 'DAC/Database.class.php';
+include 'MODEL/Persona.php';
+include 'MODEL/V_acceso_modulo.php';
+include 'MODEL/Producto.php';
 session_start();
 if(!isset($_SESSION['id_persona'])){
-        header('Location: index.php');
-        exit();
+    header('Location: index.php');
+    exit();
 }
 ?>
 
@@ -38,23 +42,19 @@ if(!isset($_SESSION['id_persona'])){
     <body>
     
 <?php 
- include 'DAC/Database.class.php';
- include 'MODEL/Persona.php';
- include 'MODEL/V_acceso_modulo.php';
- include 'MODEL/Producto.php';
+ 
 
-
- $id_persona=$_SESSION['id_persona'];   
+$id_persona=$_SESSION['id_persona'];   
 $persona=new persona();
 $v_mod_acc=new v_acceso_modulo();
 $persona=$persona->showPersona($id_persona);
 //array de mdluos
+
 $arr_acceso=array();
 $arr_acceso=$v_mod_acc->listV_acceso_modulos($id_persona);
 $producto = new producto();
 $prod_en_cero = $producto->getPreductoPrecioVtaIgualCero();
 $prod_vta_costo = $producto->getProductoPrecioVtaIgualCosto();
-
 
 ?>
 

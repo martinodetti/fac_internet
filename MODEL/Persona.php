@@ -1063,7 +1063,7 @@ class persona {
         }
 
 	//ordenes de reparacion
-	//TODO: esta quiery la tengo que modificar porque estÃ trayendo saldos de facturas de compra porque coinciden los id de recibo
+	//TODO: esta quiery la tengo que modificar porque estï¿½ trayendo saldos de facturas de compra porque coinciden los id de recibo
 		$sql1= "SELECT 	f.id_fact, f.num_fact, date_format(f.fecemi_fact, '%d-%m-%Y') fecha, GROUP_CONCAT(id_orden) AS ordenes,
 						v.dominio, date_format(o.fecemi_orden, '%d-%m-%Y') fec_orden,
 						IF(recibo_factura.id_recibo is null, f.total_fact,min(recibo_factura.saldo_fact)) total_fact
@@ -1176,6 +1176,16 @@ class persona {
 
         return $result[0]['id_persona'];
 	}
+
+    public function validarRuc($ruc = '', $id_tipo_per = 1){
+        $id_persona = FALSE;
+        if($ruc != ''){
+            $sql = "SELECT id_persona FROM persona WHERE id_tipoper = ".$id_tipo_per." AND ruc_persona = '".$ruc."'";
+            $result = $this->_DB->select_query($sql);
+            $id_persona = $result[0]['id_persona'];
+        }
+        return $id_persona;
+    }
 }
 
 ?>

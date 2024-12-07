@@ -1,4 +1,5 @@
 <?php
+phpinfo();die;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 

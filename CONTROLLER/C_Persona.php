@@ -627,8 +627,13 @@ case 33:
 	$id_persona = $_POST['id_provd'];
 	$out=$W_persona->printCuentaCorrienteProvd($id_persona);
 	break;
+case 34:
+    $persona=new Persona();
+	$ruc = $_POST['ruc'];
+    $id_tipo_per = $_POST['id_tipo_per'];
+    $out=$persona->validarRuc($ruc, $id_tipo_per);
+	break;
 }
-
 die($out);
 
 ?>

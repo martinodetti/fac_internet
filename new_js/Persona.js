@@ -513,6 +513,25 @@ $("#table-example_filter").children().children().focus();
 		});
 	
 	});
+
+    $("#save_ruc_persona").blur(function(){
+		cuit= $("#save_ruc_persona").val();
+        param = "opc=34&id_tipo_per=2&ruc="+cuit;
+        console.log(param);
+        $.ajax({
+			type:"POST",
+			url:"CONTROLLER/C_Persona.php",
+			data:param,
+			dataType:"json",
+			success:function(response){
+				if(response != ''){
+                    alert("El número de CUIT "+cuit+ " ya se encuentra registrado");
+                    $("#save_ruc_persona").val("");
+                    $("#save_ruc_persona").focus();
+                }
+			}
+		});
+	});
     
 
 	$("#update_id_provincia").change(function(){
