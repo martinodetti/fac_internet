@@ -530,12 +530,6 @@ if(isset ($_SESSION['id_persona'])){
                                                         </tr>
                                                     </thead>
                                                 </table>
-											<hr/>
-													<label class="form-label required"> Factura Credito</label>
-												<div>
-												<input type="checkbox"  name="update_factura_credito" id="update_factura_credito">
-												</div>
-											
 											
 											<input id="btn_Factura_Add" class="fr button themed" type="button" value="Guardar Factura" name="btn_Factura_Add" />
                                             <input id="btn_Factura_New" class="fl button themed" type="button" value="Nuevo" name="btn_Factura_New" />

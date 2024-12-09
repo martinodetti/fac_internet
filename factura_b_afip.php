@@ -327,7 +327,7 @@ $url_output = "impresiones/facturas/".$pre.$id_fact.".pdf";
 $pdf->Output($url_output,"F");
 
 //hago el envío del mail si corresponde
-if($mail && $clsCliente->get_email_persona() != ''){
+if($mail != 'false'  && $clsCliente->get_email_persona() != ''){
 	$mail = new mail_sender();
 	$mail->send_factura($url_output, $clsCliente, $pre . $id_fact);
 }
