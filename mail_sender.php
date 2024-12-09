@@ -58,7 +58,18 @@ class mail_sender{
             //Read an HTML message body from an external file, convert referenced images to embedded,
             //convert HTML into a basic plain-text alternative body
             //$mail->msgHTML(file_get_contents('contents.html'), __DIR__);
-            $this->mail->msgHTML('Adjunto encontrará el documento.');
+            
+            $this->mail->msgHTML('<p>Estimado cliente,</p>
+        <p>Adjunto encontrará el documento solicitado.</p>
+        <p>Cualquier inquietud enviar mail a las siguientes direcciones:</p>
+        <p>clulic@frenosoeste.com.ar</p>
+        <p>info@frenosoeste.com.ar</p>
+        <br>
+        <p>Saludos cordiales,</p>
+        <p><br>Frenos Oeste<br>
+        <a href="https://www.frenosoeste.com.ar">www.frenosoeste.com.ar</a><br>
+        Teléfono: 0261-4360959</p>
+');
 
             //Replace the plain text body with one created manually
             $this->mail->AltBody = 'Adjunto encontrará el documento.';

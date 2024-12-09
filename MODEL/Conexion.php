@@ -1,7 +1,7 @@
 <?php
 
 class conexion{
-	var $db_host	= "localhost";		// Host, nombre o IP del servidor Mysql.
+	var $db_host	= "db";		// Host, nombre o IP del servidor Mysql.
 	var $db_user	= "root";   		// Usuario de Mysql
 	var $db_pass	= "";   	  		// contrase�a de Mysql
 	var $database 	= "fac_internet";	// Nombre de la base de datos
