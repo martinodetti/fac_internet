@@ -12,7 +12,6 @@ include 'mail_sender.php';
 $id_cli		= $_GET['id_cliente'];
 $clsCliente	= new persona();
 $clsCliente	= $clsCliente->showPersona($id_cli);
-pr($clsCliente);die;
 $clsCiudad 	= new ciudad();
 $clsCiudad  = $clsCiudad->showCiudad('',$clsCliente->_id_ciudad);
 
@@ -39,7 +38,7 @@ $obs		= $_GET['obs'];
 $cae		= $_GET['cae'];
 $cae_vto	= $_GET['cae_vto'];
 $tipo_doc   = $_GET['tipo_doc'];
-$mail 		= $_GET['mail'];
+$mail 		= $_GET['send_mail'];
 
 $arr		= explode("^", $Data);
 $id_fact 	= $_GET['tipo_fact'] . $_GET['numero'];
