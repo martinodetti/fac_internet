@@ -10,7 +10,7 @@ class Database extends PDO {
     public function __construct() {
 
         $this->motor 	= 'mysql';
-        $this->host 	= 'db';
+        $this->host 	= 'localhost';
 		$this->database = 'fac_internet';
         $this->usuario 	= 'root';
         $this->clave 	= '';
