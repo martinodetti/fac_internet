@@ -12,7 +12,7 @@
 	$gaSql['user']       = "root";
 	$gaSql['password']   = "";
 	$gaSql['db']         = "fac_internet";
-	$gaSql['server']     = "localhost";
+	$gaSql['server']     = "db";
 
 	/* 
 	 * MySQL connection

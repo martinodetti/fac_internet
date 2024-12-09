@@ -295,7 +295,6 @@ case '1': //add
 			{
 				$out=$clsDetFactura->addDetalle_factura($clsDetFactura, $afecta_stock);
 			}
-
 		}
 	}
 	

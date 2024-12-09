@@ -19,7 +19,6 @@ class conexion{
 		return($this);
 	}
 
-
 	//Permite que la clase sea unica (singleton) y se cree una sola conexion
 	public static function getConexion() {
 		if(conexion::$conexion == Null){
