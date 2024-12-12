@@ -50,8 +50,11 @@ class mail_sender{
 
     public function send_factura($path ='', $cliente, $numero){
         if($path != ''){
-            $this->mail->addAddress($cliente->get_email_persona());
-
+            $arr_address = array_map('trim', explode(";",$cliente->get_email_persona()));
+            foreach($arr_address as $address){
+                $this->mail->addAddress($address);
+            }
+            
             //Set the subject line
             $this->mail->Subject = 'Nuevo comprobante de Frenos Oeste, ref: ' . $numero . '. ';
 
