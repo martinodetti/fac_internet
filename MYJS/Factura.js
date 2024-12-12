@@ -1420,7 +1420,7 @@ $(document).ready(function(){
 					$('#txt_punto_de_venta').val(response.p_de_v);
                		$("#msg").text(response.txt);
                     $('#dialg_msg').dialog('open');
-               		imprimir_automatico();
+               		imprimir_automatico(true);
                 }else{
                 	$('#dialg_error').dialog('open');
                     $("#msg_err").text("ERROR AFIP: " + response.descripcion);
@@ -1436,12 +1436,12 @@ $(document).ready(function(){
 
     $("#btn_Factura_Print").click(function(){
 		$("#txt_idremitos").val($("#save_orden_y_remito").val());
-        imprimir_automatico();
+        imprimir_automatico(false);
     });
 
     //esta es la funcion que vamos a utilizar para imprimir de forma automatica.
     //genero el popup que es el que genera el archivo pdf en el servidor y lo cierro automaticamente
-    function imprimir_automatico(){
+    function imprimir_automatico(mail=false){
 
     	var fo=getStringParsedToPrint();
 
@@ -1512,6 +1512,7 @@ $(document).ready(function(){
         var param			= param + "&sub="+sub+"&remis="+remis+"&ordens="+ordens+"&detalle="+fo+"&forpago="+forpago+"&dominio="+dominio;
         var param			= param + "&tipo_fact="+tipofact+"&obs="+obs+"&cae="+cae+"&cae_vto="+cae_vto;
         var param           = param + "&tipo_doc="+tipo_doc;
+		var param 			= param + "&send_mail="+mail;
         var win				= window.open(url+param, windowName, windowSize);
     }
 

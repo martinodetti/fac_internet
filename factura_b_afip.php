@@ -7,6 +7,7 @@ include 'MODEL/Ciudad.php';
 include 'MODEL/Vehiculo.php';
 include 'fpdf17/fpdf_i25.php';
 include 'fpdf17/qrcode.class.php';
+include 'mail_sender.php';
 
 //inicializo todas las variables
 $id_cli		= $_GET['id_cliente'];
@@ -38,6 +39,7 @@ $cae_vto	= $_GET['cae_vto'];
 $tipo_doc   = $_GET['tipo_doc'];
 $arr		= explode("^", $Data);
 $id_fact 	= $_GET['tipo_fact'] . $_GET['numero'];
+$mail 		= $_GET['send_mail'];
 
 $arr_num = explode('-',$numero);
 $tmp_vto = str_replace('-','',$cae_vto);
@@ -321,10 +323,16 @@ else if($tipo_doc == 3)
     $pre = "ND_";
 
 
-$pdf->Output("impresiones/facturas/".$pre.$id_fact.".pdf","F");
-$pdf->Output();
+$url_output = "impresiones/facturas/".$pre.$id_fact.".pdf";
+$pdf->Output($url_output,"F");
 
-//sleep(1);
+//hago el envío del mail si corresponde
+if($mail != 'false'  && $clsCliente->get_email_persona() != ''){
+	$mail = new mail_sender();
+	$mail->send_factura($url_output, $clsCliente, $pre . $id_fact);
+}
+
+$pdf->Output();
 //exec("lp -d HP_LaserJet_Professional_P1102w impresiones/facturas/".$id_fact.".pdf");
 
 ?>

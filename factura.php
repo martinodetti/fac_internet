@@ -530,7 +530,7 @@ if(isset ($_SESSION['id_persona'])){
                                                         </tr>
                                                     </thead>
                                                 </table>
-											<hr/>
+											
 											<input id="btn_Factura_Add" class="fr button themed" type="button" value="Guardar Factura" name="btn_Factura_Add" />
                                             <input id="btn_Factura_New" class="fl button themed" type="button" value="Nuevo" name="btn_Factura_New" />
 

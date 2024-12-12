@@ -1,5 +1,5 @@
 <?php
-phpinfo();die;
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -11,6 +11,10 @@ require 'PHPMailer/src/SMTP.php';
 //Create a new PHPMailer instance
 $mail = new PHPMailer();
 
+$mail->SMTPDebug = 2; // Muestra mensajes de depuración detallados
+$mail->Debugoutput = 'html'; // Formato de salida para los mensajes de depuración
+$mail->SMTPKeepAlive = false; // Cierra la conexión después de cada mensaje
+
 //Tell PHPMailer to use SMTP
 $mail->isSMTP();
 
@@ -21,7 +25,7 @@ $mail->isSMTP();
 //$mail->SMTPDebug = SMTP::DEBUG_SERVER;
 
 //Set the hostname of the mail server
-$mail->Host = 'smtp.gmail.com';
+$mail->Host = 'smtp.frenosoeste.com.ar';
 //Use `$mail->Host = gethostbyname('smtp.gmail.com');`
 //if your network does not support SMTP over IPv6,
 //though this may cause issues with TLS
@@ -29,34 +33,43 @@ $mail->Host = 'smtp.gmail.com';
 //Set the SMTP port number:
 // - 465 for SMTP with implicit TLS, a.k.a. RFC8314 SMTPS or
 // - 587 for SMTP+STARTTLS
-$mail->Port = 465;
+$mail->Port = 587;
+$mail->SMTPSecure = 'tls'; 
 
 //Set the encryption mechanism to use:
 // - SMTPS (implicit TLS on port 465) or
 // - STARTTLS (explicit TLS on port 587)
-$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+// $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+
+$mail->SMTPOptions = array(
+    'ssl' => array(
+        'verify_peer' => false,
+        'verify_peer_name' => false,
+        'allow_self_signed' => true
+    )
+);
 
 //Whether to use SMTP authentication
 $mail->SMTPAuth = true;
 
 //Username to use for SMTP authentication - use full email address for gmail
-$mail->Username = 'martin.odetti@gmail.com';
+$mail->Username = 'no_reply@frenosoeste.com.ar';
 
 //Password to use for SMTP authentication
-$mail->Password = 'saeemmpasla';
+$mail->Password = 'martin1234';
 
 //Set who the message is to be sent from
 //Note that with gmail you can only use your account address (same as `Username`)
 //or predefined aliases that you have configured within your account.
 //Do not use user-submitted addresses in here
-$mail->setFrom('martin.odetti@gmail.com', 'Frenos');
+$mail->setFrom('no_reply@frenosoeste.com.ar', 'Frenos Oeste');
 
 //Set an alternative reply-to address
 //This is a good place to put user-submitted addresses
-$mail->addReplyTo('replyto@frenosoeste.com.ar', 'Frenos');
+$mail->addReplyTo('no_reply@frenosoeste.com.ar', 'Frenos Oeste');
 
 //Set who the message is to be sent to
-$mail->addAddress('techiqui@gmail.com');
+$mail->addAddress('martin.odetti@gmail.com');
 
 //Set the subject line
 $mail->Subject = 'PHPMailer GMail SMTP test';
