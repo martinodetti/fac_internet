@@ -1,10 +1,10 @@
 <?php
 
 class conexion{
-	var $db_host	= "localhost";		// Host, nombre o IP del servidor Mysql.
-	var $db_user	= "root";   		// Usuario de Mysql
-	var $db_pass	= "";   	  		// contrase�a de Mysql
-	var $database 	= "fac_internet";	// Nombre de la base de datos
+	var $db_host	= getenv("DB_HOST");		// Host, nombre o IP del servidor Mysql.
+	var $db_user	= getenv("DB_USER");   		// Usuario de Mysql
+	var $db_pass	= getenv("DB_PASS");   	  		// contrase�a de Mysql
+	var $database 	= getenv("DB_NAME");	// Nombre de la base de datos
 	public static $conexion=NULL;		// Variable que contiene el objeto conexi�n singleton
 	
 	/**

@@ -29,8 +29,8 @@ class persona {
     public $_factura_credito;
 
     public function __construct() {
-
         $this->_DB = new Database();
+
     }
 
     public function persona($id_persona, $id_tipoper, $id_ciudad, $id_sexo, $id_civil, $nom_persona, $ape_persona, $ruc_persona, $direc_persona, $telf_persona, $cel_persona, $email_persona, $web_persona, $obs_persona, $fec_persona, $estado_persona, $clave_persona, $tiene_ctacte, $id_condiva, $telf_persona_2, $ganancia, $factura_credito) {

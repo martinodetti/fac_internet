@@ -10,18 +10,17 @@ class Database extends PDO {
     public function __construct() {
 
         $this->motor 	= 'mysql';
-        $this->host 	= 'localhost';
-		$this->database = 'fac_internet';
-        $this->usuario 	= 'root';
-        $this->clave 	= '';
-
+        $this->host 	= getenv("DB_HOST");
+		$this->database = getenv("DB_NAME");
+        $this->usuario 	= getenv("DB_USER");
+        $this->clave 	= getenv("DB_PASS");
+pr($this);
         $dns = $this->motor . ':dbname=' . $this->database . ';host=' . $this->host;
 
-		
-        try{
+		try{
 			parent::__construct($dns, $this->usuario, $this->clave);
 		}catch(PDOException $e){
-
+            pr($e);
 		}
 		
     }

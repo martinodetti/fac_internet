@@ -1,5 +1,8 @@
 <?php 
+include_once 'CONTROLLER/C_Enviroment.php';
 session_start();
+
+C_Enviroment::loadEnv('.env');
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml" >
 	<head>
