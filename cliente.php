@@ -274,7 +274,7 @@ $arr_ciudad=$Ciudad->listCiudads();
                                                                 <tr>
                                                                 	<td>
                                                                         <label class="form-label required"> E-mail </label>
-                                                                           <input id="update_email_persona" class="form-field width80" name="update_email_persona" type="text" value="" maxlength="50"/>
+                                                                           <input id="update_email_persona" class="form-field width80" name="update_email_persona" type="text" value="" />
                                                                     </td>
                                                                     <td>
                                                                         <label class="form-label required"> Lista de precios </label>

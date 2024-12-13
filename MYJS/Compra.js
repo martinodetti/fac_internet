@@ -3,6 +3,7 @@ $(document).ready(function(){
 //VARIABLES INCIALES DEL grid
  var cont=0;
  var dat=[];//modelo del grid
+ var desc_gral=0;
 $('#tt').datagrid('reloadFooter',[  //inicio foter del datagrid
     {cantidad:"SubTotal : ",total: 0},
     {cantidad:"Iva 10,5% : ",total: 0},
@@ -103,7 +104,6 @@ $('#tt').datagrid('reloadFooter',[  //inicio foter del datagrid
  
  //FUNCIONES jqueryeasy
   function Add(){
-       
        if(verificarDat()){
             cont++;
             var idprod	= $("#txt_idproducto").val();
@@ -119,12 +119,17 @@ $('#tt').datagrid('reloadFooter',[  //inicio foter del datagrid
             var desc_p = 0;
             if($("#txt_descuento_prod").val() != ""){
 	            desc_p	= $("#txt_descuento_prod").val();
-	        }else if($("#save_descuento").val() != ""){
-	        	desc_p = $("#save_descuento").val();
+	        } 
+            /*
+            if($("#save_descuento").val() != ""){
+	        	desc_gral = $("#save_descuento").val();
 	        }
+            */
             
             var precio_orig = parseFloat(precio);
-            precio = parseFloat(precio) - parseFloat(precio) * parseFloat(desc_p) / 100;
+            precio = parseFloat(precio) - (parseFloat(precio) * parseFloat(desc_p) / 100);
+            //precio con descuento general
+            precio = parseFloat(precio) - (parseFloat(precio) * parseFloat(desc_gral) / 100);
             
             precio=parseFloat(precio);
             preciovta=parseFloat(precio) + (parseFloat(precio) * parseFloat(margen) / 100);
@@ -148,6 +153,7 @@ $('#tt').datagrid('reloadFooter',[  //inicio foter del datagrid
                 cod:codprod,
                 producto:prod,
                 precio_orig:precio_orig.toFixed(2),
+                descuento:desc_p,
                 precio:precio.toFixed(2),
                 preciovta:Math.round(preciovta.toFixed(2)),
                 cantidad:canti,
@@ -183,7 +189,6 @@ $('#tt').datagrid('reloadFooter',[  //inicio foter del datagrid
   function reloadConDescuento(){
   
 	var margen = $("#margen_ganancia").val();
-  	var desct = 0;
   	if($("#save_descuento").val() != "")
 		desct = parseFloat($("#save_descuento").val());
 
@@ -192,7 +197,8 @@ $('#tt').datagrid('reloadFooter',[  //inicio foter del datagrid
   	
 
   	for(var t=0;t<lng;t++){
-	    var precio 	= (tl[t].precio_orig - (tl[t].precio_orig * desct / 100)).toFixed(2);
+	    var precio 	= parseFloat((tl[t].precio_orig - (tl[t].precio_orig * tl[t].descuento / 100)).toFixed(2));
+        precio = precio - (precio * desc_gral / 100);
         tl[t].precio = parseFloat(precio);
 		var preciovta	= tl[t].precio + (tl[t].precio * parseFloat(margen) / 100);
         tl[t].preciovta = parseFloat(preciovta);
@@ -496,8 +502,14 @@ $('#tt').datagrid('reloadFooter',[  //inicio foter del datagrid
     });
     
     $("#save_descuento").keyup(function(){
+        if($("#save_descuento").val() != ""){
+            desc_gral	= parseFloat($("#save_descuento").val());
+        }else  {
+            desc_gral = 0;
+        }
+       
     	reloadConDescuento();
-//    	sumatoria();
+    	sumatoria();
     });
     
     $("#save_ganancia_ret").keyup(function(){
