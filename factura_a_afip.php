@@ -323,7 +323,8 @@ if($tipo_doc == 2)
 else if($tipo_doc == 3)
     $pre = "ND_";
 
-$pdf->Output("impresiones/facturas/".$pre.$id_fact.".pdf","F");
+$url_output = "impresiones/facturas/".$pre.$id_fact.".pdf";
+$pdf->Output($url_output,"F");
 
 //hago el envío del mail si corresponde
 if($mail != 'false' && $clsCliente->get_email_persona() != ''){

@@ -187,8 +187,7 @@ $("#table-example_filter").children().children().focus();
                required: false
             },
             save_email_persona:{
-                required: false,
-                email:true
+                required: false
             },
             save_direc_persona:{
               required: false,
@@ -312,8 +311,7 @@ $("#table-example_filter").children().children().focus();
                required: false
             },
             update_email_persona:{
-                required: false,
-                email:true
+                required: false
             },
             update_direc_persona:{
               required: false,

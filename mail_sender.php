@@ -7,6 +7,7 @@ require 'PHPMailer/src/Exception.php';
 require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
 include_once 'MODEL/Persona.php';
+include_once 'CONTROLLER/C_Debug.php';
 
 
 class mail_sender{
@@ -49,9 +50,9 @@ class mail_sender{
 
 
     public function send_factura($path ='', $cliente, $numero){
-        if($path != ''){
+		if($path != ''){
             $arr_address = array_map('trim', explode(";",$cliente->get_email_persona()));
-            foreach($arr_address as $address){
+			foreach($arr_address as $address){
                 $this->mail->addAddress($address);
             }
             
@@ -79,10 +80,9 @@ class mail_sender{
 
             //Attach an image file
             $this->mail->addAttachment($path);
-
             //send the message, check for errors
             if (!$this->mail->send()) {
-                //echo 'Mailer Error: ' . $mail->ErrorInfo;
+				logger("Error en envio de mail: " . $mail->ErrorInfo);
             } else {
                 //echo 'Message sent!';
             }
