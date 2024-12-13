@@ -123,8 +123,6 @@ case '1': //add
 			$out=$clsDetalle->addDetalle_notacredito($clsDetalle);
 		else
 			$out=$clsDetalle->addDetalle_compra($clsDetalle);
-
-
 	}
 
 break;
